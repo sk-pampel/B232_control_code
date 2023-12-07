@@ -1,0 +1,40 @@
+% pushout(), but with the repump on. usually used for depth measurements
+
+def pushout_all():
+
+  var probePowSetting 0.04 %0.04 %0
+  var pushoutfreq -1.3 %-1.4 %0
+  var RepumpPowerVal 0.3
+  var pushouttime 20 %0.075 %0.5 %0.0025
+  var repump_freq -0.51 %-1 %-0.51
+ 
+  % repump on allows the pushout of the F=1 state atoms as well.
+
+
+  off: sideMotRf
+
+  dac: RepumpPower RepumpPowerVal
+  daclinspace: motFreq defaultMotFreq pushoutfreq 5 10
+  dac: probePower probePowSetting
+  dac: RepumpFreq repump_freq 
+
+  %var tvar 8
+  t += 5.01
+  off: probeRf
+  off: repumpRf
+  on: repumpshutter
+  on: probeShutter
+  %t += tvar
+  t += 20
+  on: RepumpRF
+  on: probeRf 
+  t += pushouttime
+  off: probeRf
+  off: repumpRf
+  off: probeShutter
+  off: repumpShutter
+  daclinspace: motFreq pushoutfreq defaultMotFreq 5 10
+  t += 5.001
+
+
+

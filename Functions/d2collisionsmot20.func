@@ -1,0 +1,48 @@
+def D2collisionsMOT20():
+    call zeroFieldsPgcCollisions()
+    %call setquantaxis()
+
+	off: diagMotRf
+    off: sideMotRf
+    off: repumpRf
+    off: sidemotshutter
+    off: diagmotshutter
+    off: probeShutter
+    off: repumpshutter
+    off: lacshutterD2
+    var dTwoFreqTwoZero 1.45 %-1.4 %0
+    var RepumpPowerVal 0.02
+    var colTimeTwoZero 10
+    var sideMotPow .2
+    var probePow 0.0
+    dac: probePower probePow % 
+    dac: RepumpPower RepumpPowerVal
+on: c9
+    daclinspace: motFreq defaultMotFreq dTwoFreqTwoZero 5 10
+    dac: sideMOTpower sideMotPow
+    dac: diagMOTpower { 0 diagmot }
+    t += 5
+    on: repumpshutter
+    %on: probeshutter
+
+    on: sidemotshutter
+    t += 20
+    on: RepumpRF
+    on: sideMotRf
+    t += colTimeTwoZero
+    off: sideMotRf
+    off: lacshutterD2
+    off: repumpRf
+    off: sideMotRf
+    off: diagMotRf
+    off: probeShutter
+    off: repumpShutter
+    off: sidemotshutter
+    off: diagmotshutter
+off: c9
+    daclinspace: motFreq dTwoFreqTwoZero defaultMotFreq 5 10
+    t += 5.001
+
+
+ 
+  

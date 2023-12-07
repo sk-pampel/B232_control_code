@@ -1,0 +1,4 @@
+%% the trigger is a 1 ms trigger at the moment.
+
+def triggerWindfreak():
+    pulseon: windfreaktrig 0.5

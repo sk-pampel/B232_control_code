@@ -1,0 +1,44 @@
+def gmcollisions20():
+  var D1twoToTwopPower -1.8
+  var collision_time20  20
+  var D1SidemotPow 0 %0.5 % 2.5 %0.9  %side collision
+  var diagmotD1Pow20 0.0 %0.15 %0.15 %diagonal collision
+  var LACPow20 0.00 
+  %var repump_pow 0.1 %0.175 %0.25
+  %var repump_freq -1.3 %-1.3
+  off: diagMotRf
+  off: sideMotRf
+  off: repumpRf
+  on: shutter795side
+  off: shutter795diag
+  off: shutter795lac
+  off: repumpShutter
+  %dac: RepumpPower repump_pow
+  %dac: repumpFreq repump_freq
+  dac: power795 D1twoToTwopPower
+ % dac: diag795pow { diagmotD1Pow20 diagmot_d1 }
+  %dac: diag795pow { diagmotD1Pow20 diagmot_d1 }
+  %dac: side795pow { D1SidemotPow sidemot_d1 }
+  dac: side795pow .3
+  t += 15
+  dac: diagMotPower 0
+  dac: sideMotPower 0
+  %call D1GreyLoadFields()
+  %call D1GreyInTrapPgcFields()
+  call zerofieldspgc()
+  %call send_uw_to_795_eom()
+  on: rf795
+  %on: repumpRf
+  t += collision_time20 
+  off: rf795
+  off: repumpRf
+  t += 1
+  dac: diag795pow 0
+  dac: side795pow 0
+  dac: power795 0.1
+  pulseon: a15 0.1 
+  off: shutter795lac
+  off: shutter795diag
+  off: repumpShutter
+  t += 1.1
+

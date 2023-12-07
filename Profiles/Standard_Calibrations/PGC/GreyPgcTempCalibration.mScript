@@ -1,0 +1,46 @@
+% simple load experiment
+t = 1
+call openLGMshutter()
+pulseon: dds_reset 0.1
+off: diagMotRf
+off: sideMotRf
+off: repumpRf
+t += 50
+% make sure that the mot drops all the way for 
+% consistency between experiments.
+call turnonmot()
+
+t += 2000
+
+call triggerwindfreak()
+t += 1
+
+call D1greyLambdaCooling()
+
+
+% wait for the drop
+
+t += flytime
+% image
+on: diagMotRf
+off: sideMotRf  % on
+on: repumpRf
+var repump_pow 0.26
+var repump_freq -0.46 %0.46
+dac: DiagMotPower { 3.1 diagmot } %dac: DiagMotPower 3.9 % 
+dac: RepumpPower repump_pow
+dac: MotFreq motImagingDetuning
+dac: RepumpFreq repump_freq
+dac: SideMotPower { 1.88 sidemot } % sidemot__sv 
+call triggerScout()
+
+t += 1 
+call closeLGMshutter()
+off: diagMotRf
+off: sideMotRf
+off: repumpRf
+off: rf795
+off: b13
+t += 5
+
+

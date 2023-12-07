@@ -1,0 +1,15 @@
+%% make sure the mot is off, then turn it on and take a series of pictures.
+t = 1
+off: diagmotrf
+t += 100
+call turnOnMot()
+%t += waittime
+t += 0.1
+repeat: 100
+	pulseon: scoutTrig 0.1
+	t += 100
+end
+
+
+
+

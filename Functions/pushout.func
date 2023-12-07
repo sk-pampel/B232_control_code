@@ -1,0 +1,43 @@
+def pushout():
+
+  var probepowsetting 0.1 %0.1 %0.02 %0.08
+  var pushoutfreq -2.44 %-2.28 -2.14 %-1.75
+  var pushouttime 0.01
+  
+
+  off: repumpRf
+  off: repumpshutter
+  % not pushing out F=1
+  off: sideMotRf
+
+  dac: probePower { probepowsetting probe } % 
+  daclinspace: motFreq defaultMotFreq pushoutfreq 5 10
+  t += 5.01
+  on: probeShutter
+  off: repumpshutter
+  off: repumpRf
+  t += 15
+  on: probeRf
+  t += pushouttime 
+  off: proberf
+  off: repumpRf
+
+  t += 1
+  off: probeshutter
+
+  daclinspace: motFreq pushoutfreq defaultMotFreq 5 10
+  dac: probepower 0
+  t += 1
+
+
+
+
+
+
+
+
+
+
+
+
+

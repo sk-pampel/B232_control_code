@@ -1,0 +1,49 @@
+% simple load experiment
+t = 1
+%on: tweezerrf
+off: diagMotRf
+off: sideMotRf
+off: repumpRf
+% make sure that the mot drops all the way for 
+% consistency between experiments.
+t += 50
+call turnonmot()
+
+t += 1000
+
+call pgcCooling()
+%call D1greylambdacooling()
+% wait for the drop
+t += flyTime 
+
+% image
+on: diagMotRf
+off: sideMotRf
+on: repumpRf
+
+var diagmot_pow 3.1 %4.5
+var repump_pow 0.26 
+var repump_freq -0.46
+var imgMotFreq -0.3
+dac: DiagMotPower { diagmot_pow diagmot } % diagmot__sv
+dac: RepumpPower repump_pow
+dac: MotFreq motImagingDetuning
+dac: RepumpFreq repump_freq
+dac: SideMotPower { 1.88 sidemot } % sidemot__sv 
+call triggerScout()
+
+
+t += 1
+off: diagMotRf
+off: sidemotRf
+off: repumpRf
+
+%%%%%
+%on: andorTrig
+%t += andorImageTime
+%t += 150
+%off: andorTrig
+%%%%%
+
+t += 1
+t += 5

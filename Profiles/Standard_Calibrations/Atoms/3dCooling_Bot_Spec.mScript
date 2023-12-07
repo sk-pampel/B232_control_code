@@ -1,0 +1,75 @@
+% Master-Script See the "?" for info on commands. 
+t = 0.1
+on: tweezerrf
+off: axialRamanShutter 
+off: probeShutter 
+on: totalRamanRf
+on: shutter795
+pulseon: dds_reset 0.1
+pulseon: windfreakTrig 0.05
+call openAndorShutter()
+t += 1
+call turnonmot()
+t += loadMotTime
+call triggerScout()
+call pgcloading()
+%call D1GreyLambdaLoading()
+%call triggerWindfreak()
+ 
+t += 20
+pulseon: tweezerIntensityTrig 0.1 % to imging
+pulseon: dds_step 5
+call stdPgcImage()
+call closeAndorShutter()
+pulseon: tweezerIntensityTrig 0.1 % to lgm
+off: sidemotShutter  
+off: diagmotShutter 
+off: repumpShutter
+t += 0.1
+on: axialRamanShutter 
+on: axialRamanShutter2 
+%call intrapgreymolasses()
+call intrappgc()
+call triggerWindfreak()
+off: shutter795
+pulseon: tweezerIntensityTrig 0.1 % to raman
+call send_uw_to_raman_eom()
+t += 1
+call pump2stretch()
+call gsbc()
+call triggerWindfreak()
+
+% var specPulseTime 0.08
+%dac: eoPulseLev { 0.255 eo_raman } % eo_raman__sv
+%pulseon: topPulseTrig 0.01
+%call topRamanPulse(specPulseTime)
+
+%dac: topPulseLev 0
+%dac: eoPulseLev 0
+%off: axialRamanShutter  
+%off: axialRamanShutter2  
+
+
+%pulseon: windfreakTrig 0.05
+t += 1
+pulseon: axialMicroPulseTrig 0.01
+dac: eoPulseLev { 0.255 eo_raman } % eo_raman__sv
+call botRamanPulse(tbsbcpulselen)
+dac: eoPulseLev 0
+off: axialRamanShutter  
+off: axialRamanShutter2  
+% t += 20
+pulseon: tweezerIntensityTrig 0.1 % to drop
+t += 1
+t += 0.1 
+call pushout()
+
+call openAndorShutter()
+t += 5
+pulseon: tweezerIntensityTrig 0.1 % to imging
+t += 1
+call stdPgcImage()
+pulseon: tweezerIntensityTrig 0.1 % to loading
+t += 1
+off: tweezerRf
+t += 0.2

@@ -1,0 +1,15 @@
+var loadingdepth 25
+var imagingDepth 10
+var intrapPGCdepth 17.5
+var releaseDepth 8.55
+
+
+hold loadingdepth 1 oncewaittrig #  
+ramp lin loadingdepth imagingdepth 1 oncewaittrig #
+ramp lin imagingdepth intrapPGCdepth 1 oncewaittrig #
+ramp lin intrapPGCdepth releaseDepth 1 oncewaittrig #
+ramp lin releaseDepth intrapPGCdepth 1 oncewaittrig #
+ramp lin intrapPGCdepth imagingdepth 1 oncewaittrig #
+ramp lin imagingdepth loadingdepth 1 once #  
+
+

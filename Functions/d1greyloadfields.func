@@ -1,0 +1,19 @@
+def D1GreyLoadFields():
+
+  dac: motGradientCurrent 0
+
+  var lr_field 0.38 %0.486 %0.33 %0.5 %0.421
+  var tb_field 2.02 %1.81 %2 % 1.929 
+  var fb_field 0.58 %0.75 %0.518 %0.75 %0.567
+
+  dac: leftCoilCurrent (-lr_field) 
+  dac: rightCoilCurrent lr_field
+  dac: topCoilCurrent tb_field
+  dac: bottomCoilCurrent (-tb_field)
+  dac: frontCoilCurrent (-fb_field)
+  dac: backCoilCurrent fb_field
+  
+  var greyLoadFieldTime 1
+  t += greyLoadFieldTime 
+
+

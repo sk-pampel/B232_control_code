@@ -1,0 +1,658 @@
+Version 3.1
+diagmotrf
+0
+repumprf
+0
+botramanrf
+0
+sigmarepumprf
+0
+sigmaoprf
+0
+sidemotrf
+0
+tweezerrf
+0
+repumpflash
+0
+eoramanrf
+0
+tweezerServoSamp
+0
+topramanrf
+0
+axialramanrf
+0
+tweezermod
+0
+a13
+0
+a14
+0
+oscilloscopemarker
+0
+scouttrig
+0
+b1
+0
+opshutter
+0
+totalramanrf
+0
+topPulseTrig
+0
+probeflashing
+0
+tweezerintensitytrig
+0
+repumpShutter
+0
+sidemotshutter
+0
+b9
+0
+shutter795
+0
+uw_mod_switch
+0
+axialramanshutter2
+0
+lacshutterD1
+0
+niawgtrig
+0
+b15
+0
+eoswitch
+0
+eoswitch2
+0
+andortrig
+0
+rstrig
+0
+ramanshutter
+0
+tweezerflashrf
+0
+lsrf
+0
+sidemotflash
+0
+diagmotshutter
+0
+c9
+0
+rf795
+0
+oscilloscopetrig
+0
+axialramanshutter
+0
+shutter795side
+0
+lacshutterD2
+0
+acetrig
+0
+windfreaktrig
+0
+d1
+0
+andorshutter
+0
+axialmicropulsetrig
+0
+topfsktrig
+0
+botfsktrig
+0
+axialfsktrig
+0
+d7
+0
+dds_reset
+0
+d9
+0
+dds_step
+0
+auxtweezerrf
+0
+proberf
+0
+probeshutter
+0
+dacboardtrig
+0
+NItriggercount
+0
+rightcoilcurrent
+-4 - 4
+0
+_
+leftcoilcurrent
+-4 - 4
+0
+_
+frontcoilcurrent
+-4 - 4
+0
+_
+backcoilcurrent
+-4 - 4
+0
+_
+bottomcoilcurrent
+-4 - 4
+0
+_
+topcoilcurrent
+-4 - 4
+0
+_
+motgradientcurrent
+-7.1 - 7.1
+0
+_
+eopulselev
+0 - 10
+0
+_
+side795pow
+-1 - 1
+0
+_
+diagmotpower
+0 - 0.4
+0
+_
+diag795pow
+-10 - 10
+0
+_
+repumppower
+0 - 0.3
+0
+_
+sigmaopfreq
+-10 - 10
+0
+~17MHz/V (2022)
+sigmaoppower
+-0 - 10
+0
+_
+sigmarepumpfreq
+-5 - 1.7
+0
+_
+sigmarepumppower
+0 - 0.38
+0
+_
+toppulselev
+0 - 1
+0
+-
+dac17
+-10 - 10
+0
+_
+power795
+-4 - 0.1
+0
+_
+probepower
+-0.1 - 0.42
+0
+_
+repumpfreq
+-5 - 1.5
+0
+~22 MHz/Volt (2018)
+motfreq
+-4 - 4
+0
+~23 MHz/Volt (2018)
+sidemotpower
+-0.1 - 0.5
+0
+_
+axpulselev
+0 - 1
+0
+_
+43
+loadmottime 250
+andorimagetime 15
+imagingpower 0.3
+fieldtheta 1.5708
+fieldphi 1.5708
+imagingrepumppower 0.2
+intrappgccoolingtime 5
+field 3
+defaultmotfreq 1.7
+motimagingdetuning -0.45
+d1loadingfreq 111.5
+intraplgmcoolingfreq 111.5
+axramanoffset 92800
+intraplgmrepumpfreq 0.03
+intraplgmrepumppower 8
+pzttop_x 128
+pzttop_y 50
+pztax_x 30
+pztax_y 55
+pzteo_y 100
+pzteo_x 140
+sbc_cooling_mod 128
+radial_carrier_freq 6.830753425
+axtekpower -3
+eotekpower -3
+lgm_cooling_time 175
+tbsbcpulselen 0.04
+axsbcpulselen 0.07000000000000001
+opsbcpulselen 0.015
+topsbcamp 0.3
+axsbcamp 0.5
+botsbcamp 0.7
+pztbot_x 33
+pztbot_y 13
+topsbcw 0.008
+botsbcw 0.01
+axsbcw 0.0178
+tbspecpulselen 0.015
+loading_repump_freq 0.14
+loading_repump_power 8
+gmcollision_freq 105
+radial_carrier_power -6.67
+dds_d2repump_mot 122.429
+
+CALIBRATION_MANAGER
+/*Auto Cal Checked: */ 1
+/*Calibration Number: */ 12
+/*Calibration Name: */ sidemot
+/*Analog Input Chanel: */ 6
+/*Analog Output Control Chanel: */ 22
+/*Control Values: */ [ 0 0.275 ) 30
+/*Calibration Active: */ 1
+/*TTL Config Size: */ 2
+/*ttl config: */ a 5 b 8 
+/*Analog Output Config Size: */ 0
+/*Analog Output Config: */ 
+/*Data Point Average Number: */ 100
+/*Use Agilent: */0
+/*Which Agilent: */TopBottom
+/*Which Agilent Channel: */1
+/*Include Sqrt on Next Cal: */1
+/*Recent Calibration Result:*/
+/*Number of Calibration Coefficients: */ 8
+/*Calibration Coefficients: */ 0.07689036 -0.15850434 -0.00361146 0.00222034 -0.00038462 0.00011154 -0.0000105 0.00000037 
+/*Calibration Includes Sqrt: */ 1
+/*Polynomial Order: */ 6
+/*Number of Control Vals: */30
+/*Control Vals: */0. 0.00916667 0.01833333 0.0275 0.03666667 0.04583333 0.055 0.06416667 0.07333333 0.0825 0.09166667 0.10083333 0.11 0.11916667 0.12833333 0.1375 0.14666667 0.15583333 0.165 0.17416667 0.18333333 0.1925 0.20166667 0.21083333 0.22 0.22916667 0.23833333 0.2475 0.25666667 0.26583333 
+/*Number of Result Vals: */30
+/*Result Vals: */0.16030654 0.18444621 0.23633502 0.31495971 0.42090948 0.55375377 0.71233044 0.89642263 1.10447001 1.34089786 1.59965914 1.88446694 2.18939728 2.51721152 2.88045066 3.25284172 3.64519379 4.05554849 4.48380561 4.91819476 5.39220841 5.86731732 6.35346642 6.86238446 7.37238532 7.89320038 8.42904805 8.97302025 9.52512692 10.07604804 
+/*Historical Calibration Result:*/
+/*Number of Calibration Coefficients: */ 8
+/*Calibration Coefficients: */ 0.06017596 -0.25609533 -0.00099676 0.00185846 -0.00035132 0.00007204 -0.000006 0.00000019 
+/*Calibration Includes Sqrt: */ 1
+/*Polynomial Order: */ 6
+/*Number of Control Vals: */30
+/*Control Vals: */0. 0.007 0.014 0.021 0.028 0.035 0.042 0.049 0.056 0.063 0.07 0.077 0.084 0.091 0.098 0.105 0.112 0.119 0.126 0.133 0.14 0.147 0.154 0.161 0.168 0.175 0.182 0.189 0.196 0.203 
+/*Number of Result Vals: */30
+/*Result Vals: */0.25617571 0.27203467 0.3130433 0.38095616 0.47546896 0.59508289 0.73955516 0.9097922 1.10410421 1.30999892 1.55282028 1.8288488 2.11899162 2.43556304 2.76788689 3.12320809 3.50264032 3.9069283 4.33361836 4.77776745 5.24095875 5.71555583 6.2074215 6.72830074 7.26757572 7.79296144 8.36019421 8.93111016 9.51886919 10.1056858 
+/*Calibration Name: */ diagmot
+/*Analog Input Chanel: */ 7
+/*Analog Output Control Chanel: */ 9
+/*Control Values: */ [ 0 0.4 ] 30
+/*Calibration Active: */ 1
+/*TTL Config Size: */ 2
+/*ttl config: */ a 0 c 8 
+/*Analog Output Config Size: */ 0
+/*Analog Output Config: */ 
+/*Data Point Average Number: */ 100
+/*Use Agilent: */0
+/*Which Agilent: */TopBottom
+/*Which Agilent Channel: */1
+/*Include Sqrt on Next Cal: */1
+/*Recent Calibration Result:*/
+/*Number of Calibration Coefficients: */ 8
+/*Calibration Coefficients: */ 0.24668862 -0.04852982 -0.01436792 -0.13212629 0.0496378 -0.00771779 -0.00052612 0.00021848 
+/*Calibration Includes Sqrt: */ 1
+/*Polynomial Order: */ 6
+/*Number of Control Vals: */30
+/*Control Vals: */0. 0.0137931 0.02758621 0.04137931 0.05517241 0.06896552 0.08275862 0.09655172 0.11034483 0.12413793 0.13793103 0.15172414 0.16551724 0.17931034 0.19310345 0.20689655 0.22068966 0.23448276 0.24827586 0.26206897 0.27586207 0.28965517 0.30344828 0.31724138 0.33103448 0.34482759 0.35862069 0.37241379 0.3862069 0.4 
+/*Number of Result Vals: */30
+/*Result Vals: */0.07843172 0.06579376 0.07888168 0.11833647 0.18228054 0.26961649 0.380176 0.51223042 0.66761522 0.83608475 1.02079202 1.21680034 1.42634015 1.6477605 1.87220447 2.10026447 2.32844435 2.55512877 2.78402755 3.00327314 3.21447119 3.41573117 3.60447948 3.78266815 3.94257966 4.08425606 4.2097044 4.31708592 4.40794151 4.4793253 
+/*Historical Calibration Result:*/
+/*Number of Calibration Coefficients: */ 8
+/*Calibration Coefficients: */ 0.42144975 0.00180849 -0.09832266 -0.29313223 0.09168147 -0.021487 0.0026792 -0.00013068 
+/*Calibration Includes Sqrt: */ 1
+/*Polynomial Order: */ 6
+/*Number of Control Vals: */30
+/*Control Vals: */0. 0.01034483 0.02068966 0.03103448 0.04137931 0.05172414 0.06206897 0.07241379 0.08275862 0.09310345 0.10344828 0.1137931 0.12413793 0.13448276 0.14482759 0.15517241 0.16551724 0.17586207 0.1862069 0.19655172 0.20689655 0.21724138 0.22758621 0.23793103 0.24827586 0.25862069 0.26896552 0.27931034 0.28965517 0.3 
+/*Number of Result Vals: */30
+/*Result Vals: */0.15226538 0.12029173 0.11526114 0.13774661 0.18718163 0.26203501 0.36489326 0.49227965 0.64289609 0.81809895 1.01344685 1.23352688 1.46728085 1.71874879 1.97905114 2.24354253 2.52755759 2.82006401 3.11681138 3.42255195 3.72711448 4.03263877 4.3342658 4.63067156 4.9221118 5.19690337 5.46953605 5.73556516 5.98294814 6.2142812 
+/*Calibration Name: */ repump
+/*Analog Input Chanel: */ 7
+/*Analog Output Control Chanel: */ 11
+/*Control Values: */ [ 0 0.3 ] 30
+/*Calibration Active: */ 1
+/*TTL Config Size: */ 2
+/*ttl config: */ a 1 b 7 
+/*Analog Output Config Size: */ 0
+/*Analog Output Config: */ 
+/*Data Point Average Number: */ 100
+/*Use Agilent: */0
+/*Which Agilent: */TopBottom
+/*Which Agilent Channel: */1
+/*Include Sqrt on Next Cal: */1
+/*Recent Calibration Result:*/
+/*Number of Calibration Coefficients: */ 8
+/*Calibration Coefficients: */ 0.29200114 -0.0211585 0.0097032 0.0825883 0.16569183 0.30942716 0.6085728 1.2864881 
+/*Calibration Includes Sqrt: */ 1
+/*Polynomial Order: */ 6
+/*Number of Control Vals: */30
+/*Control Vals: */0. 0.01034483 0.02068966 0.03103448 0.04137931 0.05172414 0.06206897 0.07241379 0.08275862 0.09310345 0.10344828 0.1137931 0.12413793 0.13448276 0.14482759 0.15517241 0.16551724 0.17586207 0.1862069 0.19655172 0.20689655 0.21724138 0.22758621 0.23793103 0.24827586 0.25862069 0.26896552 0.27931034 0.28965517 0.3 
+/*Number of Result Vals: */30
+/*Result Vals: */0.02251586 0.02115948 0.02206589 0.02492432 0.02951789 0.0358401 0.04454165 0.05477762 0.06646385 0.08036431 0.09512263 0.11137652 0.12843324 0.14664563 0.16551517 0.18396711 0.20367184 0.22313055 0.24286765 0.26186991 0.2805258 0.29835296 0.31557802 0.3313172 0.34594927 0.35880088 0.37080759 0.38089142 0.39002028 0.39676657 
+/*Historical Calibration Result:*/
+/*Number of Calibration Coefficients: */ 8
+/*Calibration Coefficients: */ 0.9115 -0.0302 -0.0092 -1.9851 4.9947 -8.3075 6.8036 -1.8106 
+/*Calibration Includes Sqrt: */ 1
+/*Polynomial Order: */ 6
+/*Number of Control Vals: */30
+/*Control Vals: */0. 0.0103 0.0207 0.031 0.0414 0.0517 0.0621 0.0724 0.0828 0.0931 0.1034 0.1138 0.1241 0.1345 0.1448 0.1552 0.1655 0.1759 0.1862 0.1966 0.2069 0.2172 0.2276 0.2379 0.2483 0.2586 0.269 0.2793 0.2897 0.3 
+/*Number of Result Vals: */30
+/*Result Vals: */0.0445 0.0409 0.0412 0.0455 0.0532 0.064 0.0789 0.0971 0.1183 0.1432 0.1705 0.2006 0.2319 0.2652 0.2999 0.3355 0.3719 0.4079 0.4456 0.482 0.5164 0.5507 0.5831 0.6139 0.6429 0.6681 0.6903 0.7105 0.7285 0.7433 
+/*Calibration Name: */ probe
+/*Analog Input Chanel: */ 5
+/*Analog Output Control Chanel: */ 19
+/*Control Values: */ [ 0 0.42 ] 42
+/*Calibration Active: */ 1
+/*TTL Config Size: */ 2
+/*ttl config: */ d 12 d 13 
+/*Analog Output Config Size: */ 0
+/*Analog Output Config: */ 
+/*Data Point Average Number: */ 100
+/*Use Agilent: */0
+/*Which Agilent: */TopBottom
+/*Which Agilent Channel: */1
+/*Include Sqrt on Next Cal: */1
+/*Recent Calibration Result:*/
+/*Number of Calibration Coefficients: */ 8
+/*Calibration Coefficients: */ 0.40996163 0.00112628 0.03026183 0.57326592 2.44433014 8.23728109 18.02980933 -35.6973729 
+/*Calibration Includes Sqrt: */ 1
+/*Polynomial Order: */ 6
+/*Number of Control Vals: */42
+/*Control Vals: */0. 0.0102439 0.0204878 0.03073171 0.04097561 0.05121951 0.06146341 0.07170732 0.08195122 0.09219512 0.10243902 0.11268293 0.12292683 0.13317073 0.14341463 0.15365854 0.16390244 0.17414634 0.18439024 0.19463415 0.20487805 0.21512195 0.22536585 0.23560976 0.24585366 0.25609756 0.26634146 0.27658537 0.28682927 0.29707317 0.30731707 0.31756098 0.32780488 0.33804878 0.34829268 0.35853659 0.36878049 0.37902439 0.38926829 0.3995122 0.4097561 0.42 
+/*Number of Result Vals: */42
+/*Result Vals: */-0.00112528 -0.00067208 -0.00005054 0.00107924 0.00246799 0.00439088 0.0065177 0.0091463 0.01209537 0.01519659 0.01869922 0.02230868 0.02643285 0.03065738 0.03521533 0.03999988 0.04489127 0.04994451 0.05517256 0.06044269 0.06573225 0.07125812 0.07669011 0.08226778 0.0880073 0.09362381 0.09922738 0.1047144 0.11024027 0.11575643 0.12126288 0.12679199 0.13197472 0.1371704 0.14221393 0.14724775 0.15221682 0.15740926 0.16258875 0.16771969 0.17279235 0.17788768 
+/*Historical Calibration Result:*/
+/*Number of Calibration Coefficients: */ 8
+/*Calibration Coefficients: */ 0.2228361 -0.08610413 -0.00298931 -0.00626505 0.04886753 -0.02914982 0.01453757 -0.00159573 
+/*Calibration Includes Sqrt: */ 1
+/*Polynomial Order: */ 6
+/*Number of Control Vals: */42
+/*Control Vals: */0. 0.0102439 0.0204878 0.03073171 0.04097561 0.05121951 0.06146341 0.07170732 0.08195122 0.09219512 0.10243902 0.11268293 0.12292683 0.13317073 0.14341463 0.15365854 0.16390244 0.17414634 0.18439024 0.19463415 0.20487805 0.21512195 0.22536585 0.23560976 0.24585366 0.25609756 0.26634146 0.27658537 0.28682927 0.29707317 0.30731707 0.31756098 0.32780488 0.33804878 0.34829268 0.35853659 0.36878049 0.37902439 0.38926829 0.3995122 0.4097561 0.42 
+/*Number of Result Vals: */42
+/*Result Vals: */0.08630778 0.0897392 0.09741132 0.10930149 0.12467811 0.14516947 0.16933504 0.19739171 0.22919703 0.26338815 0.30181999 0.34298077 0.38814271 0.43520811 0.48375615 0.53450224 0.58756291 0.64388343 0.70057299 0.75955124 0.81599802 0.87507016 0.93323265 0.99437335 1.05650464 1.11589728 1.17546472 1.23209281 1.28942013 1.34606764 1.40310363 1.45943391 1.51136486 1.5634771 1.61365026 1.66367128 1.71143275 1.75919098 1.80509755 1.848382 1.89220059 1.93429052 
+/*Calibration Name: */ sigma_op
+/*Analog Input Chanel: */ 5
+/*Analog Output Control Chanel: */ 13
+/*Control Values: */ [ 0 0.21 ] 22
+/*Calibration Active: */ 1
+/*TTL Config Size: */ 1
+/*ttl config: */ a 4 
+/*Analog Output Config Size: */ 0
+/*Analog Output Config: */ 
+/*Data Point Average Number: */ 100
+/*Use Agilent: */0
+/*Which Agilent: */TopBottom
+/*Which Agilent Channel: */1
+/*Include Sqrt on Next Cal: */1
+/*Recent Calibration Result:*/
+/*Number of Calibration Coefficients: */ 8
+/*Calibration Coefficients: */ 0.09434741 -0.00791238 0.00286673 -0.02340017 0.01944048 -0.00734861 0.00143489 -0.00007917 
+/*Calibration Includes Sqrt: */ 1
+/*Polynomial Order: */ 6
+/*Number of Control Vals: */22
+/*Control Vals: */0. 0.01 0.02 0.03 0.04 0.05 0.06 0.07 0.08 0.09 0.1 0.11 0.12 0.13 0.14 0.15 0.16 0.17 0.18 0.19 0.2 0.21 
+/*Number of Result Vals: */22
+/*Result Vals: */0.00867691 0.0085895 0.04153431 0.10452341 0.20137344 0.32666213 0.47899425 0.65022507 0.84862884 1.06542309 1.2981055 1.53379533 1.78478419 2.03779642 2.29223313 2.54327417 2.77721325 3.00887026 3.22670781 3.42935008 3.60826054 3.77068725 
+/*Historical Calibration Result:*/
+/*Number of Calibration Coefficients: */ 8
+/*Calibration Coefficients: */ 0.1953338 0.02577857 -0.02966712 -0.134167 0.06120302 -0.01947059 0.00322036 -0.00019633 
+/*Calibration Includes Sqrt: */ 1
+/*Polynomial Order: */ 6
+/*Number of Control Vals: */22
+/*Control Vals: */0. 0.01 0.02 0.03 0.04 0.05 0.06 0.07 0.08 0.09 0.1 0.11 0.12 0.13 0.14 0.15 0.16 0.17 0.18 0.19 0.2 0.21 
+/*Number of Result Vals: */22
+/*Result Vals: */0.0230241 0.00924989 0.03847841 0.1073786 0.21984157 0.37074932 0.55705893 0.77024042 1.01580999 1.2879375 1.57986697 1.87554525 2.18781105 2.50203556 2.8149978 3.12328254 3.41225442 3.6923728 3.95292577 4.19009661 4.39588613 4.57916747 
+/*Calibration Name: */ sigma_repump
+/*Analog Input Chanel: */ 5
+/*Analog Output Control Chanel: */ 15
+/*Control Values: */ [ 0.04 0.37 ] 30
+/*Calibration Active: */ 1
+/*TTL Config Size: */ 1
+/*ttl config: */ a 3 
+/*Analog Output Config Size: */ 0
+/*Analog Output Config: */ 
+/*Data Point Average Number: */ 100
+/*Use Agilent: */0
+/*Which Agilent: */TopBottom
+/*Which Agilent Channel: */1
+/*Include Sqrt on Next Cal: */1
+/*Recent Calibration Result:*/
+/*Number of Calibration Coefficients: */ 9
+/*Calibration Coefficients: */ 0.41799506 0.00732225 0.04302224 0.4220409 1.09563935 2.1791295 0.64077529 -27.80162002 -230.95833053 
+/*Calibration Includes Sqrt: */ 1
+/*Polynomial Order: */ 7
+/*Number of Control Vals: */30
+/*Control Vals: */0.04 0.05137931 0.06275862 0.07413793 0.08551724 0.09689655 0.10827586 0.11965517 0.13103448 0.14241379 0.1537931 0.16517241 0.17655172 0.18793103 0.19931034 0.21068966 0.22206897 0.23344828 0.24482759 0.2562069 0.26758621 0.27896552 0.29034483 0.30172414 0.31310345 0.32448276 0.33586207 0.34724138 0.35862069 0.37 
+/*Number of Result Vals: */30
+/*Result Vals: */-0.00732125 -0.0057933 -0.00343663 -0.0004908 0.0030345 0.00742735 0.01224428 0.01766656 0.02359384 0.03033689 0.037381 0.04482652 0.05290653 0.06121314 0.06994382 0.07888492 0.08837958 0.09767353 0.10733652 0.11727791 0.12687939 0.13657152 0.14638666 0.15600756 0.16527885 0.17423938 0.18324522 0.19152269 0.19927898 0.206472 
+/*Historical Calibration Result:*/
+/*Number of Calibration Coefficients: */ 9
+/*Calibration Coefficients: */ 0.45033595 0.00848764 0.04808878 0.51196682 1.46380383 3.23328118 -0.46798242 -71.66077062 -662.32711228 
+/*Calibration Includes Sqrt: */ 1
+/*Polynomial Order: */ 7
+/*Number of Control Vals: */30
+/*Control Vals: */0.04 0.05137931 0.06275862 0.07413793 0.08551724 0.09689655 0.10827586 0.11965517 0.13103448 0.14241379 0.1537931 0.16517241 0.17655172 0.18793103 0.19931034 0.21068966 0.22206897 0.23344828 0.24482759 0.2562069 0.26758621 0.27896552 0.29034483 0.30172414 0.31310345 0.32448276 0.33586207 0.34724138 0.35862069 0.37 
+/*Number of Result Vals: */30
+/*Result Vals: */-0.00848664 -0.00757699 -0.00602314 -0.00381214 -0.00114471 0.0022511 0.00608069 0.01042175 0.01528723 0.02082605 0.02665298 0.03290074 0.03971825 0.04675588 0.05413666 0.06182173 0.06987584 0.07814361 0.08647612 0.09517766 0.10374001 0.11236063 0.12092621 0.12962129 0.13796674 0.14616653 0.15426596 0.16188629 0.16918937 0.17603601 
+/*Calibration Name: */ top_raman
+/*Analog Input Chanel: */ 2
+/*Analog Output Control Chanel: */ 0
+/*Control Values: */ [ 0 0.5 ] 35
+/*Calibration Active: */ 1
+/*TTL Config Size: */ 2
+/*ttl config: */ a 10 b 3 
+/*Analog Output Config Size: */ 0
+/*Analog Output Config: */ 
+/*Data Point Average Number: */ 100
+/*Use Agilent: */1
+/*Which Agilent: */TopBottom
+/*Which Agilent Channel: */1
+/*Include Sqrt on Next Cal: */1
+/*Recent Calibration Result:*/
+/*Number of Calibration Coefficients: */ 8
+/*Calibration Coefficients: */ 0.11954566 -0.0098769 -0.0002751 0.01638408 -0.02072433 0.01064778 -0.00210984 0.00014766 
+/*Calibration Includes Sqrt: */ 1
+/*Polynomial Order: */ 6
+/*Number of Control Vals: */35
+/*Control Vals: */0. 0.01470588 0.02941176 0.04411765 0.05882353 0.07352941 0.08823529 0.10294118 0.11764706 0.13235294 0.14705882 0.16176471 0.17647059 0.19117647 0.20588235 0.22058824 0.23529412 0.25 0.26470588 0.27941176 0.29411765 0.30882353 0.32352941 0.33823529 0.35294118 0.36764706 0.38235294 0.39705882 0.41176471 0.42647059 0.44117647 0.45588235 0.47058824 0.48529412 0.5 
+/*Number of Result Vals: */35
+/*Result Vals: */0.0098779 0.02351615 0.06585202 0.13655209 0.2357588 0.36387031 0.51955616 0.70377457 0.91443432 1.15108872 1.41339464 1.69766823 2.00475118 2.32950292 2.66626811 3.0095792 3.35968875 3.71096083 4.05788899 4.39792234 4.72647374 5.050364 5.3475282 5.62134916 5.86494443 6.0985855 6.29097792 6.45674098 6.58952958 6.69456211 6.78670397 6.86669323 6.92870606 6.98477208 7.04475519 
+/*Historical Calibration Result:*/
+/*Number of Calibration Coefficients: */ 8
+/*Calibration Coefficients: */ 0.11255377 -0.00980892 -0.00005975 -0.00386159 0.00229394 -0.00021552 -0.00003266 0.00000746 
+/*Calibration Includes Sqrt: */ 1
+/*Polynomial Order: */ 6
+/*Number of Control Vals: */35
+/*Control Vals: */0. 0.01323529 0.02647059 0.03970588 0.05294118 0.06617647 0.07941176 0.09264706 0.10588235 0.11911765 0.13235294 0.14558824 0.15882353 0.17205882 0.18529412 0.19852941 0.21176471 0.225 0.23823529 0.25147059 0.26470588 0.27794118 0.29117647 0.30441176 0.31764706 0.33088235 0.34411765 0.35735294 0.37058824 0.38382353 0.39705882 0.41029412 0.42352941 0.43676471 0.45 
+/*Number of Result Vals: */35
+/*Result Vals: */0.00980992 0.02140227 0.06324933 0.13543203 0.23719611 0.36799448 0.52811851 0.71648375 0.93166585 1.17323106 1.44013057 1.72954482 2.03906216 2.36923297 2.71403292 3.07103416 3.43885126 3.80908698 4.1812299 4.55272266 4.92029895 5.27571683 5.61948451 5.94982797 6.26257113 6.55538634 6.82454097 7.06888894 7.28849813 7.47728562 7.64101041 7.77813472 7.89109614 7.984375 8.06011434 
+/*Calibration Name: */ axial_raman
+/*Analog Input Chanel: */ 3
+/*Analog Output Control Chanel: */ 0
+/*Control Values: */ [ 0 0.3 ] 31
+/*Calibration Active: */ 1
+/*TTL Config Size: */ 4
+/*ttl config: */ a 11 b 12 c 12 b 3 
+/*Analog Output Config Size: */ 0
+/*Analog Output Config: */ 
+/*Data Point Average Number: */ 100
+/*Use Agilent: */1
+/*Which Agilent: */Axial
+/*Which Agilent Channel: */2
+/*Include Sqrt on Next Cal: */1
+/*Recent Calibration Result:*/
+/*Number of Calibration Coefficients: */ 8
+/*Calibration Coefficients: */ 0.10299828 -0.00360648 -0.00008182 -0.00495575 0.00189355 -0.00010131 -0.00001475 0.00000272 
+/*Calibration Includes Sqrt: */ 1
+/*Polynomial Order: */ 6
+/*Number of Control Vals: */31
+/*Control Vals: */0. 0.01 0.02 0.03 0.04 0.05 0.06 0.07 0.08 0.09 0.1 0.11 0.12 0.13 0.14 0.15 0.16 0.17 0.18 0.19 0.2 0.21 0.22 0.23 0.24 0.25 0.26 0.27 0.28 0.29 0.3 
+/*Number of Result Vals: */31
+/*Result Vals: */0.00360748 0.01253563 0.04203283 0.09206673 0.16213879 0.25310686 0.3645922 0.49586645 0.64702673 0.81798565 1.00728001 1.2155346 1.44136717 1.68276745 1.93863806 2.20596522 2.48778867 2.78595692 3.09127636 3.40580591 3.7236798 4.04312085 4.36866442 4.6942602 5.02287676 5.34573154 5.66073978 5.97173435 6.27576936 6.56506894 6.84715641 
+/*Historical Calibration Result:*/
+/*Number of Calibration Coefficients: */ 8
+/*Calibration Coefficients: */ 0.07976908 -0.00388488 -0.00007654 -0.00071413 0.00027734 0.00006838 -0.00001343 0.00000084 
+/*Calibration Includes Sqrt: */ 1
+/*Polynomial Order: */ 6
+/*Number of Control Vals: */31
+/*Control Vals: */0. 0.01 0.02 0.03 0.04 0.05 0.06 0.07 0.08 0.09 0.1 0.11 0.12 0.13 0.14 0.15 0.16 0.17 0.18 0.19 0.2 0.21 0.22 0.23 0.24 0.25 0.26 0.27 0.28 0.29 0.3 
+/*Number of Result Vals: */31
+/*Result Vals: */0.00388588 0.01959916 0.06744148 0.14753909 0.25923808 0.40237337 0.57785783 0.78449051 1.02088266 1.28819 1.58387461 1.90617229 2.25661755 2.62838323 3.0272284 3.44190394 3.88047061 4.33238498 4.80056394 5.27662649 5.76018431 6.25881916 6.754639 7.24780252 7.73833247 8.22563001 8.71260232 9.17262263 9.57338556 9.9613106 10.33512217 
+/*Calibration Name: */ bot_raman
+/*Analog Input Chanel: */ 0
+/*Analog Output Control Chanel: */ 0
+/*Control Values: */ [ 0.002 0.25 ] 20
+/*Calibration Active: */ 1
+/*TTL Config Size: */ 2
+/*ttl config: */ a 2 b 3 
+/*Analog Output Config Size: */ 0
+/*Analog Output Config: */ 
+/*Data Point Average Number: */ 100
+/*Use Agilent: */1
+/*Which Agilent: */Axial
+/*Which Agilent Channel: */1
+/*Include Sqrt on Next Cal: */1
+/*Recent Calibration Result:*/
+/*Number of Calibration Coefficients: */ 8
+/*Calibration Coefficients: */ 0.14476934 -0.00915061 -0.00010714 -0.01171691 0.01199665 -0.00815927 0.002673 -0.00030488 
+/*Calibration Includes Sqrt: */ 1
+/*Polynomial Order: */ 6
+/*Number of Control Vals: */20
+/*Control Vals: */0.002 0.01505263 0.02810526 0.04115789 0.05421053 0.06726316 0.08031579 0.09336842 0.10642105 0.11947368 0.13252632 0.14557895 0.15863158 0.17168421 0.18473684 0.19778947 0.21084211 0.22389474 0.23694737 0.25 
+/*Number of Result Vals: */20
+/*Result Vals: */0.00938585 0.02034695 0.04875323 0.09479567 0.15839013 0.23992829 0.33957849 0.4574767 0.59323122 0.74684853 0.9170273 1.10654505 1.31173405 1.53090128 1.76464241 2.03866722 2.28713455 2.55228651 2.82587477 3.10318278 
+/*Historical Calibration Result:*/
+/*Number of Calibration Coefficients: */ 8
+/*Calibration Coefficients: */ 0.05794149 -0.0597748 0.00209413 -0.00256213 0.00083459 -0.00005514 -0.00000612 0.00000064 
+/*Calibration Includes Sqrt: */ 1
+/*Polynomial Order: */ 6
+/*Number of Control Vals: */20
+/*Control Vals: */0.002 0.01242105 0.02284211 0.03326316 0.04368421 0.05410526 0.06452632 0.07494737 0.08536842 0.09578947 0.10621053 0.11663158 0.12705263 0.13747368 0.14789474 0.15831579 0.16873684 0.17915789 0.18957895 0.2 
+/*Number of Result Vals: */20
+/*Result Vals: */0.05977584 0.08928275 0.19663421 0.37599032 0.61736766 0.92567059 1.28476182 1.72186944 2.22303169 2.78367469 3.39865817 4.06790815 4.7975857 5.57782784 6.41011495 7.28157687 8.20316975 9.15744291 10.03398863 10.60922792 
+/*Calibration Name: */ sidemot_d1
+/*Analog Input Chanel: */ 6
+/*Analog Output Control Chanel: */ 8
+/*Control Values: */ [ 0.03 0.3 ] 30
+/*Calibration Active: */ 1
+/*TTL Config Size: */ 2
+/*ttl config: */ c 13 c 10 
+/*Analog Output Config Size: */ 0
+/*Analog Output Config: */ 
+/*Data Point Average Number: */ 100
+/*Use Agilent: */0
+/*Which Agilent: */TopBottom
+/*Which Agilent Channel: */0
+/*Include Sqrt on Next Cal: */1
+/*Recent Calibration Result:*/
+/*Number of Calibration Coefficients: */ 8
+/*Calibration Coefficients: */ 0.33351264 -0.00731521 0.01847119 -0.36784304 0.61928193 -0.68926836 0.39577124 -0.07897061 
+/*Calibration Includes Sqrt: */ 1
+/*Polynomial Order: */ 6
+/*Number of Control Vals: */30
+/*Control Vals: */0.03 0.03931034 0.04862069 0.05793103 0.06724138 0.07655172 0.08586207 0.09517241 0.10448276 0.1137931 0.12310345 0.13241379 0.14172414 0.15103448 0.16034483 0.16965517 0.17896552 0.18827586 0.19758621 0.20689655 0.2162069 0.22551724 0.23482759 0.24413793 0.25344828 0.26275862 0.27206897 0.28137931 0.29068966 0.3 
+/*Number of Result Vals: */30
+/*Result Vals: */0.01479194 0.01162922 0.01529371 0.02550054 0.04184184 0.06462837 0.09297314 0.12837173 0.1677035 0.21366826 0.26445642 0.31960183 0.37850885 0.44242703 0.50449031 0.56980696 0.63988227 0.71090608 0.78090371 0.84730159 0.90677514 0.97153178 1.02770017 1.08465196 1.1350776 1.18250884 1.22967787 1.27353849 1.31064312 1.33846026 
+/*Historical Calibration Result:*/
+/*Number of Calibration Coefficients: */ 8
+/*Calibration Coefficients: */ 0.70856383 0.10816682 -0.19641479 -0.58458995 0.25966576 -0.09132838 0.01660155 -0.00102242 
+/*Calibration Includes Sqrt: */ 1
+/*Polynomial Order: */ 6
+/*Number of Control Vals: */30
+/*Control Vals: */0.03 0.03931034 0.04862069 0.05793103 0.06724138 0.07655172 0.08586207 0.09517241 0.10448276 0.1137931 0.12310345 0.13241379 0.14172414 0.15103448 0.16034483 0.16965517 0.17896552 0.18827586 0.19758621 0.20689655 0.2162069 0.22551724 0.23482759 0.24413793 0.25344828 0.26275862 0.27206897 0.28137931 0.29068966 0.3 
+/*Number of Result Vals: */30
+/*Result Vals: */0.04167351 0.0181489 0.01280755 0.02555558 0.05481323 0.10221853 0.16398722 0.24482291 0.34180891 0.45533368 0.57635578 0.7175941 0.86614524 1.02519783 1.18470041 1.35864411 1.53312199 1.71543715 1.88648695 2.05673398 2.22477654 2.39832886 2.55477268 2.70249232 2.83549572 2.95870018 3.07124134 3.16726959 3.25064366 3.3149215 
+/*Calibration Name: */ eo_raman
+/*Analog Input Chanel: */ 1
+/*Analog Output Control Chanel: */ 7
+/*Control Values: */ [ 0 0.3 ] 29
+/*Calibration Active: */ 1
+/*TTL Config Size: */ 2
+/*ttl config: */ a 8 b 3 
+/*Analog Output Config Size: */ 0
+/*Analog Output Config: */ 
+/*Data Point Average Number: */ 100
+/*Use Agilent: */0
+/*Which Agilent: */TopBottom
+/*Which Agilent Channel: */0
+/*Include Sqrt on Next Cal: */1
+/*Recent Calibration Result:*/
+/*Number of Calibration Coefficients: */ 8
+/*Calibration Coefficients: */ 0.25856722 0.00111657 0.00010277 0.0157489 0.02740354 0.04085377 0.05882913 0.08392021 
+/*Calibration Includes Sqrt: */ 1
+/*Polynomial Order: */ 6
+/*Number of Control Vals: */29
+/*Control Vals: */0. 0.01071429 0.02142857 0.03214286 0.04285714 0.05357143 0.06428571 0.075 0.08571429 0.09642857 0.10714286 0.11785714 0.12857143 0.13928571 0.15 0.16071429 0.17142857 0.18214286 0.19285714 0.20357143 0.21428571 0.225 0.23571429 0.24642857 0.25714286 0.26785714 0.27857143 0.28928571 0.3 
+/*Number of Result Vals: */29
+/*Result Vals: */-0.00111557 0.00092385 0.00666662 0.01588935 0.02851436 0.04485242 0.06370577 0.08516506 0.10879002 0.13444145 0.16209023 0.19244853 0.22316939 0.25674545 0.29230267 0.32740021 0.36376672 0.39974477 0.43611776 0.47412877 0.50999028 0.5453986 0.57938578 0.61259605 0.64407442 0.67223792 0.6955683 0.71424362 0.72655139 
+/*Historical Calibration Result:*/
+/*Number of Calibration Coefficients: */ 8
+/*Calibration Coefficients: */ 0.28554137 0.0036137 -0.00854248 -0.2349655 0.40274776 -0.41847607 0.21941916 -0.04226692 
+/*Calibration Includes Sqrt: */ 1
+/*Polynomial Order: */ 6
+/*Number of Control Vals: */29
+/*Control Vals: */0. 0.01 0.02 0.03 0.04 0.05 0.06 0.07 0.08 0.09 0.1 0.11 0.12 0.13 0.14 0.15 0.16 0.17 0.18 0.19 0.2 0.21 0.22 0.23 0.24 0.25 0.26 0.27 0.28 
+/*Number of Result Vals: */29
+/*Result Vals: */0.00077494 -0.00121269 0.00398299 0.01562066 0.03434776 0.0595557 0.0915067 0.12795414 0.17031267 0.21842045 0.27056499 0.32587873 0.38573425 0.44953589 0.51711856 0.5873007 0.65939278 0.73410374 0.81088327 0.88901918 0.96670514 1.04597408 1.12404527 1.20177009 1.27751052 1.35063208 1.42119303 1.48369339 1.54198217 
+/*Calibration Name: */ diagmot_d1
+/*Analog Input Chanel: */ 7
+/*Analog Output Control Chanel: */ 10
+/*Control Values: */ [ 0.04 .35] 30
+/*Calibration Active: */ 1
+/*TTL Config Size: */ 2
+/*ttl config: */ b 13 c 10 
+/*Analog Output Config Size: */ 0
+/*Analog Output Config: */ 
+/*Data Point Average Number: */ 100
+/*Use Agilent: */0
+/*Which Agilent: */TopBottom
+/*Which Agilent Channel: */0
+/*Include Sqrt on Next Cal: */1
+/*Recent Calibration Result:*/
+/*Number of Calibration Coefficients: */ 8
+/*Calibration Coefficients: */ 0.3885797 0.00129138 0.04195338 0.3020801 0.58585479 1.60570753 11.09697746 100.6236228 
+/*Calibration Includes Sqrt: */ 1
+/*Polynomial Order: */ 6
+/*Number of Control Vals: */30
+/*Control Vals: */0.04 0.05068966 0.06137931 0.07206897 0.08275862 0.09344828 0.10413793 0.11482759 0.12551724 0.1362069 0.14689655 0.15758621 0.16827586 0.17896552 0.18965517 0.20034483 0.21103448 0.22172414 0.23241379 0.24310345 0.2537931 0.26448276 0.27517241 0.28586207 0.29655172 0.30724138 0.31793103 0.32862069 0.33931034 0.35 
+/*Number of Result Vals: */30
+/*Result Vals: */-0.00129038 -0.00078862 0.00127347 0.00384055 0.00754065 0.01211803 0.01773131 0.0240082 0.03123683 0.0387212 0.04684329 0.05587826 0.06542148 0.07492908 0.08496435 0.0950417 0.10526472 0.11469464 0.12405333 0.13312715 0.14127191 0.14977599 0.1570726 0.16392247 0.17018319 0.17547922 0.17952246 0.18318695 0.18605833 0.18748269 
+/*Historical Calibration Result:*/
+/*Number of Calibration Coefficients: */ 8
+/*Calibration Coefficients: */ 0.34398342 0.00198011 0.03786585 -0.30624077 1.31674557 -3.22231748 4.17533249 -1.78364496 
+/*Calibration Includes Sqrt: */ 1
+/*Polynomial Order: */ 6
+/*Number of Control Vals: */30
+/*Control Vals: */0.04 0.04896552 0.05793103 0.06689655 0.07586207 0.08482759 0.0937931 0.10275862 0.11172414 0.12068966 0.12965517 0.13862069 0.14758621 0.15655172 0.16551724 0.17448276 0.18344828 0.19241379 0.20137931 0.21034483 0.21931034 0.22827586 0.23724138 0.2462069 0.25517241 0.26413793 0.27310345 0.28206897 0.29103448 0.3 
+/*Number of Result Vals: */30
+/*Result Vals: */-0.00148785 -0.00164323 0.00097565 0.00546562 0.01281726 0.02215006 0.03438337 0.04922262 0.0651884 0.08316771 0.10480504 0.12722577 0.1524758 0.1774798 0.20341287 0.23131414 0.25943555 0.28910433 0.31886052 0.34750959 0.37705859 0.40437395 0.43238853 0.46090164 0.48591859 0.5106798 0.53468676 0.55696505 0.57788373 0.59585657 218 247 3 232 246 3
+0 0

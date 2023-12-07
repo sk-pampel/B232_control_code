@@ -1,0 +1,44 @@
+% free space grey molasses cooling
+
+def D1greyLambdaCooling():
+  var D1twoToTwopPower -3.1 %-1.45 %-1.75
+  var cooling_time 3 %20 
+  off: diagMotRf
+  off: sideMotRf
+  off: repumpRf
+  dac: diagMotPower 0
+  dac: sideMotPower 0
+  dac: RepumpPower 0
+  dac: motGradientCurrent 0
+  off: shutter795lac
+  call openLGMshutter()
+  var side_795_power 0.04
+  var diag_795_power 0.3
+  call send_Uw_To_795_Eom()
+  %call zeroFields() 
+  %call zerofieldspgc()
+  %call d1GreyMolassesFreeSpaceFields()
+  call D1GreyLoadFields()
+  % dealing with servo lag, this ends up turning things on initially during the 
+  % zero fields delay
+  t += -1
+  var delay2 -0.4 
+  t += delay2
+  dac: side795Pow side_795_power
+  dac: Diag795Pow diag_795_power
+  dac: power795 D1twoToTwopPower
+  on: oscilloscopemarker
+  on: rf795
+  t += cooling_time 
+  off: rf795
+  off: oscilloscopemarker
+  dac: side795Pow 0
+  dac: Diag795Pow 0
+  dac: power795 0.1
+  t += 1.2
+
+
+
+
+
+

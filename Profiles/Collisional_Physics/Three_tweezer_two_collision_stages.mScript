@@ -1,0 +1,73 @@
+% Master-Script See the "?" for info on commands.
+% Time starts at 1 ms.
+
+
+t = 0.1
+off: axialRamanShutter
+call triggerwindfreak()
+on: tweezerrf
+pulseon: dds_reset 0.1
+t += 1
+call turnonmot()
+t += loadmottime
+pulseon: scoutTrig 0.1
+t += 2
+call pgcloading()
+t += 2
+pulseon: tweezerIntensityTrig 0.1 % to imaging depth
+t += 10
+call stdPgcImage()
+t += 2 
+pulseon: tweezerIntensityTrig 0.1 % to cooling depth
+t += 20
+call intrappgc()
+t += 2
+
+
+t += 1
+pulseon: tweezerIntensityTrig 0.1 % to moving depth
+t += 1
+pulseon: niawgTrig 0.1 % Begin merge: freq ramp, amp ramp
+t += 1
+pulseon: tweezerIntensityTrig 0.1 % to single depth
+t += 1
+pulseon: tweezerIntensityTrig 0.1 %To heating depth
+t += 1
+
+%% must connect UW source to bottom Raman agilent
+%on: oscilloscopemarker
+on: axialmicropulsetrig
+t += t_heat
+off: axialmicropulsetrig 
+off: oscilloscopemarker
+t += 1
+
+pulseon: tweezerIntensityTrig 0.1 %To collision depth
+t += 10
+%call D2collisions20()
+%call D2collisionsMOT20()
+%call D1collisions20()
+%call D2collisions21()
+t += 1
+off: tweezerRf
+t += releasetime
+on: tweezerRf
+t += 1
+pulseon: tweezerIntensityTrig 0.1 %To 2-1 depth
+t += 10
+%call D2collisions21()
+%call D1collisions21()
+t += 10
+pulseon: tweezerIntensityTrig 0.1 % To single cooling depth
+t += 1
+call intrappgc()
+t += 15
+pulseon: tweezerIntensityTrig 0.1 % To imaging depth
+t += 2
+call stdpgcimage()
+pulseon: tweezerIntensityTrig 0.1 % to loading depth
+t += 1
+pulseon: niawgTrig 0.1
+t += 10
+
+  

@@ -1,0 +1,43 @@
+def D2collisions21top():
+    var dTwoFreqTwoOne 1.6875 %-1.4 %0
+    var RepumpPowerVal 0.00
+    var colTimeTwoOne 15
+    var probePow 0.00
+	off: diagMotRf
+    off: sideMotRf
+    off: repumpRf
+    off: sidemotshutter
+    off: diagmotshutter
+    off: probeShutter
+    off: lacshutterD2
+    t += 1
+	%call zeroFieldsinTrapPgc()
+    %call zeroFieldsPgc()
+    call zeroFieldsPgcCollisions()
+    %call setQuantAxis() 
+	t += 1
+    dac: probePower probePow % 
+    dac: RepumpPower RepumpPowerVal
+    daclinspace: motFreq defaultMotFreq dTwoFreqTwoOne 5 10 
+    t += 5.01
+    on: repumpshutter
+    on: lacshutterD2
+    off: probeshutter
+    t += 20
+    on: RepumpRF
+    on: probeRf
+    t += colTimeTwoOne
+    off: probeRf
+    off: repumpRf
+    off: sideMotRf
+    off: diagMotRf
+    off: lacshutterD2
+    off: repumpShutter
+    off: sidemotshutter
+    off: diagmotshutter
+    daclinspace: motFreq dTwoFreqTwoOne defaultMotFreq 5 10
+    t += 5.001
+
+
+ 
+  

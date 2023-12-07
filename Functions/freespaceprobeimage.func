@@ -1,0 +1,65 @@
+% Master-Script See the "?" for info on commands.
+def freeSpaceProbeImage():
+  % give the shutter some time to open.
+  off: diagMotRf
+  t += -5
+  on: repumpShutter
+  on: sidemotShutter
+  on: diagmotShutter
+  t += 5
+  off: SideMotRf
+  off: repumpRf
+
+  on: andorShutter
+  dac: diagMotPower 0
+  % var image_detuning -1.5
+  % var motPower 0.25
+  var image_detuning -2.4 %0.3
+  var motPower 0.3 % 0.2
+  dacLinSpace: MotFreq defaultMotFreq image_detuning 5 10
+  call zeroFields()
+  t += 5
+  var freespacePower 8 
+  dac: SideMotPower { freespacePower sidemot }
+  dac: probePower 0
+  dac: RepumpPower { 0.6 repump }
+  dac: DiagMotPower 0
+
+  off: repumpRf
+  var waitTime 0.000
+  var freeSpaceImageTime 15
+  off: tweezerRf
+  t += waitTime
+ 
+
+  on: a15
+  off: rf795
+  off: proberf
+  on: SideMotRf
+  on: diagMotRf
+  on: repumpRf
+	
+  on: andorTrig
+
+  t += freeSpaceImageTime
+  off: a15
+  off: SideMotRf
+  off: diagMotRf
+  off: repumpRf
+  off: andorShutter
+  dacLinSpace: MotFreq image_detuning defaultMotFreq 2 10
+  %t += ( - 0.745 )
+  %on: andorTrig
+  %t += 0.745
+  t += 1
+  off: andorTrig
+  t += 10.2
+  % sometimes I remove the tweezerRf off above to take an image in the 
+  % tweezers, so this (usually redundant) command makes sure the tweezers 
+  % are always off at the end of this function.
+  off: tweezerRf
+
+  % note that the camera needs some time before it can take
+  % another image. Typically we need to wait like 5ms. The camera window
+  % will tell you the minimum kinetic cycle time, which depends on the
+  % exposure time and the image size, with some net overhead.

@@ -1,0 +1,58 @@
+% Master-Script See the "?" for info on commands.
+
+def stdPgcImage():
+  % give the shutter some time to open.
+  call openAndorShutter()
+  off: diagMotRf
+  t += -5
+  on: repumpShutter
+  on: sidemotShutter
+  off: diagmotShutter
+  t += 15
+  call zeroFieldsPGC()
+  dac: diagMotPower 0
+  var image_detuning 1.61 %-1.5 %-0.85  % -2.2
+  var image_power 7.3
+  dac: SideMotPower { image_power sidemot } % 2 0.9 
+  dac: RepumpPower { 0.2 repump } 
+  dac: DiagMotPower { 0 diagmot } 
+  dacLinSpace: MotFreq defaultMotFreq image_detuning 5 10
+
+  t += 5
+  on: RepumpRf
+  t += 0.2
+  on: tweezerServoSamp
+  t += 0.1
+  on: tweezerflashrf
+  on: sidemotflash
+  on: SideMotRf
+  off: diagMotRf
+  on: andorTrig
+  t += andorImageTime
+  off: SideMotRf
+  off: diagMotRf
+  off: repumpRf
+  off: tweezerflashrf
+  off: sidemotflash
+  off: repumpShutter
+  off: sidemotShutter
+  dac: DiagMotPower 0
+  dac: SideMotPower 0
+  dac: RepumpPower 0
+
+  dacLinSpace: MotFreq image_detuning defaultMotFreq 2 10
+  t += 1
+  off: tweezerServoSamp
+  t += 1
+  off: andorTrig
+  call closeAndorShutter()
+  t += 0.2
+  % note that the camera needs some time before it can take
+  % another image. Typically we need to wait like 5ms. The camera window
+  % will tell you the minimum kinetic cycle time, which depends on the
+  % exposure time and the image size, with some net overhead.
+
+	
+
+
+

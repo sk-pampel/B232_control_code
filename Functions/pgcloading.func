@@ -1,0 +1,39 @@
+% this function takes 3 + PGCtime ms (typically around 7)
+def PgcLoading():
+  %Shutting off gradient from MOT loading:    
+  dac: motGradientCurrent 0
+  t += 1
+  call zeroFieldsPgc()
+  %on: tweezerrf
+  var loading_detuning 1.6
+  var diagmot_power 3 %0.35 %0.27
+  var sidemot_power 0 %1 %2.2
+  var repump_power 0.2
+  var pgc_time 20
+  dacLinSpace: MotFreq defaultmotFreq loading_detuning 1 10
+  dac: SideMotPower { sidemot_power sidemot }
+  dac: DiagmotPower { diagmot_power diagmot }
+  dac: repumpPower repump_power
+  off: sidemotshutter
+  on: diagmotshutter
+  on: repumpshutter
+  t += 15
+  on: repumpRf
+  off: sideMotRf
+  on: diagMotRf
+  t += pgc_time
+  off: sideMotRf
+  off: diagMotRf
+  t += 1
+  off: repumpRf
+  dacLinSpace: MotFreq loading_detuning defaultmotFreq 1 10
+  dac: repumpPower 0
+  dac: diagMotPower 0
+  dac: sideMotPower 0
+  t += 1.1
+
+
+
+
+
+

@@ -1,0 +1,51 @@
+% Master-Script See the "?" for info on commands.
+% Time starts at 1 ms.
+
+t = 0.1
+
+call closeAxialRamanShutter()
+
+call turnonmot()
+t += loadmottime
+pulseon: scoutTrig 0.1 
+
+t += 2
+call pgcloading()
+t += 2
+
+Pulseon: tweezerIntensityTrig 0.1 % to img depth
+t += 1
+call stdPgcImage()
+t += 5
+
+Pulseon: tweezerIntensityTrig 0.1 % to modulation depth
+t += 1
+
+call intrappgc()
+
+% 1) connect BNC from channel 1 of axial Agilent to input of
+%    bias tee near tweezer servo. 
+% 2) Switch Agilent system to local and program a sine wave
+%    gated burst at 268 kHz, ...mVpp , ...offset
+% 3) set modulation amplitude ~1 Vpp
+% 4) manually scan Agilent frequency +/- 60 kHz and plot surv
+%  
+%t += 100
+
+t += 5  
+%on: axialmicropulsetrig
+t += 15
+%off: axialmicropulsetrig
+
+%Pulseon: tweezerIntensityTrig 0.1 % to pushout depth
+
+t += 10
+
+Pulseon: tweezerIntensityTrig 0.1 % to image depth
+t += 1
+call stdPgcImage()
+t += 5
+pulseon: tweezerIntensityTrig 0.1 % to loading depth
+t += 5
+t += 200 
+

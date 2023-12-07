@@ -1,0 +1,23 @@
+var loadingdepth 12
+var imagingDepth 5.5
+var intrapCoolingDepth 5.5 
+var movingDepth .8 %0.8
+var singleDepth .8 %0.77
+var heatingDepth 1.75 %0.77
+var collisionDepth 1.25 %1.25 = 10 Mhz  % 2.5 = 1 mk   
+var twoToOneDepth 1.35 %1.45 %3.4 % 2.5 = 1 mk    1.5= .5 mk
+var singleCoolDepth 3.5
+var singleImgDepth 2.5 % 
+
+hold (loadingDepth) 1 onceWaitTrig #  
+ramp lin (loadingDepth) (imagingDepth) 1 onceWaitTrig #  
+ramp lin (imagingDepth) (intrapCoolingDepth) 1 onceWaitTrig #
+ramp lin (intrapCoolingDepth) (movingDepth) 1 onceWaitTrig #
+ramp lin (movingDepth) (singleDepth) 1 onceWaitTrig # 
+ramp lin (singleDepth) (heatingDepth) 1 onceWaitTrig #
+ramp lin (heatingDepth) (collisionDepth) 1 onceWaitTrig #
+ramp lin (collisionDepth)   (twoToOneDepth) 1 onceWaitTrig #
+ramp lin (twoToOneDepth)   (singleCoolDepth) 1 onceWaitTrig #
+ramp lin (singleCoolDepth)   (singleImgDepth) 1 onceWaitTrig #
+ramp lin (singleImgDepth) (loadingDepth) 1 once #
+

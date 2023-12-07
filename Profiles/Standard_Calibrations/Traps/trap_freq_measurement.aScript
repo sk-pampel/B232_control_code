@@ -1,0 +1,12 @@
+var loadingDepth 19 %12 %15.25
+var imagingDepth 15.5 %14 %18.5
+var modulationDepth 20 
+var pushoutDepth 5
+
+hold loadingDepth 1 oncewaittrig #  
+ramp lin loadingDepth imagingDepth 1 oncewaittrig #
+ramp lin imagingDepth modulationDepth 1 oncewaittrig #
+ramp lin modulationDepth pushoutDepth 1 oncewaittrig #
+ramp lin pushoutDepth imagingDepth 1 oncewaittrig #
+ramp lin imagingDepth loadingDepth 1 once #
+

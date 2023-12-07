@@ -1,0 +1,33 @@
+def D1collisions20():
+  var D1twoToTwopPower -1.8
+  var coltimetwozero  5
+  var D1SidemotPow 0.0 %0.3 %0.5 % 2.5 %0.9  %side collision
+  var LACPow20 0.3 %0.33 %0.15 %0.15 %diagonal collision
+  off: diagMotRf
+  off: probeshutter
+  off: probeRf
+  off: sideMotRf
+  off: repumpRf
+  off: shutter795side
+  off: lacshutterD2
+  on: lacshutterD1
+  dac: power795 D1twoToTwopPower
+  dac: side795pow D1SidemotPow
+  dac: diag795pow LACPow20
+  t += 15
+  dac: diagMotPower 0
+  dac: sideMotPower 0
+  %call zerofieldspgc()
+  call setquantaxis()
+  t += 1 
+  call send_uw_to_795_eom()
+  on: rf795
+  t += coltimetwozero 
+  off: rf795
+  t += 1
+  dac: diag795pow 0
+  dac: side795pow 0
+  dac: power795 0.1
+  off: lacshutterD1
+  off: shutter795side
+  t += 1.1
