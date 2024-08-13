@@ -1,10 +1,12 @@
 % Master-Script See the "?" for info on commands. 
 t = 0.1
+on: b3
 on: tweezerrf
 off: axialRamanShutter
 off: probeShutter 
 on: shutter795
 pulseon: dds_reset 0.1
+
 call openAndorshutter()
 call triggerwindfreak() 
 t += 1
@@ -17,30 +19,28 @@ call pgcloading()
 call triggerwindfreak()
 pulseon: dds_step 5
 t += 20
-pulseon: tweezerIntensityTrig 0.1 % to LGM depth
+pulseon: tweezerIntensityTrig 0.1 % to image depth
 
 %
 call stdpgcimage()
 
-%t += 5
+t += 5
+pulseon: tweezerIntensityTrig 0.1 % to LGM depth
 
 call intrappgc()
 
 %call intrapgreymolasses()
 %off: tweezerrf
-t += 100
+t += 10
 
 
 pulseon: tweezerIntensityTrig 0.1 % to TOF depth
-call freespaceimage()
-%call stdpgcimage()
-%call freespaceprobeimage()
-%call pgcAtomFlashingImage()
-
-t += 5
+%call freespaceimage()
+call stdpgcimage()
+t += 1
 
 pulseon: tweezerIntensityTrig 0.1 % to loadingDepth
 
 t += 1
-off: tweezerRf
+%off: tweezerRf
 t += 0.2

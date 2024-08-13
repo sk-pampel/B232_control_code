@@ -5,45 +5,41 @@ def gsbc():
   off: probeRf
   off: repumpRf
   dac: probePower 0
-
-  %var opPulseLength 0.15
-  var sigmaoppowscan 0.1 %0.41
-  var sigmaopfreqscan 0.42 
-  var sigmarepumppowscan 0.35 %0.3 %0.15 %0.35
-  var sigmarepumpfreqscan 0.66 % 0
-
-
-  var repumpf -0.6
-  var opfreq -0.5
-  %var tbsbcpulselen 0.04
+  var eoamp 0.25555555 % 0.255
+  var sigmarepumpfreqscan -.1
+  var opFreq 1.8 %1.829 % 1.6
   daclinspace: motFreq defaultMotFreq opFreq 1 10  
-  dac: repumpfreq repumpf
   t += 2 
-  var sigma_op_pow 0.1
-  var sigma_repump_pow 0.2 %0.2
-  dac: sigmaoppower { sigma_op_pow sigma_op } 
+  var sigmaoppowscan 0.1 %2 %0.15
+  var sigma_repump_pow 0.1 %0.2
+  dac: sigmaoppower { sigmaoppowscan sigma_op } 
   dac: sigmarepumpPower { sigma_repump_pow sigma_repump } 
-  dac: sigmaRepumpFreq 0.66 %0.66 %0
-  dac: eoPulseLev { 0.255 eo_raman } % eo_raman__sv 0.255
+  dac: sigmaRepumpFreq sigmarepumpfreqscan 
+  dac: eoPulseLev { eoamp eo_raman } % eo_raman__sv 0.255
   off: uw_mod_switch 
   % original times reported in sbc paper were 72.5us 
   % and 48us for top/bottom. 
+  on: a15
   pulseon: topPulseTrig 0.01
   pulseon: axialmicropulsetrig 0.01
-  var opPulseLength 0.03 %0.015
-  repeat: 100
-    call axialRamanPulse(0.0725) %0.085
-    call opPulse(opPulseLength) %0.005 % 0.015
-    call topRamanPulse(0.048) % 0.02  0.04
-    call opPulse(opPulseLength) 
-    call botRamanPulse(0.048) % 0.04
-    call opPulse(opPulseLength) 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% pulse times must match Agilent pulse times
+% putting variable in sequence causes Chimera to freeze
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  repeat: 100 
+    call axialRamanPulse(0.07) %% axsbcpulselen
+    call opPulse(0.1) %% opsbcpulselen
+    call topRamanPulse(.04) %% tbsbcpulselen
+    call opPulse(0.1) %% opsbcpulselen\
+
   end	
-  %var afterSbcOpTime 0.02
-  %call opPulse(afterSbcOpTime) 
+  off: a15
   dac: sigmaoppower 0
   dac: sigmarepumpPower 0
   dac: topPulseLev 0
   dac: axPulseLev 0
   dac: dac17 0
   dac: eoPulseLev 0
+  daclinspace: motFreq opFreq defaultMotFreq 1 10
+
+

@@ -1,8 +1,8 @@
 def D2collisions21():
-    var dTwoFreqTwoOne 1.6875 %1.6875 %-1.4 %0
-    var RepumpPowerVal 0.02
-    var colTimeTwoOne 15
-    var probePow 0.12
+    var dTwoFreqTwoOne 1.75 %1.68 %0
+    var RepumpPowerVal 0.01
+    var colTimeTwoOne 17
+    var probePow 0.00
 	off: diagMotRf
     off: sideMotRf
     off: repumpRf
@@ -12,6 +12,7 @@ def D2collisions21():
     off: lacshutterD2
     t += 1
 	%call zeroFieldsinTrapPgc()
+    %call d1greyLoadFields()
     %call zeroFieldsPgc()
     call zeroFieldsPgcCollisions()
     %call setQuantAxis() 

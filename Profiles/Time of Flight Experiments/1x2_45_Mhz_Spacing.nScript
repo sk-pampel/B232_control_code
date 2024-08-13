@@ -1,0 +1,18 @@
+% Default Y Script
+%%-----------------------------------------------------------%%
+%%-----------------------------------------------------------%%
+% LOW FREQUENCY MEANS LOWER/LEFT ON SCREEN
+
+var_v 2 freqs [ 51 99 ] 
+var_v 2 pows [ 0.15603695313423827  0.17692864199880404 ]
+var_v 2 phases [ 0.000000000  5.179345038 ] 
+
+repeatForever
+gen2const_v Horizontal
+freqs pows phases # 
+gen1const Vertical
+75	1	0 #
+0.01 0
+endRepeat
+
+ 

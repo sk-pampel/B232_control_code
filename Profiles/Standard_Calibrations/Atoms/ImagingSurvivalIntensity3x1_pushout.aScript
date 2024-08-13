@@ -1,0 +1,15 @@
+var loadingdepth 10 %12 %15.25
+var imagingDepth 3.5 %14 %18.5
+var intrapCoolingdepth 10
+var pumpDepth 8
+var pushoutDepth .9
+
+
+hold loadingDepth 1 oncewaittrig #  
+ramp lin loadingDepth imagingdepth 1 oncewaittrig #
+ramp lin imagingdepth intrapCoolingdepth 1 oncewaittrig #
+ramp lin intrapCoolingdepth pumpDepth 1 oncewaittrig #
+ramp lin pumpDepth pushoutDepth 1 oncewaittrig #
+ramp lin pushoutDepth imagingdepth 1 oncewaittrig #
+ramp lin imagingdepth loadingDepth 1 once #  
+

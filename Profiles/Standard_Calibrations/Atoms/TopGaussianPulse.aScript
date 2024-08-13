@@ -2,4 +2,4 @@
 % offset amp tau t_offset total_length
 % order is axial->top->bot pusle w = 0.0153
 hold 0 0.01 onceWaitTrig #
-pulse gaussian 0 topSbcAmp tsbcWidth (tbsbcpulselen/2) tbsbcpulselen once #
+pulse gaussian 0 topSpecAmp topspecw (tbspecpulselen/2) tbspecpulselen once #

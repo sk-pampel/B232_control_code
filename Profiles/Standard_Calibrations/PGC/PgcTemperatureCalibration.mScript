@@ -9,41 +9,31 @@ off: repumpRf
 t += 50
 call turnonmot()
 
-t += 1000
+t += 1000 %1000
 
 call pgcCooling()
+
+
 %call D1greylambdacooling()
 % wait for the drop
 t += flyTime 
 
 % image
-on: diagMotRf
-off: sideMotRf
-on: repumpRf
-
-var diagmot_pow 3.1 %4.5
-var repump_pow 0.26 
-var repump_freq -0.46
-var imgMotFreq -0.3
+var diagmot_pow 2.2 %4.5
+var repump_pow 0.12 
+var imgMotFreq 1.71
 dac: DiagMotPower { diagmot_pow diagmot } % diagmot__sv
 dac: RepumpPower repump_pow
-dac: MotFreq motImagingDetuning
-dac: RepumpFreq repump_freq
+dac: MotFreq imgMotFreq
 dac: SideMotPower { 1.88 sidemot } % sidemot__sv 
+
+on: diagMotRf
+on: sideMotRf
+on: repumpRf
 call triggerScout()
-
-
 t += 1
 off: diagMotRf
 off: sidemotRf
 off: repumpRf
 
-%%%%%
-%on: andorTrig
-%t += andorImageTime
-%t += 150
-%off: andorTrig
-%%%%%
-
-t += 1
 t += 5

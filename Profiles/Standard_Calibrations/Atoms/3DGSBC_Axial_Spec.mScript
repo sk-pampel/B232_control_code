@@ -3,9 +3,7 @@ t = 0.1
 on: tweezerrf
 off: axialRamanShutter 
 off: probeShutter 
-on: totalRamanRf
-on: shutter795
-%pulseon: dds_reset 0.1
+pulseon: dds_reset 0.1
 
 t += 1
 call turnonmot()
@@ -15,46 +13,41 @@ call pgcloading()
 %call D1GreyLambdaLoading()
 
 t += 20
-pulseon: tweezerIntensityTrig 0.1
-%pulseon: dds_step 5
+pulseon: tweezerIntensityTrig 0.1 % to imaging
 call stdPgcImage()
-pulseon: tweezerIntensityTrig 0.1
-off: sidemotShutter  
-off: diagmotShutter 
-off: repumpShutter
+pulseon: tweezerIntensityTrig 0.1 % to cooling
 t += 4
 call openAxialRamanShutter()
-%call intrapgreymolasses()
 call intrappgc()
 t += 1
-%pulseon: repumpRf 1
 call triggerWindFreak()
-off: shutter795
-pulseon: tweezerIntensityTrig 0.1
+on: totalRamanRf
+pulseon: tweezerIntensityTrig 0.1 % to Raman
 call send_uw_to_raman_eom()
 t += 1
 call pump2stretch() 
-%call gsbc()
+t += 0.1
+call gsbc()
+t += 0.1
 call triggerWindFreak()
 t += 1
-on: a15
+
 dac: eoPulseLev { 0.255 eo_raman } 
 pulseon: axialmicropulsetrig 0.01
-call axialRamanPulse(axsbcpulselen)
+on: a15
+call axialRamanPulse(axspecpulselen)
 off: a15
 dac: eoPulseLev 0
-call closeAxialRamanShutter()
 off: axialRamanShutter 
 % t += 20
 t += 0.1 
-pulseon: tweezerIntensityTrig 0.1
+pulseon: tweezerIntensityTrig 0.1 % to pushout
 t += 5
 call pushout()
-%call pushout_all()
-pulseon: tweezerIntensityTrig 0.1
+pulseon: tweezerIntensityTrig 0.1 % to imaging
 t += 1
 call stdPgcImage()
-pulseon: tweezerIntensityTrig 0.1
+pulseon: tweezerIntensityTrig 0.1 % to loading
 t += 1
 off: tweezerRf
 off: windfreakTrig

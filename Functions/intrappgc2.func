@@ -3,12 +3,12 @@
 
 def intrappgc2():
 	off: diagMotRf
-	%call zeroFieldsinTrapPgc()
-    call zeroFieldsPgc()
+	call zeroFieldsinTrapPgc()
+    %call zeroFieldsPgc()
 	t += 1
 	dac: diagMotPower 0
-	var pgc_intrap_freq 1.68 %-4 %-3
-    var sidemot_power 2.5
+	var pgc_intrap_freq 1.1 %-4 %-3
+    var sidemot_power 4
 	var repump_pow 0.2 %0.175 %0.25
     var diagmot_power 0 %1
     dac: SideMotPower { sidemot_power sidemot }
@@ -21,7 +21,7 @@ def intrappgc2():
     off: diagmotshutter
     on: repumpshutter
 	t += 15
-	var cooling_time 20 %18 %8
+	var cooling_time 12 %18 %8
 	on: RepumpRf
 	off: diagmotRf
 	on: SideMotRf

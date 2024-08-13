@@ -1,0 +1,14 @@
+var loadingdepth 10
+var imagingDepth 5.5
+var intrapCoolingDepth 5.5 
+var movingDepth .7 %0.8
+var singleDepth .7 %0.77
+var TOF_depth .1 % 1.8 for PGC
+
+hold (loadingDepth) 1 onceWaitTrig #  
+ramp lin (loadingDepth) (imagingDepth) 1 onceWaitTrig #  
+ramp lin (imagingDepth) (intrapCoolingDepth) 1 onceWaitTrig #
+ramp lin (intrapCoolingDepth) (movingDepth) 1 onceWaitTrig #
+ramp lin (movingDepth) (singleDepth) 1 onceWaitTrig # 
+ramp lin (singleDepth)   (TOF_depth) 1 onceWaitTrig #
+ramp lin (TOF_depth) (loadingDepth) 1 once #

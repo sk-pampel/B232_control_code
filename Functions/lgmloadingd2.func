@@ -1,61 +1,50 @@
 % free space grey molasses
 
 def LGMloadingD2():
-  % settings
   on: tweezerRf
+%%% D1 prep
+  on: shutter795diag
+  on: shutter795side
   var D1_2_to_2p_Power -1.8 %-1.8 %-1.75  %-1.5
-  %var side795setpoint 1 %0.5 %1.4
-  %var diag795setpoint  0.15 %0.1
-  var diag795power 0.17 % photo voltage = .35
-  var side795power 0.75 % photo voltage = .2
-  var dTwoFreqTwoOne 1.6875 %-1.4 %0
-  var RepumpPowerVal 0.02
-  var colTimeTwoOne 15
-  var probePow 0.03
+  var diag795power 0.16 % photo voltage = .35
+  var side795power 1.25 % photo voltage = .2
+  dac: power795 D1_2_to_2p_Power
+
+%%% D2 prep
+  var dTwoFreqTwoOne 1.7 %1.6875 %-1.4 %0
+  var probePow 0.01
+  on: probeshutter
+  dac: probePower probePow % 
+  %daclinspace: motFreq defaultMotFreq dTwoFreqTwoOne 5 10 
+  
+  t += 4.01
   off: diagMotRf
   off: sideMotRf
   off: repumpRf
-  off: sidemotshutter
-  off: diagmotshutter
-  off: probeShutter
-  off: lacshutterD2
-  t += 1
-  dac: power795 D1_2_to_2p_Power
-  t += 4.01
-  %dac: probePower probePow % 
-  %dac: RepumpPower RepumpPowerVal
-  daclinspace: motFreq defaultMotFreq dTwoFreqTwoOne 5 10 
   dac: side795pow { side795power sidemot_d1 } 
   dac: diag795pow { diag795power diagmot_d1 } 
   dac: diagMotPower 0
   dac: sideMotPower 0
-  %on: repumpshutter
-  %on: probeshutter
-  on: shutter795side
-  on: lacshutterD1
-  %call d1greyLoadFields()
-  call zeroFieldsPgc()
-  t += 10
-
-
+  call d1greyLoadFields()
   call send_uw_to_795_eom()
-  on: rf795
-  %on: RepumpRF
-  %on: probeRf
-  t += colTimeTwoOne
-  off: RepumpRF
+  on: probeRf
+  t += .001
   off: probeRf
-  t += lgm_cooling_time-colTimeTwoOne 
+  on: rf795
+
+  t += lgm_cooling_time
   off: rf795
-  off: repumpRf
+  off: probeRf
   dac: power795 0.1
   dac: diag795pow 0
   dac: side795pow 0
+  off: shutter795diag
+  off: shutter795side
   off: probeShutter
   off: repumpShutter
   daclinspace: motFreq dTwoFreqTwoOne defaultMotFreq 5 10
-  t += 5.001
+  t += 4.01
 
 
 
-
+ 

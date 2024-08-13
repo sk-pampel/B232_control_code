@@ -1,7 +1,7 @@
 def zeroFieldsPgcCollisions():
   % total time = 0. This function is for doing pgc.
   var LR_field 0.61 %0.43 %0.387 %0.486 %0.43 %0.4388 %0.4167 
-  var TB_Field 1.81 %2.05 %1.7 %1.986 %2.1 %1.81 %2 %2.0287 
+  var TB_Field 1.81 %1.81 %2.05 %1.7 %1.986 %2.1 %1.81 %2 
   var FB_Field 0.611 %0.557 %0.75 %0.57 %0.5754 %0.517
   dac: leftCoilCurrent (-1*LR_field) 
   dac: rightCoilCurrent LR_field 

@@ -1,0 +1,14 @@
+var loadingDepth 10 
+var imagingDepth 3.5 
+var intrapcooldepth 10
+var ramanDepth 8.0
+var tofDepth .4
+
+hold loadingDepth 1 onceWaitTrig #   
+ramp lin loadingDepth imagingDepth 1 onceWaitTrig # 
+ramp lin imagingDepth intrapcooldepth 1 onceWaitTrig #
+ramp lin intrapcooldepth ramanDepth 1 onceWaitTrig #
+ramp lin ramanDepth tofDepth 1 onceWaitTrig #
+ramp lin tofDepth loadingDepth 1 once #   
+ 
+ 

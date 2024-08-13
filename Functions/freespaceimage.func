@@ -2,38 +2,41 @@
 
 def freeSpaceImage():
   % give the shutter some time to open.
-  var FSImageTime .02 %0.02 %0.02 %0.01
-  var offsetTime 0.0
-  var sideMotScan 9 %8.0 % 6 %9.1
-  var repumpscan .2 %0.29 %0.2
+  var FSImageTime .015 %0.02 %0.02 %0.01
+  var offsetTime 0
+  var sideMotScan 5.4 %8.0 % 6 %9.1
   var diagmotscan 0.0
   var toftimescan .0001 %0.1
-  var image_detuning -.06 %-0.07 %-2 % -2.2 %-1.5
-  var shutterOffset 10
-
-  off: diagmotShutter
+  var image_detuning 1.71
+  var shutterOffset 20
+  var repumpscan 0.2
   off: diagMotRf
+  off: sigmaOpRf 
+  off: sigmaRepumpRf
+  off: proberf
+  off: totalRamanRf
+  %t += -shutterOffset
   on: repumpShutter
   on: sidemotShutter
-  off: rf795
-  off: diagMotRf
   call openAndorShutter()
+  %on: diagmotShutter
   t += shutterOffset
   dac: diagMotPower 0
   dacLinSpace: MotFreq defaultMotFreq image_detuning 1 10
-  call zeroFieldsPGC()
-  on: RepumpRf
+  %call zeroFieldsFSI()
+  call zeroFields()
+  %call setQuantAxis()
   dac: SideMotPower { sideMotScan sidemot } %sideMotScan 9
   dac: RepumpPower { repumpscan repump } %repumpscan 0.2
   dac: DiagMotPower { diagmotscan diagmot } %diagmotscan 0.86
   t += 0.2
-
+  off: rf795
   off: tweezerrf
+  %t += offsetTime
   t += toftimescan
-
-  on: oscilloscopemarker
   on: SideMotRf
-  on: repumpRf
+  on: repumpRf 
+  on: oscilloscopemarker
   on: andorTrig
   t += fSImageTime
   off: andorTrig 
@@ -49,7 +52,6 @@ def freeSpaceImage():
   dacLinSpace: MotFreq image_detuning defaultMotFreq 2 10
   t += 1
   t += 0.2
-
   % note that the camera needs some time before it can take
   % another image. Typically we need to wait like 5ms. 
   % The camera window will tell you the minimum kinetic 

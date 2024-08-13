@@ -3,7 +3,7 @@ t = 1
 off: diagmotrf
 t += 100
 call turnOnMot()
-%t += waittime
+t += waittime
 t += 0.1
 repeat: 100
 	pulseon: scoutTrig 0.1

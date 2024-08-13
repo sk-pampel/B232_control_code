@@ -9,9 +9,9 @@ def turnOnMot():
   on: DiagMotShutter
   on: SideMotShutter
   var repump_pow 0.2 
-  var MOT_freq 1.7 %-0.51 %-0.8 %0.14 %-0.8 %-0.42 %0.08
-  var diagmot_power 3.5 %4.1 % 2.1 %2 %4.5
-  var sidemot_power 1.8 %1.3 %1.88
+  var MOT_freq 1.69 %-0.51 %-0.8 %0.14 %-0.8 %-0.42 %0.08
+  var diagmot_power 2.5 %4.1 % 2.1 %2 %4.5
+  var sidemot_power 2.4 %1.3 %1.88
   dac: DiagMotPower { diagmot_power diagmot }
   dac: RepumpPower repump_pow
   dac: Motfreq MOT_freq
@@ -19,9 +19,9 @@ def turnOnMot():
 
   %% Magnetic Field Control
   var motStrength 7.1
-  var rlField 0.75 %0.7857 %0.71 %.7 %.75 %0.8 %0.794
-  var fbField 0.75 %0.71 % .68 %0.8 %0  %0.561
-  var tbField 0.75 %0.45 %0.65 %0.76 % .82 0.76 %1.2 %0.75 
+  var rlField 0.73 %0.7857 %0.71 %.7 %.75 %0.8 %0.794
+  var fbField 0.778 %0.71 % .68 %0.8 %0  %0.561
+  var tbField 0.55 %0.45 %0.65 %0.76 % .82 0.76 %1.2 %0.75 
 
   dac: MotGradientCurrent motStrength 
   dac: RightCoilCurrent rlField

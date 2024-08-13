@@ -1,8 +1,8 @@
 def zeroFieldsinTrapPgc():
   % total time = 0. This function is for doing pgc.
-  var LR_field 0.5 %0.37 %0.43 %0.387 %0.486 %0.43 %0.4388 %0.4167 
-  var TB_Field 2.07 %1.7 %1.986 %2.1 %1.81 %2 %2.0287 %1.944
-  var FB_Field 0.64 %0.557 %0.75 %0.57 %0.5754 %0.517
+  var LR_field 0.4 %0.31 %0.43 %0.387 %0.486 %0.43 %0.4388 
+  var TB_Field 2.1 %1.85 %1.7 %1.986 %2.1 %1.81 %2 %2.0287 
+  var FB_Field .7 %0.7 %0.557 %0.75 %0.57 %0.5754 %0.517
   dac: leftCoilCurrent (-1*LR_field) 
   dac: rightCoilCurrent LR_field 
   dac: topCoilCurrent TB_field  

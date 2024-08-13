@@ -1,13 +1,17 @@
-var loadingdepth 7.5 %12 %15.25
-var imagingDepth 5.5 %14 %18.5
-var releaseDepth 7.5 
-var intrapPGCdepth 6
-var capturePGCdepth 6
+var loadingdepth 10 %12 %15.25
+var imagingDepth 3.6 %14 %18.5
+var releaseDepth 8.5 
+var intrapPGCdepth 10
+var dropDepth 0.9
+var pushoutDepth 7.5 
 
 hold loadingDepth 1 oncewaittrig #  
 ramp lin loadingDepth imagingdepth 1 oncewaittrig #
 ramp lin imagingdepth intrapPGCdepth 1 oncewaittrig #
-ramp lin intrapPGCdepth releaseDepth 1 oncewaittrig #
-ramp lin releaseDepth capturePGCdepth 1 oncewaittrig #
-ramp lin capturePGCdepth imagingdepth 1 oncewaittrig #
+ramp lin intrapPGCdepth pushoutDepth 1 oncewaittrig #
+ramp lin pushoutDepth dropDepth 1 oncewaittrig #
+ramp lin dropDepth imagingdepth 1 oncewaittrig #
 ramp lin imagingdepth loadingDepth 1 once # 
+
+
+

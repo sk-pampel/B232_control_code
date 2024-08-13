@@ -11,7 +11,8 @@ var rotateFieldTime 3
   var bot_field -1.9
   var front_field -2.7361
   var back_field 2.7361
-  var rotationFactor 0.0 %1.71 %roughly 1.41 for 45 degrees tilt
+  var rotationFactor 1.41 %1.71 %roughly 1.41 for 45 degrees 
+
   dac: leftCoilCurrent (rotationFactor * left_field / 2)
   dac: rightCoilCurrent (rotationFactor * right_field / 2)
   dac: topCoilCurrent top_field 
@@ -19,3 +20,9 @@ var rotateFieldTime 3
   dac: frontCoilCurrent (rotationFactor  * front_field / 2)
   dac: backCoilCurrent (rotationFactor * back_field / 2)
   t += rotateFieldTime
+
+
+  var lrf 3.031  %2.91 %3.053 %3.045 %2.98 %2.9714 %3.055 %3.18 %3.114 
+  var tbf 1.917 %1.844 %1.7 %1.54 %1.75 %1.6 %1.5 %1.6167 %1.6 %1.857 
+  var fbf 0.578 %.57 %.487%0.925 %0.85 %1 %0.975 %0.636 %1 %0.586
+

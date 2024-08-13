@@ -1,0 +1,42 @@
+% Master-Script See the "?" for info on commands.
+def c():
+  % expecting totalramanrf (b3) to be on a while ago in order
+  % to let the servo settle
+  off: probeRf
+  off: repumpRf
+  dac: probePower 0
+  var eoamp 0.25555555 % 0.255
+  var sigmarepumpfreqscan 0.0
+  var opFreq 1.829 % 1.6
+  daclinspace: motFreq defaultMotFreq opFreq 1 10  
+  t += 2 
+  var sigmaoppowscan 0.05 %2 %0.15
+  var sigma_repump_pow 0.2 %0.2
+  dac: sigmaoppower { sigmaoppowscan sigma_op } 
+  dac: sigmarepumpPower { sigma_repump_pow sigma_repump } 
+  dac: sigmaRepumpFreq sigmarepumpfreqscan 
+  dac: eoPulseLev { eoamp eo_raman } % eo_raman__sv 0.255
+  off: uw_mod_switch 
+  % original times reported in sbc paper were 72.5us 
+  % and 48us for top/bottom. 
+  on: a15
+  pulseon: topPulseTrig 0.01
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% pulse times must match Agilent pulse times
+% putting variable in sequence causes Chimera to freeze
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  repeat: 100 
+    call topRamanPulse(.05) %% tbsbcpulselen
+    call opPulse(0.1) %% opsbcpulselen
+
+  end	
+  off: a15
+  dac: sigmaoppower 0
+  dac: sigmarepumpPower 0
+  dac: topPulseLev 0
+  dac: axPulseLev 0
+  dac: dac17 0
+  dac: eoPulseLev 0
+  daclinspace: motFreq opFreq defaultMotFreq 1 10
+
+

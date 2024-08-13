@@ -1,0 +1,61 @@
+% Master-Script See the "?" for info on commands.
+
+t = 0.1
+on: tweezerrf
+pulseon: dds_reset 0.1
+call turnonmot()
+t += loadMotTime
+call pgcloading()
+t += 2
+pulseon: tweezerIntensityTrig 0.1 % to imagingDepth 
+call stdPgcImage()
+t += 5
+pulseon: tweezerIntensityTrig 0.1 % to intrapCoolingDepth
+t += 5
+call intrappgc()
+t += 1
+pulseon: tweezerIntensityTrig 0.1 % to intrapCoolingDepth
+t += 1
+call pump2stretch()
+t += 1
+pulseon: tweezerIntensityTrig 0.1 %to movingDepth
+t += 1
+pulseon: niawgTrig 0.1 % Begin merge: freq ramp, amp ramp
+t += 1
+pulseon: tweezerIntensityTrig 0.1 %to singleDepth
+call triggerwindfreak() % to Raman freq
+t += 1
+pulseon: tweezerIntensityTrig 0.1 % to RamanDepth
+%%% pump to stretch
+on: totalRamanRf
+t += 1
+call gsbc_radial()
+t += 0.1
+call triggerwindfreak() % to spectroscopy freq
+t += 1
+dac: eopulselev { 0.255 eo_raman } 
+call send_uw_to_raman_eom() 
+on: a15 
+pulseon: topPulseTrig 0.01
+call TopRamanPulse(tbspecpulselen)
+off: a15
+off: totalRamanRf
+off: axialRamanShutter 
+dac: topPulseLev 0
+dac: eoPulseLev 0
+t += 1
+%%call pushout()
+pulseon: tweezerIntensityTrig 0.1 % to pushout depth
+%%t += t_push
+call pushout()
+
+
+t += 1
+%%%% merge here 
+t += 15
+pulseon: tweezerIntensityTrig 0.1 %to singleImagingDepth
+
+call stdPgcImage()
+pulseon: tweezerIntensityTrig 0.1 %to loading depth
+pulseon: niawgTrig 0.1 % Begin merge: freq ramp, amp ramp
+t += 0.2

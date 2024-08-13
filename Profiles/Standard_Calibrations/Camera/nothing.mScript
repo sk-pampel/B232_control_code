@@ -1,7 +1,0 @@
-t = 0.1
-on: tweezerrf 
-call openAndorShutter()
-on: andorTrig
-t += andorImageTime
-off: andorTrig
-  

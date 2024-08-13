@@ -1,0 +1,16 @@
+def zeroFieldsImage():
+
+
+  var lrfield 0.37 %0.4122 %0.4388 %0.4167 
+  var tbField 1.9 %1.933 %2.0287 %1.944
+  var fbField 0.51 %0.4667 %0.5754 %0.517
+
+  dac: leftCoilCurrent -lrfield %(left_field - dField)
+  dac: rightCoilCurrent lrfield %(right_field + dField)
+  dac: topCoilCurrent tbfield %top_field 
+  dac: bottomCoilCurrent -tbfield %bot_field 
+  dac: frontCoilCurrent -fbfield %front_field
+  dac: backCoilCurrent fbfield %back_field 
+  t += 1
+
+% fb=.57  tb=2.20   lr=0.4388

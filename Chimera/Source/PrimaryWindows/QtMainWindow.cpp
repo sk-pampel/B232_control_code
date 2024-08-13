@@ -63,7 +63,7 @@ QtMainWindow::QtMainWindow () :
 	auto numMonitors = qApp->screens ().size ();
 	auto screens = qApp->screens ();
 	unsigned winCount = 0;
-	std::vector<unsigned> monitorNum = { 2,1,3,4,5,0 }; //{ 4,3,5,1,2,0 }; //
+	std::vector<unsigned> monitorNum = { 5,1,3,2,0,4 }; //{  3,1,4,2,0,5}; //
 	/*	scriptWin, andorWin, auxWin, basWin, dmWin, mainWin; */
 	for (auto* window : winList ()) { 
 		auto screen = qApp->screens ()[monitorNum[winCount++] % numMonitors];

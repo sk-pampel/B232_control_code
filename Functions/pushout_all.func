@@ -2,11 +2,10 @@
 
 def pushout_all():
 
-  var probePowSetting 0.04 %0.04 %0
-  var pushoutfreq -1.3 %-1.4 %0
-  var RepumpPowerVal 0.3
-  var pushouttime 20 %0.075 %0.5 %0.0025
-  var repump_freq -0.51 %-1 %-0.51
+  var probePowSetting 0.01 %0.04 %0
+  var pushoutfreq 1.5 %1.48 %-1.4 %0
+  var RepumpPowerVal 0.2
+  var pushouttime .015 %0.075 %0.5 %0.0025
  
   % repump on allows the pushout of the F=1 state atoms as well.
 
@@ -16,17 +15,16 @@ def pushout_all():
   dac: RepumpPower RepumpPowerVal
   daclinspace: motFreq defaultMotFreq pushoutfreq 5 10
   dac: probePower probePowSetting
-  dac: RepumpFreq repump_freq 
 
   %var tvar 8
   t += 5.01
   off: probeRf
   off: repumpRf
-  on: repumpshutter
+  %on: repumpshutter
   on: probeShutter
   %t += tvar
-  t += 20
-  on: RepumpRF
+  t += 10
+  %on: RepumpRF
   on: probeRf 
   t += pushouttime
   off: probeRf

@@ -10,8 +10,8 @@ def zeroFields():
   var dField 0
 
   var lrfield 0.414 %0.4122 %0.4388 %0.4167 
-  var tbField 2.03 %1.933 %2.0287 %1.944
-  var fbField 0.564 %0.4667 %0.5754 %0.517
+  var tbField 2 %1.933 %2.0287 %1.944
+  var fbField 0.59 %0.4667 %0.5754 %0.517
 
   dac: leftCoilCurrent -lrfield %(left_field - dField)
   dac: rightCoilCurrent lrfield %(right_field + dField)

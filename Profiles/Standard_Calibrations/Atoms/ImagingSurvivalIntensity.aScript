@@ -1,6 +1,6 @@
-var loadingdepth 25 %12 %15.25
-var imagingDepth 11 %14 %18.5
-var intrappgcdepth 11
+var loadingdepth 18 %12 %15.25
+var imagingDepth 10 %14 %18.5
+var intrappgcdepth 17
 
 
 hold loadingDepth 1 oncewaittrig #  

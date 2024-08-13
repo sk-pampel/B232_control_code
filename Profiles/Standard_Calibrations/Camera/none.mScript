@@ -1,9 +1,0 @@
-t = 1
-%call openAndorShutter()
-%on: tweezerRF
-%on: andorTrig
-t += andorImageTime
-%off: andorTrig
-t += 100
-
-

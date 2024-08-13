@@ -1,7 +1,7 @@
 def D2collisions20():
-    %call zerofieldspgc()    
+    call zerofieldspgc()    
     %call zeroFieldsPgcCollisions()
-    call setquantaxis()
+    %call setquantaxis()
 	off: diagMotRf
     off: sideMotRf
     off: repumpRf
@@ -10,10 +10,10 @@ def D2collisions20():
     off: probeShutter
     off: repumpshutter
     var dTwoFreqTwoZero 1.45 %-1.4 %0
-    var RepumpPowerVal 0.02
+    var RepumpPowerVal 0.01
     var colTimeTwoZero .5
     var sideMotPow 0
-    var probePow 0.3
+    var probePow 0.2
     dac: probePower probePow % 
     dac: RepumpPower RepumpPowerVal   
     daclinspace: motFreq defaultMotFreq dTwoFreqTwoZero 5 10

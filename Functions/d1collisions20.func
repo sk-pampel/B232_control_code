@@ -2,7 +2,7 @@ def D1collisions20():
   var D1twoToTwopPower -1.8
   var coltimetwozero  5
   var D1SidemotPow 0.0 %0.3 %0.5 % 2.5 %0.9  %side collision
-  var LACPow20 0.3 %0.33 %0.15 %0.15 %diagonal collision
+  var LACPow20 0.25 %0.33 %0.15 %0.15 %diagonal collision
   off: diagMotRf
   off: probeshutter
   off: probeRf
@@ -14,11 +14,14 @@ def D1collisions20():
   dac: power795 D1twoToTwopPower
   dac: side795pow D1SidemotPow
   dac: diag795pow LACPow20
+  %dac: diag795pow { LACPow20 diagmot_d1 } % 0.5
+
+
   t += 15
   dac: diagMotPower 0
   dac: sideMotPower 0
-  %call zerofieldspgc()
-  call setquantaxis()
+  call zerofieldspgc()
+  %call setquantaxis()
   t += 1 
   call send_uw_to_795_eom()
   on: rf795

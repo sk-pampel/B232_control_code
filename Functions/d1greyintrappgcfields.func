@@ -1,8 +1,8 @@
 def D1GreyInTrapPgcFields():
   dac: motGradientCurrent 0
-  var rlField 0.45 %0.4147
+  var rlField 0.38 %0.4147
   var tbField 2.04 %1.929 %2.0019
-  var fbField 0.7 %0.5713
+  var fbField 0.68 %0.5713
   dac: leftCoilCurrent (-1*rlField)
   dac: rightCoilCurrent (rlField)
   dac: topCoilCurrent (tbField) 

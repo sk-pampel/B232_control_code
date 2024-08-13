@@ -1,0 +1,39 @@
+%% Master-Script See the "?" for info on commands.
+% Time starts at 1 ms.
+t = 0.1
+call closeAxialRamanShutter()
+pulseon: dds_reset 0.1 % gm loading freq
+call triggerwindfreak() % gm loading repump freq
+on: tweezerrf
+call turnonmot()
+t += loadmottime
+%pulseon: scoutTrig 0.1 
+call pgcloading()
+t += 1
+pulseon: tweezerIntensityTrig 0.1 % to imaging depth
+t += 10
+call stdPgcImage()
+t += 1
+pulseon: tweezerIntensityTrig 0.1 % to intrap cooling depth
+call intrappgc()
+t += 2
+pulseon: tweezerIntensityTrig 0.1 % to Raman
+t += 1
+call pump2stretch()
+on: totalRamanRf
+t += 1
+call gsbc_radial()
+t += 1
+off: totalRamanRf
+off: axialRamanShutter 
+dac: topPulseLev 0
+dac: eoPulseLev 0
+pulseon: dds_step 2 
+pulseon: tweezerIntensityTrig 0.1 % to TOF depth
+t += 50 % need this if taking initial PGC 
+call freeSpaceImage()
+%call stdPgcImage()
+t += 1
+pulseon: tweezerIntensityTrig 0.1 % to loading depth
+t += 3
+

@@ -1,0 +1,19 @@
+% Master-Script See the "?" for info on commands.
+
+
+def repumpBoostD2():
+	dac: RepumpPower .3
+	on: RepumpRf
+	on: a15
+	t += .25
+	off: a15
+	off: RepumpRf
+
+
+
+
+	
+
+
+
+

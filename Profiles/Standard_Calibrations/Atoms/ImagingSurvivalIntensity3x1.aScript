@@ -1,13 +1,12 @@
-var loadingdepth 6.5 %12 %15.25
-var imagingDepth 5.5 %14 %18.5
-var intrapLGMdepth 4
-var intrapPGCdepth 4
+var loadingdepth 10 %12 %15.25
+var imagingDepth 3.5 %14 %18.5
+var intrapCoolingdepth 8
 
 
 hold loadingDepth 1 oncewaittrig #  
 ramp lin loadingDepth imagingdepth 1 oncewaittrig #
-ramp lin imagingdepth intrapLGMdepth 1 oncewaittrig #
-ramp lin intrapLGMdepth imagingdepth 1 oncewaittrig #
+ramp lin imagingdepth intrapCoolingdepth 1 oncewaittrig #
+ramp lin intrapCoolingdepth imagingdepth 1 oncewaittrig #
 ramp lin imagingdepth loadingDepth 1 once #  
 
 
