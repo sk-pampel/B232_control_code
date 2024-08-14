@@ -33,7 +33,7 @@ call pushout()
 pulseon: tweezerIntensityTrig 0.1 % to pushout depth
 t += 5
 pulseon: tweezerIntensityTrig 0.1 %to imaging depth
-t += 15
+t += 1
 call stdPgcImage()
 pulseon: tweezerIntensityTrig 0.1 %to loading depth
 t += 0.2

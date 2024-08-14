@@ -22,12 +22,12 @@ t += 5
 call intrappgc()
 
 t += 1
-on: oscilliscopeMarker
+on: osc_marker
 pulseon: tweezerIntensityTrig 0.1 % to release depth
 off: tweezerRf
 t += releaseTime
 on: tweezerRf
-off: oscilliscopeMarker
+off: osc_marker
 
 t += 1
 

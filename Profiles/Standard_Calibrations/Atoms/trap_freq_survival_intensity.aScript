@@ -1,7 +1,7 @@
 var loadingdepth 15 %12 %15.25
 var imagingDepth 10 %14 %18.5
 var intrappgcDepth 19
-var modulationdepth 8.9 %17.8
+var modulationdepth 19 %17.8
 var dropDepth 3
 
 hold loadingDepth 1 oncewaittrig #  

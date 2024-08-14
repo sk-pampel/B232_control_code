@@ -18,8 +18,7 @@ call pump2stretch()
 t += 1
 call pushout()
 pulseon: tweezerIntensityTrig 0.1 % to pushout depth
-
-t += 5
+t += purify_time
 pulseon: tweezerIntensityTrig 0.1 %to imaging depth
 call stdPgcImage()
 pulseon: tweezerIntensityTrig 0.1 %to loading depth
