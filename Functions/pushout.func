@@ -4,7 +4,7 @@ def pushout():
 %probepowsetting=0.03   pushoutfreq=1.5  pushouttime = 0.03
 
   var probepowsetting 0.15 % 0.22 deep   
-  var pushoutfreq 1.61 %1.48 for shallow-trap  1.61 for deep
+  var pushoutfreq 1.58 %1.48 for shallow-trap  1.61 for deep
   var pushouttime .1 %0.1 for deep trap 
   %call setQuantAxis()
   %call zeroFieldsinTrapPgc()

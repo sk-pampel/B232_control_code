@@ -7,11 +7,11 @@ def gsbc_radial():
   dac: probePower 0
   var eoamp 0.255555555 % 0.255
   var sigmarepumpfreqscan -.1
-  var opFreq 2.05 %1.829 % 1.6
+  var opFreq 1.9 %1.829 % 1.6
   daclinspace: motFreq defaultMotFreq opFreq 1 10  
   t += 2 
-  var sigmaoppowscan 0.1 %2 %0.15
-  var sigma_repump_pow 0.1 %0.1
+  var sigmaoppowscan 0 %2 %0.15
+  var sigma_repump_pow 0.2 % %0.1
   dac: sigmaoppower { sigmaoppowscan sigma_op } 
   dac: sigmarepumpPower { sigma_repump_pow sigma_repump } 
   dac: sigmaRepumpFreq sigmarepumpfreqscan 
@@ -23,7 +23,7 @@ def gsbc_radial():
   pulseon: topPulseTrig 0.01
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % pulse times must match Agilent pulse times
-% putting variable in sequence causes Chimera to freeze
+% putting variable in repeat sequence causes Chimera to freeze
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
   repeat: 100 
     call topRamanPulse(.04) %% tbsbcpulselen

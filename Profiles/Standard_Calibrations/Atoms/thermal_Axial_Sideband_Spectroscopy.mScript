@@ -19,8 +19,6 @@ pulseon: tweezerIntensityTrig 0.1 % to RamanDepth
 call pump2stretch()
 on: totalRamanRf
 t += 1
-call gsbc()
-t += 0.1
 call triggerWindFreak() % to spec freq
 t += 1
 dac: eoPulseLev { 0.255 eo_raman } 

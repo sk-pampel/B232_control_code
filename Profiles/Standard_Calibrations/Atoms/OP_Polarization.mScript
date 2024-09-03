@@ -1,38 +1,20 @@
 % Master-Script See the "?" for info on commands.
 t = 0.1
-
-on: tweezerrf 
-off: axialRamanShutter  
-off: probeShutter 
-pulseon: dds_reset 1.1
-pulseon: windfreakTrig 0.05
-
-t += 1
-call turnonmot() 
-t += loadmottime
-pulseon: scoutTrig 0.1
-t += 2
+on: tweezerrf
+pulseon: dds_reset 0.1
+call turnonmot()
+t += loadMotTime
 call pgcloading()
-t += 1
-%call D1GreyLambdaLoading() 
-%pulseon: windfreakTrig 0.05
-%t += 20
-t += 1
-pulseon: tweezerIntensityTrig 0.1 %to imaging depth
-%pulseon: dds_step 5
+t += 2
+pulseon: tweezerIntensityTrig 0.1 % to imagingDepth 
 call stdPgcImage()
-%t += 50
-t += 1
-pulseon: tweezerIntensityTrig 0.1 %to intrap cooling depth
-t += 1
+t += 5
+pulseon: tweezerIntensityTrig 0.1 % to intraplgmDepth
+t += 5
 call intrappgc()
-%call intrapgreymolasses() 
 t += 1
-
-pulseon: tweezerIntensityTrig 0.1 %to pump depth
-
-t += 1
-call pump2Stretch()
+pulseon: tweezerIntensityTrig 0.1 % to RamanDepth
+call pump2stretch()
 t += 1
 
 off: sigmaRepumpRf
@@ -48,27 +30,17 @@ call setQuantAxis()
 dac: sigmaopfreq sigmaopfreqscan 
 daclinspace: motFreq defaultMotFreq opFreq 1 10  
 dac: sigmaoppower { sigmaoppowscan sigma_op }
-t += 1.01
 on: sigmaOpRf
 t += opPulseLength2
 off: sigmaOpRf 
 dac: sigmaoppower 0
 var finPumpFreq -0.5
 daclinspace: motFreq opFreq finPumpFreq 0.2 10 
-
-var t_wait 1 
-t += t_wait
-pulseon: tweezerIntensityTrig 0.1 %to pushout depth
 call pushout()
-%call pushout_all()
-
-
-t += 1
-pulseon: tweezerIntensityTrig 0.1 %to drop depth
-t += 1.1
+pulseon: tweezerIntensityTrig 0.1 %to pushout depth
+t += 7
 
 pulseon: tweezerIntensityTrig 0.1 %to image depth
-t += 1
 call stdPgcImage()
 t += 1
 pulseon: tweezerIntensityTrig 0.1 %to loading depth 

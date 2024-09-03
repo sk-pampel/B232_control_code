@@ -1,8 +1,8 @@
 var loadingDepth 15 % 13.4 10
 var imagingDepth 10 % 12.7 9
-var intrapcooldepth 16
+var intrapcooldepth 14
 var ramanDepth 19 
-var pushoutDepth 2
+var pushoutDepth 3
 
 
 

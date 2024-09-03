@@ -10,6 +10,7 @@ t += 2
 pulseon: tweezerIntensityTrig 0.1 % to imagingDepth 
 call stdPgcImage()
 t += 5
+on: axialRamanShutter
 pulseon: tweezerIntensityTrig 0.1 % to intraplgmDepth
 t += 5
 call intrappgc()
@@ -19,13 +20,13 @@ pulseon: tweezerIntensityTrig 0.1 % to RamanDepth
 call pump2stretch()
 on: totalRamanRf
 t += 1
-call gsbc_radial()
+call gsbc()
 t += 0.1
 call triggerwindfreak() % to spectroscopy freq
 t += 1
 dac: eopulselev { 0.255 eo_raman } 
 call send_uw_to_raman_eom() 
-on: a15 
+%on: a15 
 pulseon: topPulseTrig 0.01
 call TopRamanPulse(tbspecpulselen)
 off: a15

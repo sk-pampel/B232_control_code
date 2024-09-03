@@ -27,10 +27,10 @@ def gsbc():
 % putting variable in sequence causes Chimera to freeze
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
   repeat: 100 
-    call axialRamanPulse(0.07) %% axsbcpulselen
-    call opPulse(0.1) %% opsbcpulselen
+    call axialRamanPulse(.085) %% axsbcpulselen
+    call opPulse(0.06) %% opsbcpulselen
     call topRamanPulse(.04) %% tbsbcpulselen
-    call opPulse(0.1) %% opsbcpulselen\
+    call opPulse(0.06) %% opsbcpulselen\
 
   end	
   off: a15

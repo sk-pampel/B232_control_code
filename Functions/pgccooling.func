@@ -7,12 +7,12 @@ def PgcCooling():
   call zeroFieldsPgcFreespace()
   %Set beam powers for PGC and turn on beams 
   % (should already be on, but just in case):
-  var cooling_freq 1.1 
-  var diag_mot_power 3.2 %0.27
+  var cooling_freq 0.5 %1.1 
+  var diag_mot_power 3 %0.27
   daclinspace: MotFreq defaultMotFreq cooling_freq 1 10
   % to let the ramp finish
   var sidemot_power 0.7
-  dac: repumpPower 0.1   
+  dac: repumpPower 0.2   
   dac: diagMotPower { diag_mot_power diagmot }
   dac: sideMotPower { sideMot_Power sidemot }
   t += 1
