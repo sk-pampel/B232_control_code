@@ -1,0 +1,14 @@
+var loadingDepth 16  
+var imagingDepth 12 
+var intrapCoolDepth 22 %15.4 %20.4 
+
+hold loadingDepth 1 onceWaitTrig #   
+ramp lin loadingDepth imagingDepth 1 onceWaitTrig #
+ramp lin imagingDepth intrapCoolDepth 1 onceWaitTrig # 
+ramp lin intrapCoolDepth imagingDepth 1 onceWaitTrig #
+ramp lin imagingDepth loadingDepth 1 once #
+ 
+  
+  
+ 
+ 

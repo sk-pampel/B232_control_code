@@ -9,7 +9,7 @@ repeatForever
 gen7const_v Horizontal
 freqs pows phases # 
 gen1const Vertical
-75	1	0 #
+81	1	0 #
 0.01 0
 endRepeat
 

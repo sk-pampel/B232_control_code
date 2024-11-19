@@ -3,9 +3,9 @@ def PgcLoading():
   %on: tweezerrf
   %t += 1
   call zeroFieldsPgc()
-  var loading_detuning 1.4 %1.4
-  var diagmot_power 2.1 %0.35 %0.27
-  var sidemot_power 1.4 %1.5 %1 %2.2
+  var loading_detuning 1.45 %1.4
+  var diagmot_power 1 %0.35 %0.27
+  var sidemot_power 2 %1.5 %1 %2.2
   var repump_power 0.15
   var pgc_time 20
   dacLinSpace: MotFreq defaultmotFreq loading_detuning 1 10

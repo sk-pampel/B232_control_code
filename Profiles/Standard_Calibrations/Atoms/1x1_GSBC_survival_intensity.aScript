@@ -1,9 +1,9 @@
 var loadingDepth 2
-var intrapcooldepth 2.25 
+var intrapcooldepth 2.6 
 var imagingDepth 1.3
-var ramanDepth 2.3 %2.7
+var ramanDepth 2.4 
 var pushoutDepth 0.3
-
+%var lowDepth .0085
 
 hold loadingDepth 1 onceWaitTrig #   
 ramp lin loadingDepth imagingDepth 1 onceWaitTrig # 

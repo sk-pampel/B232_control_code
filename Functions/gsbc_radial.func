@@ -6,12 +6,12 @@ def gsbc_radial():
   off: repumpRf
   dac: probePower 0
   var eoamp 0.255555555 % 0.255
-  var sigmarepumpfreqscan -.1
-  var opFreq 1.9 %1.829 % 1.6
+  var sigmarepumpfreqscan 0
+  var opFreq 1.857 %1.829 % 1.6
   daclinspace: motFreq defaultMotFreq opFreq 1 10  
   t += 2 
   var sigmaoppowscan 0 %2 %0.15
-  var sigma_repump_pow 0.2 % %0.1
+  var sigma_repump_pow 0.15 % %0.1
   dac: sigmaoppower { sigmaoppowscan sigma_op } 
   dac: sigmarepumpPower { sigma_repump_pow sigma_repump } 
   dac: sigmaRepumpFreq sigmarepumpfreqscan 

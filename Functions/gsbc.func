@@ -4,14 +4,15 @@ def gsbc():
   % to let the servo settle
   off: probeRf
   off: repumpRf
+  on: b10
   dac: probePower 0
   var eoamp 0.25555555 % 0.255
-  var sigmarepumpfreqscan -.1
-  var opFreq 1.8 %1.829 % 1.6
+  var sigmarepumpfreqscan 0
+  var opFreq 1.9 %1.829 % 1.6
   daclinspace: motFreq defaultMotFreq opFreq 1 10  
-  t += 2 
-  var sigmaoppowscan 0.1 %2 %0.15
-  var sigma_repump_pow 0.1 %0.2
+  t += 10
+  var sigmaoppowscan 0 %.1 %2 %0.15
+  var sigma_repump_pow 0.15 %0.2
   dac: sigmaoppower { sigmaoppowscan sigma_op } 
   dac: sigmarepumpPower { sigma_repump_pow sigma_repump } 
   dac: sigmaRepumpFreq sigmarepumpfreqscan 
@@ -28,12 +29,13 @@ def gsbc():
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
   repeat: 100 
     call axialRamanPulse(.085) %% axsbcpulselen
-    call opPulse(0.06) %% opsbcpulselen
+    call opPulse(0.02) %% opsbcpulselen
     call topRamanPulse(.04) %% tbsbcpulselen
-    call opPulse(0.06) %% opsbcpulselen\
+    call opPulse(0.02) %% opsbcpulselen\
 
   end	
   off: a15
+  off: b10
   dac: sigmaoppower 0
   dac: sigmarepumpPower 0
   dac: topPulseLev 0

@@ -13,7 +13,7 @@ def stdPgcImage():
   %call zeroFieldsImage()
   dac: diagMotPower 0
   var image_detuning 1.58 % peak around 250
-  var image_power 4
+  var image_power 2.5
   dac: SideMotPower { image_power sidemot } % 2 0.9 
   dac: RepumpPower { 0.2 repump } 
   dac: DiagMotPower { 0 diagmot } 

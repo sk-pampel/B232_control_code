@@ -1,15 +1,17 @@
 % Master-Script See the "?" for info on commands.
-def pump2stretch():
+def pump2stretch(): 
+  on: b10
   dac: probePower 0
   off: probeRf
   off: repumpRf
-  var opFreq 1.98 %1.98
-  var opPulseLength 0.1 %0.2 % .015 %0.15
-  var sigmaoppowscan 1 %2.8 % 2 %1
-  var sigmarepumpfreqscan 0 % -0.1 %-.25 
-  var sigmarepumppowscan 0.1 %0.15 %0.35
+  var opFreq 1.94 %1.857 %1.98
+  var opPulseLength .1 %0.2 % .015 %0.15
+  var sigmaoppowscan 0.0 %2.8 % 2 %1
+  var sigmarepumpfreqscan 0 %0.15 % -0.1 %-.25 
+  var sigmarepumppowscan 0.15 %0.108 %0.15 %0.35
   % set to 3G field
   call setQuantAxis() 
+  t += 20
   dac: sigmarepumpfreq sigmarepumpfreqscan 
   daclinspace: motFreq defaultMotFreq opFreq 1 10 
   dac: sigmaopfreq 0 
@@ -22,6 +24,7 @@ def pump2stretch():
   off: sigmaOpRf 
   %t += 1
   off: sigmaRepumpRf
+  off: b10
   dac: sigmarepumpPower 0
   dac: sigmaoppower 0
   daclinspace: motFreq opFreq defaultMotFreq 1 10  

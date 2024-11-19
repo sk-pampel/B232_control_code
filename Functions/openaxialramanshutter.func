@@ -1,4 +1,3 @@
 def openAxialRamanShutter():
 	on: axialRamanShutter 
-	on: axialRamanShutter2
 

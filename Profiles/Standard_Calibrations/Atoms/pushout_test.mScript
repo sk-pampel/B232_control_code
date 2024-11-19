@@ -6,6 +6,7 @@ call turnonmot()
 t += loadMotTime
 call pgcloading()
 t += 2
+pulseon: niawgTrig 0.1 % to imaging/cooling bias
 pulseon: tweezerIntensityTrig 0.1 % to imagingDepth 
 call stdPgcImage()
 t += 5
@@ -13,14 +14,16 @@ pulseon: tweezerIntensityTrig 0.1 % to intraplgmDepth
 t += 5
 call intrappgc()
 t += 1
-pulseon: tweezerIntensityTrig 0.1 % to pumpDepth
+pulseon: tweezerIntensityTrig 0.1 % to Raman depth
 call pump2stretch()
 t += 1
-call pushout()
+t += wait_time
 pulseon: tweezerIntensityTrig 0.1 % to pushout depth
-t += purify_time
+call pushout()
+t += 1
 pulseon: tweezerIntensityTrig 0.1 %to imaging depth
 call stdPgcImage()
+pulseon: niawgTrig 0.1 % back to loading bias
 pulseon: tweezerIntensityTrig 0.1 %to loading depth
 t += 0.2
 

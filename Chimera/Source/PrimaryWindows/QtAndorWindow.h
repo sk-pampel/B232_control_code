@@ -43,6 +43,7 @@ class QtAndorWindow : public IChimeraQtWindow{
 		void initializeWidgets ();
 
 		void handleBumpAnalysis (profileSettings finishedProfile);
+		void handlePiTimeAnalysis(profileSettings finishedProfile);
 		/// directly called by the message map or 1 simple step removed.
 		void wakeRearranger ();
 		void handleSpecialGreaterThanMaxSelection ();

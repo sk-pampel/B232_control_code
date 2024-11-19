@@ -1,4 +1,0 @@
-def closeLGMshutter():
-    off: shutter795diag
-    off: shutter795side
-

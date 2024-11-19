@@ -1,4 +1,0 @@
-def openLGMshutter():
-    on: shutter795diag
-    on: shutter795side
-

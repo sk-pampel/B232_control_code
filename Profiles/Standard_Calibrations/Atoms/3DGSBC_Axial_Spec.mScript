@@ -6,7 +6,9 @@ call turnonmot()
 t += loadMotTime
 call pgcloading()
 t += 2
-pulseon: tweezerIntensityTrig 0.1 % to imagingDepth 
+pulseon: tweezerIntensityTrig 0.1 % to imagingDepth
+pulseon: niawgTrig 0.1 % to imaging and cooling bias
+ 
 call stdPgcImage()
 t += 5
 call openAxialRamanShutter()
@@ -32,13 +34,14 @@ dac: eoPulseLev 0
 off: axialRamanShutter 
 % t += 20
 t += 0.1 
-call pushout()
 pulseon: tweezerIntensityTrig 0.1 % to pushout depth
-t += 5
+call pushout()
+t += 1
 pulseon: tweezerIntensityTrig 0.1 % to imaging
 t += 1
 call stdPgcImage()
 pulseon: tweezerIntensityTrig 0.1 % to loading
+pulseon: niawgTrig 0.1 % back to loading
 t += 1
 off: windfreakTrig
 t += 0.2

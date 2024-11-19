@@ -1,0 +1,59 @@
+def freeSpaceImage_2021():
+  % give the shutter some time to open.
+  var FSImageTime .015 %0.02 %0.02 %0.01
+  var offsetTime 0.0
+  var sideMotScan 6 %8.0 % 6 %9.1
+  var diagmotscan 0.0
+  var toftimescan .01 %0.1
+  var image_detuning 1.72
+  var shutterOffset 15
+  var repumpscan 0.4
+  off: diagMotRf
+  off: sigmaOpRf 
+  off: sigmaRepumpRf
+  off: proberf
+  off: totalRamanRf
+  t += -shutterOffset
+  on: repumpShutter
+  on: sidemotShutter
+  on: diagmotShutter
+  call openAndorShutter()
+  t += shutterOffset
+  dac: diagMotPower 0 
+  
+  dacLinSpace: MotFreq defaultMotFreq image_detuning 1 10
+  call zeroFields()
+
+  dac: SideMotPower { sideMotScan sidemot } %sideMotScan 9
+  dac: RepumpPower { repumpscan repump } %repumpscan 0.2
+  dac: DiagMotPower { diagmotscan diagmot } %diagmotscan 0.86
+
+  off: rf795
+  off: tweezerrf
+  t += toftimescan
+
+  t += offsetTime
+  pulseon: andorTrig FSImageTime 
+  pulseon: a15 0.001
+  t += (-1*offsetTime)
+
+  on: a15
+  on: SideMotRf
+  off: diagMotRf
+  on: repumpRf
+  
+  %on: andorTrig
+  
+  t += fSImageTime 
+  off: a15
+  call closeAndorShutter()
+  off: SideMotRf
+  off: diagMotRf
+  off: repumpRf
+
+  dac: DiagMotPower 0
+  dac: SideMotPower 0
+  dac: RepumpPower 0
+  dacLinSpace: MotFreq image_detuning defaultMotFreq 2 10
+  t += 1
+  t += 0.2

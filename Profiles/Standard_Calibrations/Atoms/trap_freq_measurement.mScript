@@ -12,6 +12,7 @@ t += 2
 call pgcloading()
 t += 2
 Pulseon: tweezerIntensityTrig 0.1 % to img depth
+pulseon: niawgTrig 0.1 % imaging/cooling bias
 t += 1
 call stdPgcImage()
 t += 5
@@ -22,6 +23,8 @@ call intrappgc()
 t += 2
 
 Pulseon: tweezerIntensityTrig 0.1 % to modulation
+pulseon: niawgTrig 0.1 % modulation
+
 t += 2
 
 %on: a15
@@ -37,6 +40,8 @@ off: axialmicropulsetrig
 off: a15
 t += .1
 Pulseon: tweezerIntensityTrig 0.1 % to pushout depth
+pulseon: niawgTrig 0.1 % imaging
+
 t += 20
 Pulseon: tweezerIntensityTrig 0.1 % to img depth
 t += 1

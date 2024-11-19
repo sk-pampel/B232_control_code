@@ -1,0 +1,67 @@
+% LOW FREQUENCY MEANS LOWER/LEFT ON SCREEN
+
+var vStdBias 0.82
+var vMainFreq 81 
+var hMainFreq 75
+var vDumpFreq 117 
+var hStdBias 0.6
+var hTofBias 0.6
+var hLoadBias 0.91 % 0.833
+var vDumpBias 0.1 % 0.06=8uK % 0.01
+var hOffset 0.75
+var_v 2 linR [ lin lin ]
+var_v 2 tanhR [ tanh tanh ] 
+var_v 2 hFreqs [ hMainFreq (hMainFreq+12) ] 
+var_v 2 hDFreqs [ hMainFreq+hOffset (hMainFreq+12+hOffset) ]   
+var_v 2 hLoadBi [ 1 0 ]
+var_v 2 hStdBi [ hStdBias (1-hStdBias) ] 
+var_v 2 zPhases [ 0 0 ]   
+var_v 2 vFreqs [ vMainFreq vDumpFreq ]
+var_v 2 vLoadBi [ (1-hLoadBias) hLoadBias ] 
+var_v 2 vStdBi [ (1-vStdBias) vStdBias ] 
+var_v 2 vTofBi [ vDumpBias (1-vDumpBias) ]
+var_v 2 hTofBi [ hTofBias (1-hTofBias) ]
+
+%% hold at loading bias
+repeatTilTrig 
+gen2const_v Horizontal hFreqs hLoadBi zPhases #  
+gen2const_v Vertical vFreqs vLoadBi zPhases #
+0.01 0 endRepeat
+
+%% ramp to imaging/cooling bias
+gen2ampRamp_v Horizontal hFreqs linR hLoadBi hStdBi zPhases #  
+gen2ampRamp_v Vertical vFreqs linr vLoadBi vStdBi zPhases #
+0.01 0 
+
+%% keep at imaging/cooling bias
+repeatTilTrig 
+gen2const_v Horizontal hFreqs hStdBi zPhases #  
+gen2const_v Vertical vFreqs vStdBi zPhases #
+0.01 0 endRepeat
+
+%% ramp to TOF bias
+gen2ampramp_v Horizontal
+hFreqs tanhR hStdBi hTofBi zphases # 
+gen2ampramp_v Vertical
+vFreqs	tanhR vStdBi vTofBi zphases #
+1 0
+
+%% hold at TOF bias
+repeatTilTrig
+gen2const_v Horizontal
+hFreqs hTofBi zphases # 
+gen2const_v Vertical
+vFreqs vTofBi zphases #
+0.01 0
+endRepeat
+
+%% displacement
+repeatTilTrig
+gen2const_v Horizontal
+hDFreqs hTofBi zphases # 
+gen2const_v Vertical
+vFreqs vTofBi zphases #
+0.01 0
+endRepeat
+
+

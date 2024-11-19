@@ -7,19 +7,21 @@ t += loadMotTime
 call pgcloading()
 t += 2
 pulseon: tweezerIntensityTrig 0.1 % to imagingDepth 
+pulseon: niawgTrig 0.1 % imaging/cooling bias
+
 call stdPgcImage()
 t += 5
 pulseon: tweezerIntensityTrig 0.1 % to intraplgmDepth
 t += 5
 call intrappgc()
 t += 1
+call send_uw_to_raman_eom() 
 pulseon: tweezerIntensityTrig 0.1 % to RamanDepth
 call pump2stretch()
 call triggerwindfreak() % to spectroscopy freq
 on: totalRamanRf
 t += 1
 dac: eopulselev { 0.255 eo_raman } 
-call send_uw_to_raman_eom() 
 on: a15 
 pulseon: topPulseTrig 0.01
 call TopRamanPulse(tbspecpulselen)
@@ -29,13 +31,14 @@ off: axialRamanShutter
 dac: topPulseLev 0
 dac: eoPulseLev 0
 t += 1
-call pushout()
 pulseon: tweezerIntensityTrig 0.1 % to pushout depth
-t += 7
+call pushout()
 pulseon: tweezerIntensityTrig 0.1 %to imaging depth
-t += 1
+t += 5
 call stdPgcImage()
 pulseon: tweezerIntensityTrig 0.1 %to loading depth
+pulseon: niawgTrig 0.1 % loading bias
+
 t += 0.2
 
 

@@ -1,3 +1,0 @@
-def sendUwToRamanEom():
-  on: eoswitch
-  on: eoswitch2

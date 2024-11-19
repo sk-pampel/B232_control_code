@@ -10,42 +10,27 @@ t += loadmottime
 pulseon: scoutTrig 0.1
 on: tweezerrf
 t += 2
-%call D1GreyLambdaLoading()
 call pgcloading() 
 t += 2
 pulseon: tweezerIntensityTrig 0.1 
-pulseon: dds_step 5
 call stdPgcImage()
 t += 5
 pulseon: tweezerIntensityTrig 0.1
 t += 1
-%call intrapgreymolasses()
 call intrappgc()
-on: repumpRf
-t += 1
-off: repumpRf
-off: repumpShutter
 pulseon: tweezerIntensityTrig 0.1 %to pump depth
-
 t += 1
 call pump2Stretch()
-%call pump2f1()
-
-t += 5
+t += 1
 pulseon: tweezerIntensityTrig 0.1 %pushoutDepth
-t += 1.1
 call pushout()
 %call pushout_all()
 t += 1.1
-%pulseon: tweezerIntensityTrig 0.1 %dropdepth
-t += 5
 
 pulseon: tweezerIntensityTrig 0.1 %imagingdepth
 t += 1.1
 call stdPgcImage()
 t += 1
-pulseon: tweezerIntensityTrig 0.1 %loadingdepth
-t += 1
- 
+pulseon: tweezerIntensityTrig 0.1 %loadingdepth 
 
-t += 25
+t += 5

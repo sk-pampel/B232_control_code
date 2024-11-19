@@ -1,0 +1,33 @@
+% LOW FREQUENCY MEANS LOWER/LEFT ON SCREEN
+%%-----------------------------------------------------------%%
+
+var_v 1 freqs [ 75 ] 
+
+var_v 1 pows [ 0.15390372855021173 ]
+
+var_v 1 phases [ 0 ]
+
+var csOffset 0.5
+
+var_v 1 csFreqs [ 75+csOffset ]
+
+repeatTilTrig
+gen1const_v Horizontal
+freqs pows phases # 
+gen1const Vertical
+75	1	0 #
+0.01 0
+endRepeat
+
+% sudden frequency change! no ramp!
+repeatTilTrig
+gen1const_v Horizontal
+csFreqs pows phases # 
+gen1const Vertical
+75	1	0 #
+0.01 0
+endRepeat
+
+
+
+

@@ -1,3 +1,0 @@
-def send_uw_to_horn():
-  on: eoswitch
-  off: eoswitch2

@@ -899,6 +899,7 @@ void QtAndorWindow::handleNormalFinish (profileSettings finishedProfile) {
 	wakeRearranger ();
 	cleanUpAfterExp ();
 	handleBumpAnalysis (finishedProfile);
+
 	assertOff();
 }
 

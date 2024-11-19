@@ -8,7 +8,7 @@ def PgcCooling():
   %Set beam powers for PGC and turn on beams 
   % (should already be on, but just in case):
   var cooling_freq 0.5 %1.1 
-  var diag_mot_power 3 %0.27
+  var diag_mot_power 2.8 %0.27
   daclinspace: MotFreq defaultMotFreq cooling_freq 1 10
   % to let the ramp finish
   var sidemot_power 0.7

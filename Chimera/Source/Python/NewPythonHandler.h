@@ -12,4 +12,6 @@ class NewPythonHandler {
 							  std::vector<coordinate> atomLocations);
 		double runCarrierAnalysis (std::string date, long runNumber, atomGrid gridInfo, QWidget* parent);
 		std::vector<double> runCalibrationFits (calSettings cal, QWidget* parent);
+		// radial BS pi time declaration
+		double runRadialPiTimeAnalysis(std::string date, long runNumber, atomGrid gridInfo, QWidget* parent);
 };

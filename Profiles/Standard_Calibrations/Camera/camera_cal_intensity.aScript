@@ -1,0 +1,11 @@
+var loadingdepth 18 %12 %15.25
+var imagingDepth 10 %14 %18.5
+var intrappgcdepth 17
+
+
+hold loadingDepth 1 oncewaittrig #  
+ramp lin loadingDepth imagingdepth 1 oncewaittrig #
+ramp lin imagingdepth imagingDepth 1 oncewaittrig #
+ramp lin imagingdepth loadingDepth 1 once #  
+
+
