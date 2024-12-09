@@ -23,7 +23,6 @@ call intrappgc()
 t += 2
 
 Pulseon: tweezerIntensityTrig 0.1 % to modulation
-pulseon: niawgTrig 0.1 % modulation
 
 t += 2
 
@@ -34,20 +33,21 @@ t += 2
 %%%% hold at U=3 for 20 ms 
 
 on: a15
+%pulseon: axialmicropulsetrig 0.1
+t += 1
 on: axialmicropulsetrig 
 t += 50
 off: axialmicropulsetrig
 off: a15
 t += .1
 Pulseon: tweezerIntensityTrig 0.1 % to pushout depth
-pulseon: niawgTrig 0.1 % imaging
 
 t += 20
 Pulseon: tweezerIntensityTrig 0.1 % to img depth
 t += 1
 call stdPgcImage()
 t += 1
-
+pulseon: niawgTrig 0.1 % loading
 pulseon: tweezerIntensityTrig 0.1 % to loading depth
 t += 10
 

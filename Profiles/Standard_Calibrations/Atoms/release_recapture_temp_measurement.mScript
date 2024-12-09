@@ -10,7 +10,7 @@ t += loadmottime
 call triggerwindfreak() % D1 loading repump
 call pgcloading()
 t += 2
-%pulseon: niawgTrig 0.1 % to image/coolin bias
+pulseon: niawgTrig 0.1 % to image/coolin bias
 Pulseon: tweezerIntensityTrig 0.1 % to img depth
 
 call stdPgcImage()
@@ -40,7 +40,7 @@ Pulseon: tweezerIntensityTrig 0.1 % to img depth
 t += 1
 call stdPgcImage()
 t += 1
-%pulseon: niawgTrig 0.1 % back to loading bias
+pulseon: niawgTrig 0.1 % back to loading bias
 pulseon: tweezerIntensityTrig 0.1 % to loading depth
 t += 1
 

@@ -1,5 +1,5 @@
-var loadingDepth 16  
-var imagingDepth 12 
+var loadingDepth 14  
+var imagingDepth 10 
 var intrapCoolDepth 19.5 %15.4 %20.4 
 var releaseDepth 19
 
