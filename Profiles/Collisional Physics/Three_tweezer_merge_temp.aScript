@@ -1,0 +1,18 @@
+var loadingdepth 12
+var imagingDepth 5.5
+var intrapCoolingDepth 5.5
+var movingDepth .7 
+var singleDepth .3 
+var collisionDepth 1.5 % 2.5 = 1 mk    1.5= .5 mk
+var singleCoolingDepth 5.5
+var singleImgDepth 2.5 % 
+
+hold loadingDepth 1 onceWaitTrig #  
+ramp lin loadingDepth imagingDepth 1 onceWaitTrig #  
+ramp lin imagingDepth intrapCoolingDepth 1 onceWaitTrig #
+ramp lin intrapCoolingDepth movingDepth 1 onceWaitTrig #
+ramp lin movingDepth singleDepth 1 onceWaitTrig # 
+ramp lin singleDepth collisionDepth 1 onceWaitTrig #
+ramp lin collisionDepth singleCoolingDepth 1 onceWaitTrig #
+ramp lin singleCoolingDepth singleImgDepth 1 onceWaitTrig #
+ramp lin singleImgDepth loadingDepth 1 once #

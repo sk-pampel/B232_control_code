@@ -1,0 +1,52 @@
+%% Master-Script See the "?" for info on commands.
+% Time starts at 1 ms.
+t = 0.1
+
+on: tweezerRf 
+t += 1
+call triggerwindfreak() % d1 repump freq
+pulseon: dds_reset 0.1 % repump and D1 collision
+call turnonmot()
+t += loadmottime
+pulseon: scoutTrig 0.1 % MOT image
+call pgcloading()
+t += 1
+Pulseon: tweezerIntensityTrig 0.1 % to img depth
+t += 2
+call stdPgcImage()
+t += 1
+Pulseon: tweezerIntensityTrig 0.1 % to cooling depth
+t += 20
+%call intrappgc()
+t += 1
+pulseon: tweezerIntensityTrig 0.1 % to moving depth
+t += 1
+pulseon: niawgTrig 0.1 % Begin merge: freq ramp, amp ramp
+t += 1
+pulseon: tweezerIntensityTrig 0.1 % to single depth
+t += 1
+pulseon: tweezerIntensityTrig 0.1 % to collision depth
+
+t += 1
+%call gmcollisions20()
+t += 1
+
+
+off: tweezerRf
+t += releaseTime
+on: tweezerRf
+
+t += 1
+pulseon: tweezerIntensityTrig 0.1 % to single cooling depth
+t += 2
+call intrappgc() 
+t += 2
+pulseon: tweezerIntensityTrig 0.1 % to single image depth
+t += 15
+call stdPgcImage()
+t += 1
+pulseon: tweezerIntensityTrig 0.1 % to loading depth
+pulseon: niawgTrig 0.1 % back to initial spacing
+t += 10
+
+  

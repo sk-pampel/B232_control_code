@@ -1,0 +1,120 @@
+% LOW FREQUENCY MEANS LOWER/LEFT ON SCREEN
+
+
+var vMainFreq 81 
+var hMainFreq 75
+var vDumpFreq 117 
+var vStdBias .09 % 0.82
+var hStdBias .15 %0.6
+var vLoadBias .13 %0.91 % 0.833
+var vTOFBias .13 %0.06 % 0.06 % 0.01
+var VModBiOff .1
+
+var_v 2 vModBiMin [ (vTOFBias-VModBiOff) (1-vTOFBias+VModBiOff) ] 
+var_v 2 vModBiMax [ (vTOFBias+VModBiOff) (1-vTOFBias-VModBiOff) ]
+
+var_v 2 sineq [ sinequarter sinequarter ]
+var_v 2 sineh [ sinehalf sinehalf ]
+var_v 2 cosq [ cosinequarter cosinequarter ]
+
+var_v 2 linR [ lin lin ]
+var_v 1 linRone [ lin ]
+var_v 2 tanhR [ tanh tanh ] 
+var_v 1 tanhRone [ tanh ] 
+var_v 1 hPhases [ 0 ] 
+var_v 1 hFreqs [ hMainFreq ] 
+var_v 1 hStdBi [ hStdBias ] 
+var_v 2 vPhases [ 0 0 ]   
+var_v 2 vFreqs [ vMainFreq vDumpFreq ]
+var_v 2 vLoadBi [ vLoadBias (1-vLoadBias) ] 
+var_v 2 vStdBi [ vStdBias (1-vStdBias) ] 
+var_v 2 vTofBi [ vTOFBias (1-vTOFBias) ]
+
+%% hold at loading bias
+repeatTilTrig 
+gen1const_v Horizontal hFreqs hStdBi hPhases #  
+gen2const_v Vertical vFreqs vLoadBi vPhases #
+0.01 0 endRepeat
+
+%% ramp to imaging/cooling bias
+gen1const_v Horizontal hFreqs hStdBi hPhases # 
+gen2ampRamp_v Vertical vFreqs linr vLoadBi vStdBi vPhases #
+0.01 0 
+
+%% keep at imaging/cooling bias
+repeatTilTrig 
+gen1const_v Horizontal hFreqs hStdBi hPhases #  
+gen2const_v Vertical vFreqs vStdBi vPhases #
+0.01 0 endRepeat
+
+%% ramp to TOF bias
+gen1const_v Horizontal hFreqs hStdBi hPhases # 
+gen2ampramp_v Vertical
+vFreqs	tanhR vStdBi vTofBi vphases #
+1 0
+
+%% hold at TOF bias
+repeatTilTrig
+gen1const_v Horizontal
+hFreqs hStdBi hPhases # 
+gen2const_v Vertical
+vFreqs vTofBi vPhases #
+0.01 0
+endRepeat
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ramp sine to amp max (quarter period)
+gen1const_v Horizontal hFreqs hStdBi hPhases #
+gen2ampRamp_v Vertical vFreqs sineq vTOFBi vModBiMax vPhases #
+.001 0 
+
+repeatSet# 4 
+gen2ampRamp_v Vertical
+vFreqs sineh vModBiMax vModBiMin vPhases #
+gen1const_v Horizontal hFreqs hStdBi hPhases #
+.002 0 
+
+gen2ampRamp_v Vertical
+vFreqs sineh vModBiMin vModBiMax vPhases #
+gen1const_v Horizontal hFreqs hStdBi hPhases #
+.002 0 endRepeat
+
+
+% ramp cos to TOF bias (quarter period)
+gen2ampRamp_v Vertical
+vFreqs cosq vModBiMax vTOFBi vPhases #
+gen1const_v Horizontal hFreqs hStdBi hPhases #
+.001 0 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% hold at TOF bias
+repeatTilTrig 
+gen1const_v Horizontal hFreqs hStdBi hPhases #  
+gen2const_v Vertical vFreqs vTOFBi vPhases #
+0.01 0 endRepeat
+
+
+%% ramp to imaging/cooling bias
+gen1const_v Horizontal hFreqs hStdBi hPhases #   
+gen2ampRamp_v Vertical vFreqs tanhr vTOFBi vStdBi vPhases #
+0.01 0 
+
+%% keep at imaging/cooling bias
+repeatTilTrig 
+gen1const_v Horizontal hFreqs hStdBi hPhases #  
+gen2const_v Vertical vFreqs vStdBi vPhases #
+0.01 0 endRepeat
+
+
+
+%% displacement
+%repeatTilTrig
+%gen1const_v Horizontal
+%hDFreqs hTofBi hphases # 
+%gen2const_v Vertical
+%vFreqs vTofBi zphases #
+%0.01 0
+%endRepeat
+
+
