@@ -638,7 +638,16 @@ void NiawgCore::loadStandardInputFormType(std::string inputType, channelWaveForm
 			wvInfo.initType = number + 6 * NiawgConstants::MAX_NIAWG_SIGNALS;
 		}
 		else if (inputType == "gen" + num_s + "fromsinmod" || inputType == "gen" + num_s + "fromsinmod_v") {
-			wvInfo.initType = number + 6 * NiawgConstants::MAX_NIAWG_SIGNALS;
+			wvInfo.initType = number + 7 * NiawgConstants::MAX_NIAWG_SIGNALS;
+		}
+		else if (inputType == "gen" + num_s + "ampsinmod" || inputType == "gen" + num_s + "ampsinmod_v") {
+			wvInfo.initType = number + 8 * NiawgConstants::MAX_NIAWG_SIGNALS;
+		}
+		else if (inputType == "gen" + num_s + "toampsinmod" || inputType == "gen" + num_s + "toampsinmod_v") {
+			wvInfo.initType = number + 9 * NiawgConstants::MAX_NIAWG_SIGNALS;
+		}
+		else if (inputType == "gen" + num_s + "fromampsinmod" || inputType == "gen" + num_s + "fromampsinmod_v") {
+			wvInfo.initType = number + 10 * NiawgConstants::MAX_NIAWG_SIGNALS;
 		}
 	}
 	if (wvInfo.initType == -1) {
@@ -964,7 +973,13 @@ void NiawgCore::calcWaveData(channelWaveForm& inputData, std::vector<ViReal64>& 
 			&& inputData.waveSigs[signal].powerRamp.type != "sinehalf"
 			&& inputData.waveSigs[signal].powerRamp.type != "sinequarter"
 			&& inputData.waveSigs[signal].powerRamp.type != "cosinequarter"
-			&& inputData.waveSigs[signal].powerRamp.type != "rar" ) {
+			&& inputData.waveSigs[signal].powerRamp.type != "rar"
+			&& inputData.waveSigs[signal].powerRamp.type != "ampsinmod"
+			&& inputData.waveSigs[signal].powerRamp.type != "toampsinmod"
+			&& inputData.waveSigs[signal].powerRamp.type != "fromampsinmod"
+			&& inputData.waveSigs[signal].freqRampType != "sinmod"
+			&& inputData.waveSigs[signal].freqRampType != "tosinmod"
+			&& inputData.waveSigs[signal].freqRampType != "fromsinmod" ) {
 			Segment::analyzeRampFile(inputData.waveSigs[signal].powerRamp, sampleNum);
 		}
 		// If the ramp type isn't a standard command...
@@ -1483,7 +1498,7 @@ void NiawgCore::readTraditionalSimpleWaveParams(ScriptStream& script, std::vecto
 			assertAllValid(sig, parameters);
 			break;
 		}
-		case 4: { // genXsinmod (was timeavg)
+		case 4: { // genXsinmod
 			script >> sig.freqInit >> sig.freqFin >> sig.powerRamp.start >> sig.modFreq >> sig.initPhase;
 			sig.freqRampType = "sinmod";
 			sig.powerRamp.end = sig.powerRamp.start;
@@ -1517,6 +1532,14 @@ void NiawgCore::readTraditionalSimpleWaveParams(ScriptStream& script, std::vecto
 			sig.freqRampType = "fromsinmod";
 			sig.powerRamp.end = sig.powerRamp.start;
 			sig.powerRamp.type = "nr";
+			assertAllValid(sig, parameters);
+			break;
+		}
+		case 8: { // genXampsinmod
+			script >> sig.freqInit >> sig.powerRamp.type >> sig.powerRamp.start >> sig.powerRamp.end >> sig.initPhase;
+			sig.powerRamp.isRamp = true;
+			sig.freqFin = sig.freqInit;
+			sig.freqRampType = "nr";
 			assertAllValid(sig, parameters);
 			break;
 		}
@@ -2187,14 +2210,18 @@ bool NiawgCore::isStandardWaveform(std::string inputType) {
 		if (inputType == "gen" + str(number + 1) + "const" || inputType == "gen" + str(number + 1) + "ampramp"
 			|| inputType == "gen" + str(number + 1) + "freqramp" || inputType == "gen" + str(number + 1) + "freq&ampramp" 
 			|| inputType == "gen" + str(number + 1) + "sinmod" || inputType == "gen" + str(number + 1) + "rar"
-			|| inputType == "gen" + str(number + 1) + "tosinmod" || inputType == "gen" + str(number + 1) + "fromsinmod" ) {
+			|| inputType == "gen" + str(number + 1) + "tosinmod" || inputType == "gen" + str(number + 1) + "fromsinmod"
+			|| inputType == "gen" + str(number + 1) + "ampsinmod" || inputType == "gen" + str(number + 1) + "toampsinmod" 
+			|| inputType == "gen" + str(number + 1) + "fromampsinmod" ) {
 			return true;
 		}
 		// vectorized versions
 		if (inputType == "gen" + str(number + 1) + "const_v" || inputType == "gen" + str(number + 1) + "ampramp_v"
 			|| inputType == "gen" + str(number + 1) + "freqramp_v" || inputType == "gen" + str(number + 1) + "freq&ampramp_v"
 			|| inputType == "gen" + str(number + 1) + "sinmod_v" || inputType == "gen" + str(number + 1) + "rar_v"
-			|| inputType == "gen" + str(number + 1) + "tosinmod_v" || inputType == "gen" + str(number + 1) + "fromsinmod_v") {
+			|| inputType == "gen" + str(number + 1) + "tosinmod_v" || inputType == "gen" + str(number + 1) + "fromsinmod_v"
+			|| inputType == "gen" + str(number + 1) + "ampsinmod_v" || inputType == "gen" + str(number + 1) + "toampsinmod_v"
+			|| inputType == "gen" + str(number + 1) + "fromampsinmod_v" ) {
 			return true;
 		}
 	}

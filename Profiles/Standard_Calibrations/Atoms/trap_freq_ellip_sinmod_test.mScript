@@ -20,7 +20,7 @@ Pulseon: tweezerIntensityTrig 0.1 % to cooling depth
 t += 5
 call intrappgc()
 t += 2
-Pulseon: niawgTrig 0.1 % ramp and hold at TOF bias
+Pulseon: niawgTrig 0.1 % moulate
 Pulseon: tweezerIntensityTrig 0.1 % to modulation
 t += 1
 
@@ -32,7 +32,7 @@ off: a15
 t += 1
 Pulseon: niawgTrig 0.1 % end modulate
 
-t += 1
+t += 1000
 Pulseon: tweezerIntensityTrig 0.1 % to drop depth
 t += 10
 Pulseon: tweezerIntensityTrig 0.1 % to img depth
