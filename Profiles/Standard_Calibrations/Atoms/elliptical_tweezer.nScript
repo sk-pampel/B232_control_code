@@ -1,0 +1,78 @@
+% LOW FREQUENCY MEANS LOWER/LEFT ON SCREEN
+%%-----------------------------------------------------------%%
+var vStdBias 1
+var hStdBias 1 
+var vMainFreq 85 
+var hcf 75
+var vDumpFreq 117 
+var vTOFBias 1
+var iSp 12
+var fSp 2
+var phase1 1.311884828
+var phase2 3.348335934
+var phase3 6.051353821 
+var_v 3 init_pows [ 0 1 0  ] 
+var_v 3 fin_pows [ 0.122013562  0.15390372855021173 0.1175  ] 
+
+var_v 3 hPhases [ phase1 phase2 phase3 ] 
+var_v 3 init_freqs [ (hcf-iSp) (hcf) (hcf+iSp) ]
+var_v 3 fin_freqs [ (hcf-fsp) (hcf) (hcf+fsp) ]
+var_v 3 fRamps [ tanh nr tanh ]
+var_v 3 ampRamps [ lin lin lin ]
+  
+
+var_v 2 vPhases [ 0 0 ]   
+var_v 2 vFreqs [ vMainFreq vDumpFreq ]
+var_v 2 vStdBi [ (vStdBias) (1-vStdBias) ] 
+var_v 2 vTofBi [ vTOFBias (1-vTOFBias) ]
+var_v 2 tanhR [ tanh tanh ]
+ 
+%% loading/cooling 
+repeatTilTrig
+gen3const_v Horizontal init_freqs init_pows hPhases # 
+gen2const_v Vertical vFreqs vStdBi vPhases #
+0.01 0
+endRepeat
+
+%% ramp to TOF bias
+gen3const_v Horizontal init_freqs init_pows hPhases #
+gen2ampramp_v Vertical vFreqs	tanhR vStdBi vTofBi vPhases #
+1 0
+
+%% hold at TOF bias
+repeatTilTrig
+gen3const_v Horizontal init_freqs init_pows hPhases # 
+gen2const_v Vertical vFreqs vTofBi vPhases #
+0.01 0 endRepeat
+
+%% give power to outer tweezers
+gen3ampramp_v Horizontal 
+init_freqs ampRamps init_pows fin_pows hPhases #
+gen2const_v Vertical vFreqs vTofBi vPhases #
+1 0
+
+
+%% ramp outer tweezers to final freqs
+gen3freqramp_v Horizontal
+fRamps init_freqs fin_freqs fin_pows hPhases #
+gen2const_v Vertical vFreqs vTofBi vPhases #
+5 0
+
+%% hold at finFreqs finPowers
+repeatTilTrig 
+gen3const_v Horizontal fin_freqs fin_pows hPhases # 
+gen2const_v Vertical vFreqs vTofBi vPhases #
+0.01 0 endRepeat
+
+
+%% ramp to standard bias
+gen3const_v Horizontal fin_freqs fin_pows hPhases # 
+gen2ampramp_v Vertical vFreqs tanhR vTofBi vStdBi vPhases #
+1 0
+
+
+%% hold at standard bias
+repeatTilTrig
+gen3const_v Horizontal fin_freqs fin_pows hPhases # 
+gen2const_v Vertical vFreqs vStdBi vPhases #
+0.01 0 endRepeat

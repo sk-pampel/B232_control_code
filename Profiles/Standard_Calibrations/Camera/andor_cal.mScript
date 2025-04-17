@@ -11,27 +11,27 @@ t += loadmottime
 call pgcloading()
 t += 2
 pulseon: niawgTrig 0.1 % to imaging and cooling
-Pulseon: tweezerIntensityTrig 0.1 % to img depth
+%Pulseon: tweezerIntensityTrig 0.1 % to img depth
 
 %call stdPgcImage()
 t += 5
 
-Pulseon: tweezerIntensityTrig 0.1 % to cooling depth
+%Pulseon: tweezerIntensityTrig 0.1 % to cooling depth
 t += 5
 
 %call intrappgc()
 
 t += 1
 
-Pulseon: tweezerIntensityTrig 0.1 % to img depth
+%Pulseon: tweezerIntensityTrig 0.1 % to img depth
 t += 1
 call openAndorShutter()
 on: andorTrig
 t += andorImageTime
 off: andorTrig
 t += 1
-pulseon: niawgTrig 0.1 % back to loading
-pulseon: tweezerIntensityTrig 0.1 % to loading depth
+%pulseon: niawgTrig 0.1 % back to loading
+%pulseon: tweezerIntensityTrig 0.1 % to loading depth
 t += 1
 
 

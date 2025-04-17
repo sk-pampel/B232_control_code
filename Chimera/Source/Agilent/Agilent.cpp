@@ -17,20 +17,39 @@
 Agilent::Agilent( const agilentSettings& settings, IChimeraQtWindow* parent ) : IChimeraSystem(parent), core(settings),
 initSettings(settings), agilentScript(parent){}
 
-void Agilent::programAgilentNow (std::vector<parameterType> constants){
-	readGuiSettings ();
-	std::string warnings_;
-	if (currentGuiInfo.channel[0].scriptedArb.fileAddress.expressionStr != ""){
-		currentGuiInfo.channel[0].scriptedArb.wave = ScriptedAgilentWaveform ();
-		core.analyzeAgilentScript (currentGuiInfo.channel[0].scriptedArb, constants, warnings_);
-	}
-	if (currentGuiInfo.channel[1].scriptedArb.fileAddress.expressionStr != ""){
-		currentGuiInfo.channel[1].scriptedArb.wave = ScriptedAgilentWaveform ();
-		core.analyzeAgilentScript (currentGuiInfo.channel[1].scriptedArb, constants, warnings_);
-	}
-	core.convertInputToFinalSettings (0, currentGuiInfo, constants);
-	core.convertInputToFinalSettings (1, currentGuiInfo, constants);
-	core.setAgilent (0, constants, currentGuiInfo, nullptr);
+//void Agilent::programAgilentNow (std::vector<parameterType> constants){
+//	readGuiSettings ();
+//	std::string warnings_;
+//	if (currentGuiInfo.channel[0].scriptedArb.fileAddress.expressionStr != ""){
+//		currentGuiInfo.channel[0].scriptedArb.wave = ScriptedAgilentWaveform ();
+//		core.analyzeAgilentScript (currentGuiInfo.channel[0].scriptedArb, constants, warnings_);
+//	}
+//	if (currentGuiInfo.channel[1].scriptedArb.fileAddress.expressionStr != ""){
+//		currentGuiInfo.channel[1].scriptedArb.wave = ScriptedAgilentWaveform ();
+//		core.analyzeAgilentScript (currentGuiInfo.channel[1].scriptedArb, constants, warnings_);
+//	}
+//	core.convertInputToFinalSettings (0, currentGuiInfo, constants);
+//	core.convertInputToFinalSettings (1, currentGuiInfo, constants);
+//	core.setAgilent (0, constants, currentGuiInfo, nullptr);
+//}
+
+void Agilent::programAgilentNow(std::vector<parameterType> constants) {
+    // Update settings for both channels
+    readGuiSettings(1); // Channel 1
+    readGuiSettings(2); // Channel 2
+
+    std::string warnings_;
+    if (currentGuiInfo.channel[0].scriptedArb.fileAddress.expressionStr != "") {
+        currentGuiInfo.channel[0].scriptedArb.wave = ScriptedAgilentWaveform();
+        core.analyzeAgilentScript(currentGuiInfo.channel[0].scriptedArb, constants, warnings_);
+    }
+    if (currentGuiInfo.channel[1].scriptedArb.fileAddress.expressionStr != "") {
+        currentGuiInfo.channel[1].scriptedArb.wave = ScriptedAgilentWaveform();
+        core.analyzeAgilentScript(currentGuiInfo.channel[1].scriptedArb, constants, warnings_);
+    }
+    core.convertInputToFinalSettings(0, currentGuiInfo, constants);
+    core.convertInputToFinalSettings(1, currentGuiInfo, constants);
+    core.setAgilent(0, constants, currentGuiInfo, nullptr);
 }
 
 std::string Agilent::getDeviceIdentity (){

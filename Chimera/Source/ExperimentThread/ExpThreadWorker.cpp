@@ -1064,6 +1064,33 @@ void ExpThreadWorker::deviceLoadExpSettings (IDeviceCore& device, ConfigStream& 
 	}
 }
 
+//void ExpThreadWorker::deviceProgramVariation(IDeviceCore& device, std::vector<parameterType>& expParams,
+//	unsigned variationInc) {
+//	if (device.experimentActive) {
+//		try {
+//			notify({ qstr("Programming Device " + device.getDelim() + "...\n"), 1 });
+//			NiawgCore* niawg = dynamic_cast<NiawgCore*>(&device);
+//			if (niawg) {
+//				niawg->debugMsg += "deviceProgramVariation: variationInc=" + str(variationInc) + "\n";
+//			}
+//			device.programVariation(variationInc, expParams, this);
+//			if (niawg) {
+//				niawg->debugMsg += "deviceProgramVariation: Programming succeeded for variation " +
+//					str(variationInc) + "\n";
+//			}
+//			emit updateBoxColor("Green", device.getDelim().c_str());
+//		}
+//		catch (ChimeraError & e) {
+//			NiawgCore* niawg = dynamic_cast<NiawgCore*>(&device);
+//			if (niawg) {
+//				niawg->debugMsg += "ERROR in deviceProgramVariation: " + str(e.what()) + "\n";
+//			}
+//			emit updateBoxColor("Red", device.getDelim().c_str());
+//			throwNested("Error seen while programming variation for system: " + device.getDelim());
+//		}
+//	}
+//}
+
 void ExpThreadWorker::deviceProgramVariation (IDeviceCore& device, std::vector<parameterType>& expParams, 
 	unsigned variationInc) {
 	if (device.experimentActive) {

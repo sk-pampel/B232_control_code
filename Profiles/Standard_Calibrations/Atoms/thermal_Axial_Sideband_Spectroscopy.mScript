@@ -1,3 +1,4 @@
+
 % Master-Script See the "?" for info on commands. 
 t = 0.1
 on: tweezerrf
@@ -7,7 +8,6 @@ t += loadMotTime
 call pgcloading()
 t += 2
 pulseon: tweezerIntensityTrig 0.1 % to imagingDepth 
-pulseon: niawgTrig 0.1 % to imaging/cooling
 
 call stdPgcImage()
 t += 5
@@ -39,7 +39,6 @@ pulseon: tweezerIntensityTrig 0.1 % to imaging
 t += 1
 call stdPgcImage()
 pulseon: tweezerIntensityTrig 0.1 % to loading
-pulseon: niawgTrig 0.1 % back to loading
 t += 1
 off: windfreakTrig
 t += 0.2

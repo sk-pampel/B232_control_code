@@ -190,3 +190,19 @@ void DaqMxFlume::startTask( TaskHandle handle )
 		}
 	}
 }
+
+
+bool DaqMxFlume::isTaskRunning(TaskHandle handle) {
+	bool32 isDone;
+	int result = DAQmxIsTaskDone(handle, &isDone);
+	if (result) {
+		thrower("Error checking task status! (" + str(result) + "): " + getErrorMessage(result));
+	}
+	return !isDone; // Returns true if task is running
+}
+
+void DaqMxFlume::ensureTaskStopped(TaskHandle handle) {
+	if (isTaskRunning(handle)) {
+		stopTask(handle);
+	}
+}

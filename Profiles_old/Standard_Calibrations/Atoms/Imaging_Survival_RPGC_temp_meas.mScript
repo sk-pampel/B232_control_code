@@ -1,0 +1,45 @@
+% Master-Script See the "?" for info on commands.
+% Time starts at 1 ms.
+
+t = 0.1
+
+on: tweezerRf 
+pulseon: dds_reset 0.1 % MOT freq
+call turnonmot()
+t += loadmottime
+call triggerwindfreak() % D1 loading repump
+call pgcloading()
+t += 2
+
+Pulseon: tweezerIntensityTrig 0.1 % to img depth
+
+call stdPgcImage()
+t += 5
+
+Pulseon: tweezerIntensityTrig 0.1 % to cooling depth
+t += 5
+
+call intrappgc()
+
+var releasetime 1
+t += 1
+on: osc_marker
+pulseon: tweezerIntensityTrig 0.1 % to release depth
+off: tweezerRf
+t += releasetime
+on: tweezerRf
+off: osc_marker
+
+t += 1
+
+Pulseon: tweezerIntensityTrig 0.1 % to cooling depth
+call intrappgc()
+
+t += 1
+Pulseon: tweezerIntensityTrig 0.1 % to img depth
+t += 1
+call stdPgcImage()
+t += 1
+pulseon: tweezerIntensityTrig 0.1 % to loading depth
+t += 1
+

@@ -3,7 +3,7 @@ def PgcLoading():
   %on: tweezerrf
   %t += 1
   call zeroFieldsPgc()
-  var loading_detuning 1.45 %1.4
+  var loading_detuning 1.3 %1.4
   var diagmot_power 1 %0.35 %0.27
   var sidemot_power 2 %1.5 %1 %2.2
   var repump_power 0.15

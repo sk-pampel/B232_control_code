@@ -60,6 +60,21 @@ double Segment::rampCalc( int totalSamples, int sample, rampInfo ramp, unsigned 
 	else if (ramp.type == "tanh"){
 		return rampSize * (tanh( -4 + 8 * (double)sample / totalSamples ) + 1) / 2;
 	}
+	else if (ramp.type == "sinehalf") {
+		// Sine wave ramp over half a period
+		// The sine function spans [0, pi] to ramp from 0 to 1 smoothly
+		return rampSize * 0.5 * (1 - cos(PI * (double)sample / totalSamples));
+	}
+	else if (ramp.type == "sinequarter") {
+		// Sine wave ramp over quarter a period
+		// The sine function spans [0, pi/2] to ramp from 0 to 1 smoothly
+		return rampSize * (sin(0.5 * PI * (double)sample / totalSamples));
+	}
+	else if (ramp.type == "cosinequarter") {
+		// Cosine wave ramp over quarter a period
+		// The cosine function spans [0, pi/2] to ramp from 0 to 1 smoothly
+		return rampSize * (1 - cos(0.5 * PI * (double)sample / totalSamples));
+	}
 	else{
 		if (ramp.isFileRamp) {
 			if (ramp.rampFileVals.size () != totalSamples) {
@@ -116,6 +131,20 @@ double Segment::pulseCalc( segPulseInfo pulse, int iteration, long size, double 
 		// see definition: http://mathworld.wolfram.com/HyperbolicSecant.html
 		return ampV * 1.0 / cosh( (x - center) / widthV);
 	}
+
+	else if (pulse.type == "sine") {
+		// Calculate the time step based on the iteration and total pulse length
+		//double t = pulseLength * iteration / size;
+		double t = double(iteration) / size * pulseLength;
+		// Generate the sine wave with a variable amplitude, phase, and fixed frequency (30 MHz)
+		//double frequency = 30e6; // 30 MHz
+		double omega = 2 * PI * 200e3; // Angular frequency (rad/s)
+
+		// The sine wave function with variable amplitude
+		return ampV * sin(omega * t) * ((fabs(t - center) < widthV / 2) ? 1.0 : 0.0);
+	}
+
+
 	else{
 		thrower ( "ERROR: pulse type " + pulse.type + " is unrecognized.\r\n" );
 		return 0;
@@ -137,7 +166,7 @@ void Segment::calcData( unsigned long sampleRate, unsigned varNum){
 				 + str(input.time.getValue (varNum) / 1e3) + ", and the sample rate is " + str( sampleRate ) + ". The product of these"
 				 " is the number of samples in the segment, and this must be an integer." );
 	}
-	if (input.ramp.isRamp && (input.ramp.type != "lin" && input.ramp.type != "tanh" && input.ramp.type != "nr")) {
+	if (input.ramp.isRamp && (input.ramp.type != "lin" && input.ramp.type != "tanh" && input.ramp.type != "nr" && input.ramp.type != "sinehalf" && input.ramp.type != "sinequarter" && input.ramp.type != "cosinequarter")) {
 		Segment::analyzeRampFile (input.ramp, numDataPoints);
 	}
 	// resize to zero. This is a complete reset of the data points in the class.

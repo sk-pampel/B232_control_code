@@ -8,8 +8,8 @@ var hLoadBias .15 %1
 var hStdBias .15 %0.6
 var hTofBias .15 %0.6
 var vLoadBias .87 %0.91 % 0.833
-var vDumpBias .15 %0.06 % 0.06 % 0.01
-var hOffset 1.11 % .19 % .37 % .74 % 1.11 %.38 %.25 %0.5
+var vDumpBias .1 %.09 %0.06 % 0.06 % 0.01
+var hOffset 0.45 % .19 % .37 % .74 % 1.11 %.38 %.25 %0.5
 var_v 2 linR [ lin lin ]
 var_v 1 linRone [ lin ]
 var_v 2 tanhR [ tanh tanh ] 

@@ -2,7 +2,7 @@ var loadingDepth 14 %12.5 %11
 var imagingDepth 10 %12.7
 var intraplgmdepth 17.5 %15.4 %20.4 
 var ramanDepth 16 
-var TOFDepth 0  %0.076 %0.2 or 5 for testing
+var TOFDepth 0.01  % 0=3.5 uK
 
 hold loadingDepth 1 onceWaitTrig #   
 ramp lin loadingDepth imagingDepth 1 onceWaitTrig #

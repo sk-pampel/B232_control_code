@@ -75,6 +75,7 @@ struct waveSignalForm{
 	Expression initPhase;
 	// only stores the most recent variation...
 	double finPhase;
+	Expression modFreq = "0"; // Modulation frequency (MHz), used only ine sinmod
 };
 
 

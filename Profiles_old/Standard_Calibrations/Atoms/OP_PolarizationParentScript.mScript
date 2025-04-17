@@ -1,0 +1,58 @@
+% Master-Script See the "?" for info on commands.
+t = 0.1
+
+on: tweezerRf 
+pulseon: dds_reset 0.1 % MOT freq
+call turnonmot()
+t += loadmottime
+call pgcloading()
+t += 2
+pulseon: tweezerIntensityTrig 0.1 %to imaging depth
+call stdPgcImage()
+t += 5
+pulseon: tweezerIntensityTrig 0.1 %to intrap cooling depth
+t += 5
+call intrappgc()
+t += 1
+
+pulseon: tweezerIntensityTrig 0.1 %to pump depth
+
+t += 1
+call pump2Stretch()
+t += 1
+
+off: sigmaRepumpRf
+dac: probePower 0
+dac: sigmarepumpPower 0
+off: probeRf
+off: repumpRf
+var opPulseLength2 1
+%call setQuantAxis() 
+call setangledquantaxis()
+daclinspace: motFreq defaultMotFreq opFreq 1 10
+dac: sigmaopfreq 0 
+dac: sigmaoppower { sigmaoppowscan sigma_op }
+t += 1
+on: sigmaOpRf
+t += opPulseLength2
+off: sigmaOpRf 
+
+dac: sigmaoppower 0
+daclinspace: motFreq opFreq defaultMotFreq 1 10 
+
+t += 0.1
+call pushout()
+t += 0.1
+pulseon: tweezerIntensityTrig 0.1 %to drop depth
+
+t += 1
+
+pulseon: tweezerIntensityTrig 0.1 %to image depth
+t += 15
+call stdPgcImage()
+t += 1
+pulseon: tweezerIntensityTrig 0.1 %to loading depth 
+t += 1
+
+
+ 

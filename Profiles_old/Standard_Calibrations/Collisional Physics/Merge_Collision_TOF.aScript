@@ -1,0 +1,18 @@
+var loadingdepth 15 %20
+var imagingDepth 7.5 %7.5
+var intrapCoolingDepth 9.5
+var movingDepth 2 %2
+var singleDepth 1.6 %1.8
+var flightDepth 1 % 0.2 12
+var collisionDepth 6.8 %6.8 %0.2 %6.8
+var intFctr 0.428
+
+hold (loadingDepth*intFctr) 1 onceWaitTrig #  
+ramp lin (loadingDepth*intFctr) (imagingDepth*intFctr) 1 onceWaitTrig #  
+ramp lin (imagingDepth*intFctr) (intrapCoolingDepth*intFctr) 1 onceWaitTrig #  
+ramp lin (intrapCoolingDepth*intFctr) (movingDepth*intFctr) 1 onceWaitTrig #
+ramp lin (movingDepth*intFctr) (singleDepth*intFctr) 1 onceWaitTrig #  
+ramp lin (singleDepth*intFctr) (flightDepth*intFctr) 1 onceWaitTrig #
+ramp lin (collisionDepth*intFctr) (flightDepth*intFctr) 1 onceWaitTrig #
+ramp lin (flightDepth*intFctr) (loadingDepth*intFctr) 1 once #
+%

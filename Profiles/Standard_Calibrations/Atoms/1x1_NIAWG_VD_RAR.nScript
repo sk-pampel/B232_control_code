@@ -1,0 +1,52 @@
+% LOW FREQUENCY MEANS LOWER/LEFT ON SCREEN
+
+var vStdBias 1
+var hStdBias 1 
+var vMainFreq 85 
+var hMainFreq 75
+var vDumpFreq 117 % 117 
+var_v 1 hPhases [ 0 ] 
+var_v 1 hFreqs [ hMainFreq ] 
+var_v 1 hStdBi [ hStdBias ] 
+var_v 2 vPhases [ 0 0 ]   
+var_v 2 vFreqs [ vMainFreq vDumpFreq ] 
+var_v 2 vStdBi [ (vStdBias) (1-vStdBias) ] 
+var_v 2 vRARBi [ (1-vStdBias) (vStdBias) ] 
+var_v 2 noRamp [ nr nr ]
+var releasetime 0.01
+var_v 2 rt [ releasetime releasetime ]
+
+
+repeatTilTrig
+gen1const_v Horizontal hFreqs hStdBi hPhases #  
+gen2const_v Vertical vFreqs vStdBi vPhases #
+0.01 0 endRepeat
+
+% release and recapture
+gen1const_v Horizontal hFreqs hStdBi hPhases # 
+gen2rar_v Vertical vFreqs vStdBi vRARBi rt vPhases #
+1 0
+
+
+%gen1const_v Horizontal hFreqs hStdBi hPhases # 
+%gen2ampramp_v Vertical vFreqs noRamp vStdBi vRARBi vPhases #
+%0.02 0 
+
+%gen1const_v Horizontal hFreqs hStdBi hPhases #  
+%gen2const_v Vertical vFreqs vRARBi vPhases #
+%.001 0
+
+%gen1const_v Horizontal hFreqs hStdBi hPhases # 
+%gen2ampramp_v Vertical vFreqs noRamp vRARBi vStdBi vPhases #
+%0.02 0 
+
+%% recapture
+repeatTilTrig
+gen1const_v Horizontal hFreqs hStdBi hPhases # 
+gen2const_v Vertical vFreqs vStdBi vPhases #
+0.01 0 endRepeat
+
+
+
+
+

@@ -146,6 +146,10 @@ class NiawgCore : public IDeviceCore {
 		void normalFinish ();
 		void errorFinish ();
 
+		void generateModulatedWaveform(
+			std::string channel, double centerFreq, double modFreq,
+			double amplitude, double bias, double phase);
+
 	private:
 		int debugLevel = 0;
 		/// a couple points taken on Friday, Sep 11th 2020, fairly low power coming from the Ti-Saph at the moment.

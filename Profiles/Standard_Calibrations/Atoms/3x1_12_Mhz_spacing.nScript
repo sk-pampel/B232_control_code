@@ -1,0 +1,20 @@
+% LOW FREQUENCY MEANS LOWER/LEFT ON SCREEN
+%%-----------------------------------------------------------%%
+
+var_v 3 pows [ 0.1220135623 0.153903728550 0.1175  ] 
+%var_v 3 pows [ 0.1220135623 0.253903728550 0.1175  ] 
+var_v 3 phases [ 1.311884828 3.348335934 6.051353821 ] 
+
+var sp 12
+var cf 75
+
+var_v 3 init_freqs [ (cf-sp) (cf) (cf+sp) ]
+
+repeatForever
+gen3const_v Horizontal
+init_freqs pows phases # 
+gen1const Vertical
+85	1	0 #
+0.01 0
+endRepeat
+

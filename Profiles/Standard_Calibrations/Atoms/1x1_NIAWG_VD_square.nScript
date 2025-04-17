@@ -1,0 +1,88 @@
+var vStdBias 1
+var hStdBias 1 
+var vMainFreq 85 
+var hMainFreq 75
+var vDumpFreq 117 
+var vMoveBias 1
+var squareLength 0 %36.4
+
+
+var_v 1 hPhase [ 0 ] 
+var_v 1 hFreq [ hMainFreq ] 
+var_v 1 hStdBi [ hStdBias ] 
+var_v 1 tanhRone [ tanh ] 
+var_v 1 linRone [ lin ] 
+var_v 1 hDFreq [ hMainFreq ]  
+
+%% tracing square with original postion in top right corner
+var_v 1 hLeft [ hMainFreq-squareLength ]
+var_v 2 vLow [ (vMainFreq-squareLength) (vDumpFreq-squareLength) ]
+var_v 1 hRight [ hMainFreq+squareLength ]
+
+var_v 2 vPhases [ 0 0 ]   
+var_v 2 vFreqs [ vMainFreq vDumpFreq ]
+var_v 2 vStdBi [ (vStdBias) (1-vStdBias) ] 
+var_v 2 vMoveBi [ vMoveBias (1-vMoveBias) ]
+var_v 2 tanhRtwo [ tanh tanh ]
+var_v 2 linRtwo [ lin lin ]
+
+repeatTilTrig 
+gen1const_v Horizontal hFreq hStdBi hPhase #  
+gen2const_v Vertical vFreqs vStdBi vPhases #
+0.01 0 endRepeat
+
+%% ramp to move bias
+gen1const_v Horizontal hFreq hStdBi hPhase # 
+gen2ampramp_v Vertical vFreqs tanhRtwo vStdBi vMoveBi vPhases #
+1 0
+
+%% hold at move bias
+repeatTilTrig
+gen1const_v Horizontal hFreq hStdBi hPhase # 
+gen2const_v Vertical vFreqs vMoveBi vPhases #
+0.01 0 endRepeat
+
+%% move to upper left corner
+repeatSet# 10 
+gen1freqramp_v Horizontal
+tanhRone hFreq hLeft hStdBi hPhase #
+gen2const_v Vertical vFreqs vMoveBi vPhases #
+.1 0 
+
+%% move down to low left corner
+gen2freqramp_v Vertical
+tanhRtwo vFreqs vLow vMoveBi vPhases #
+gen1const_v Horizontal hLeft hStdBi hPhase # 
+.1 0
+
+
+%% move right to low right corner
+gen1freqramp_v Horizontal
+tanhRone hLeft hFreq hStdBi hPhase #
+gen2const_v Vertical vLow vMoveBi vPhases #
+.1 0
+
+% move up to original position
+gen2freqramp_v Vertical
+tanhRtwo vLow vFreqs vMoveBi vPhases #
+gen1const_v Horizontal hFreq hStdBi hPhase # 
+.1 0 endRepeat
+
+% hold at move bias
+repeatTilTrig
+gen1const_v Horizontal hFreq hStdBi hPhase # 
+gen2const_v Vertical vFreqs vMoveBi vPhases #
+0.05 0 endRepeat
+
+%% ramp to standard bias
+gen1const_v Horizontal hFreq hStdBi hPhase # 
+gen2ampramp_v Vertical vFreqs tanhRtwo vMoveBi vStdBi vPhases #
+1 0
+
+%% hold at standard bias
+repeatTilTrig
+gen1const_v Horizontal hFreq hStdBi hPhase # 
+gen2const_v Vertical vFreqs vStdBi vPhases #
+0.01 0 endRepeat
+
+

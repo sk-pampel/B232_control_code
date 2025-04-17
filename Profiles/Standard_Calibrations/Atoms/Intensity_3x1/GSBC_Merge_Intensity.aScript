@@ -1,0 +1,36 @@
+var loadingdepth 10 
+var imagingDepth 3.5
+var intrapCoolingDepth 10
+var movingDepth .7 
+var singleDepth .3 
+var collisionDepth 1.5 % 2.5 = 1 mk    1.5= .5 mk
+var singleCoolingDepth 1.5
+var singleImgDepth 1.3 % 
+var ramanDepth 2.35 %8.0
+var pumpingDepth3 2.35 %8.0
+var pushoutDepth .31 %.9
+
+hold loadingDepth 1 onceWaitTrig #  
+ramp lin loadingDepth imagingDepth 1 onceWaitTrig #  
+ramp lin imagingDepth intrapCoolingDepth 1 onceWaitTrig #
+ramp lin intrapCoolingDepth pumpingDepth3 1 onceWaitTrig #
+ramp lin pumpingDepth3 movingDepth 1 onceWaitTrig #
+ramp lin movingDepth singleDepth 1 onceWaitTrig #
+ramp lin singleDepth ramanDepth 1 onceWaitTrig #
+ramp lin ramanDepth pushoutDepth 1 onceWaitTrig # 
+ramp lin pushoutDepth singleImgDepth 1 onceWaitTrig #
+ramp lin singleImgDepth loadingDepth 1 once #
+
+%hold loadingDepth 1 onceWaitTrig #  
+%ramp lin loadingDepth imagingDepth 1 onceWaitTrig #  
+%ramp lin imagingDepth intrapCoolingDepth 1 onceWaitTrig #
+%ramp lin intrapCoolingDepth ramanDepth 1 onceWaitTrig #
+%ramp lin ramanDepth pushoutDepth 1 onceWaitTrig #
+%ramp lin pushoutDepth movingDepth 1 onceWaitTrig #
+%ramp lin movingDepth singleDepth 1 onceWaitTrig # 
+%ramp lin singleDepth singleImgDepth 1 onceWaitTrig #
+%ramp lin singleImgDepth loadingDepth 1 once #
+
+
+
+ 

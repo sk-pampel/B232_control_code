@@ -1,0 +1,55 @@
+% Master-Script See the "?" for info on commands.
+
+t = 0.1
+on: tweezerrf
+pulseon: dds_reset 0.1
+call turnonmot()
+t += loadMotTime
+call pgcloading()
+t += 2
+pulseon: tweezerIntensityTrig 0.1 % to imagingDepth 
+call stdPgcImage()
+t += 5
+on: axialRamanShutter
+pulseon: tweezerIntensityTrig 0.1 % to intrapCoolDepth
+t += 5
+call intrappgc()
+t += 1
+call triggerwindfreak() % to Raman freq
+pulseon: tweezerIntensityTrig 0.1 % to RamanDepth
+call pump2stretch()
+call send_uw_to_raman_eom()
+on: totalRamanRf
+t += 1
+on: a15
+call gsbc()
+off: a15
+t += 0.1
+pulseon: tweezerIntensityTrig 0.1 % to spillDepth
+t += 1
+pulseon: niawgTrig 0.1 % to spillBias
+t += shallowTime
+pulseon: niawgTrig 0.1 % to stdBias
+t += 1
+pulseon: tweezerIntensityTrig 0.1 % to RamanDepth
+call triggerwindfreak() % to spectroscopy freq
+t += 1
+dac: eopulselev { 0.255 eo_raman } 
+%on: a15
+pulseon: topPulseTrig 0.01
+call TopRamanPulse(tbspecpulselen)
+t += 0.1 
+off: totalRamanRf
+off: axialRamanShutter 
+dac: topPulseLev 0
+dac: eoPulseLev 0
+pulseon: tweezerIntensityTrig 0.1 % to pushout depth
+t += 1
+call pushout() % 15 ms before pushout light
+pulseon: tweezerIntensityTrig 0.1 % to imaging depth
+call stdPgcImage() % 15 ms before image
+pulseon: tweezerIntensityTrig 0.1 %to loading depth
+off: a15
+t += 0.2
+pulseon: niawgTrig 0.1 % to stdBias
+t += 1

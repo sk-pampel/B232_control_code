@@ -1,0 +1,15 @@
+var IF 1
+var loadingDepth 3
+var intrapcooldepth 3.2
+var imagingDepth 1.8
+var ramandepth 2.6
+var TOFDepth .1
+
+hold loadingDepth*IF 1 onceWaitTrig #   
+ramp lin loadingDepth*IF imagingDepth*IF 1 onceWaitTrig # 
+ramp lin imagingDepth*IF intrapcooldepth*IF 1 onceWaitTrig #
+ramp lin intrapcooldepth*IF ramanDepth*IF 1 onceWaitTrig #
+ramp tanh ramanDepth*IF TOFDepth*IF 1 onceWaitTrig #
+ramp tanh TOFDepth*IF imagingDepth*IF 1 onceWaitTrig #
+ramp lin imagingDepth*IF loadingDepth*IF 1 once #   
+

@@ -9,6 +9,7 @@ struct rampInfo{
 	std::string type;
 	Expression start;
 	Expression end;
+	Expression releaseTime = Expression("0");  // Release time in ms for rar
 
 	std::string rampFileName="";
 	std::vector<double> rampFileVals = std::vector<double> ();

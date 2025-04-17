@@ -1,6 +1,6 @@
-var loadingDepth .3 
-var imagingDepth .3
-var intrapCoolDepth .3 %15.4 %20.4 
+var loadingDepth 1 
+var imagingDepth 1
+var intrapCoolDepth 1 %15.4 %20.4 
 
 hold loadingDepth 1 onceWaitTrig #   
 ramp lin loadingDepth imagingDepth 1 onceWaitTrig #

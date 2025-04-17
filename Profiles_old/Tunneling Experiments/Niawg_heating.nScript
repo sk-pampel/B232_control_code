@@ -1,0 +1,44 @@
+% LOW FREQUENCY MEANS LOWER/LEFT ON SCREEN
+%%-----------------------------------------------------------%%
+
+var_v 7 freqs [ 39 51 63 75 87 99 111 ] 
+var_v 7 pows [  0.14448622169821781 0.1566915867822716 0.11784606941129058 0.1537130565372696 0.09393199606076719 0.17485390935871412 0.15847716015146918 ]
+var_v 7 phases [ 1.325630117 0.000000000 1.311884828 3.348335934 6.051353821 5.179345038 0.000000000 ] 
+
+%var_v 7 phases [ 0 0 0 0 0 0 0 ]
+var dumpvf 111
+var mainvf 75
+var loadB 0.01
+var tundump 0.1
+
+var_v 2 vfreqs [ mainvf dumpvf ] 
+var_v 2 vinitpows [ 1-loadB loadB ]
+var_v 2 vdumppows [ tundump 1-tundump ]
+var_v 2 vphases [ 0 0 ]
+var_v 2 tanhR [ tanh tanh ]
+var_v 2 linr [ lin lin ]
+
+repeatForever
+gen7const_v Horizontal freqs pows phases # 
+gen2const_v Vertical vfreqs vinitpows vphases #
+0.01 0 endRepeat
+
+gen7const_v Horizontal freqs pows phases # 
+gen2ampramp_v Vertical vfreqs linr vinitpows vdumppows vphases #
+1 0
+
+repeatTilTrig
+gen7const_v Horizontal freqs pows phases # 
+gen2const_V Vertical vfreqs vdumppows vphases #
+0.01 0 endRepeat
+
+gen7const_v Horizontal freqs pows phases # 
+gen2ampramp_v Vertical vfreqs linr vdumppows vinitpows vphases #
+1 0
+
+repeatForever
+gen7const_v Horizontal freqs pows phases # 
+gen2const_v Vertical vfreqs vinitpows vphases #
+0.01 0 endRepeat
+
+ 

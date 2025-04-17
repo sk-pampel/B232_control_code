@@ -1,0 +1,74 @@
+var vStdBias 1
+var hStdBias 1 
+var vMainFreq 85 
+var hMainFreq 75
+var vDumpFreq 117 
+var vTOFBias 1
+
+var_v 1 hPhase [ 0 ] 
+var_v 1 hFreq [ hMainFreq ] 
+var_v 1 hStdBi [ hStdBias ] 
+var_v 1 tanhRone [ tanh ] 
+var_v 1 hDFreq [ hMainFreq ]   
+
+var_v 2 vPhases [ 0 0 ]   
+var_v 2 vFreqs [ vMainFreq vDumpFreq ]
+var_v 2 vStdBi [ (vStdBias) (1-vStdBias) ] 
+var_v 2 vTofBi [ vTOFBias (1-vTOFBias) ]
+var_v 2 tanhRtwo [ tanh tanh ]
+
+var_v 1 sineq [ sinequarter ]
+var_v 1 sineh [ sinehalf ]
+var_v 1 cosq [ cosinequarter ]
+
+var modamp 1.5
+var modfreq 2.5
+var_v 1 am [ modamp ]
+var_v 1 fm [ modfreq ] 
+
+%% hold at standard bias
+repeatTilTrig 
+gen1const_v Horizontal hFreq hStdBi hPhase #  
+gen2const_v Vertical vFreqs vStdBi vPhases #
+0.01 0 endRepeat
+
+%% ramp to TOF bias
+gen1const_v Horizontal hFreq hStdBi hPhase #  
+gen2ampRamp_v Vertical vFreqs tanhRtwo vStdBi vTofBi vPhases #
+0.01 0 
+
+%% keep at TOF bias
+repeatTilTrig 
+gen1const_v Horizontal hFreq hStdBi hPhase #  
+gen2const_v Vertical vFreqs vTofBi vPhases #
+0.01 0 endRepeat
+
+
+%% modulate
+repeatTilTrig
+%gen1const_v Horizontal hFreq hStdBi hPhase #
+gen1sinmod_v Horizontal hFreq am hStdBi fm hPhase #
+gen2const_v Vertical vFreqs vTofBi vPhases #
+1 0 endRepeat
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% keep at tof bias
+repeatTilTrig 
+gen1const_v Horizontal hFreq hStdBi hPhase #  
+gen2const_v Vertical vFreqs vTofBi vPhases #
+0.01 0 endRepeat
+
+%% ramp to standard bias
+gen1const_v Horizontal hFreq hStdBi hPhase #  
+gen2ampRamp_v Vertical vFreqs tanhRtwo vTofBi vStdBi vPhases #
+0.01 0 
+
+%% keep at standard bias
+repeatTilTrig 
+gen1const_v Horizontal hFreq hStdBi hPhase #  
+gen2const_v Vertical vFreqs vStdBi vPhases #
+0.01 0 endRepeat
+
+

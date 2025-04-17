@@ -1,0 +1,19 @@
+var loadingDepth 14 %12.5 %11 
+var imagingDepth 10 %12.7
+var intraplgmdepth 17.5 %15.4 %20.4 
+var ramanDepth 16 
+var TOFDepth 0.05  % 0=3.5 uK
+var preSqueezeDepth .05
+
+hold loadingDepth 1 onceWaitTrig #   
+ramp lin loadingDepth imagingDepth 1 onceWaitTrig #
+ramp lin imagingDepth intrapLGMDepth 1 onceWaitTrig # 
+ramp lin intrapLGMDepth ramanDepth 1 onceWaitTrig #
+ramp tanh ramanDepth preSqueezeDepth 1 onceWaitTrig #
+%ramp nr preSqueezeDepth TOFDepth 1 onceWaitTrig #
+hold TOFDepth 1 onceWaitTrig # 
+ramp lin TOFDepth loadingDepth 1 once #
+ 
+  
+  
+ 

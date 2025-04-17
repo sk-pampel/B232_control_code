@@ -1,0 +1,4 @@
+hold 0 0.01 onceWaitTrig # 
+hold 0 0.01 onceWaitTrig # 
+Pulse sine 0 modamp modtime modtime/2 2*modtime once #
+

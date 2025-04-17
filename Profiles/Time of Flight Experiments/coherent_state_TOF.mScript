@@ -6,7 +6,6 @@ t += loadMotTime
 call pgcloading()
 t += 2
 pulseon: tweezerIntensityTrig 0.1 % to imagingDepth 
-pulseon: niawgTrig 0.1 % to imaging/cooling bias
 call stdPgcImage()
 t += 5
 on: axialRamanShutter
@@ -31,7 +30,7 @@ pulseon: dds_step 2
 pulseon: tweezerIntensityTrig 0.1 % to TOF depth
 on: a15
 pulseon: niawgTrig 0.1 % to TOF bias
-t += 1 % 1
+%t += 1 % 1
 %%% frespace image
   var FSImageTime .015 %0.02 %0.02 %0.01
   var offsetTime 0
@@ -50,17 +49,17 @@ t += 1 % 1
   on: repumpShutter
   on: sidemotShutter
   call openAndorShutter()
-  %on: diagmotShutter
+  off: diagmotShutter
   t += shutterOffset
   dac: diagMotPower 0
   dacLinSpace: MotFreq defaultMotFreq image_detuning 1 10
-  call zeroFieldsFSI()
-  %call zeroFields()
+  %call zeroFieldsFSI()
+  call zeroFieldsPGC()
   dac: SideMotPower { sideMotScan sidemot } %sideMotScan 9
   dac: RepumpPower { repumpscan repump } %repumpscan 0.2
   dac: DiagMotPower { diagmotscan diagmot } %diagmotscan 0.86
   t += 0.2
-  off: a15
+  on: a15
   pulseon: niawgTrig 0.1 % displace
   t += evolvetime
   off: rf795
@@ -73,7 +72,7 @@ t += 1 % 1
   on: andorTrig
   t += fSImageTime
   off: andorTrig 
-  off: a15
+  %off: a15
   call closeAndorShutter()
   off: SideMotRf
   off: diagMotRf
@@ -84,9 +83,9 @@ t += 1 % 1
   dac: RepumpPower 0
   dacLinSpace: MotFreq image_detuning defaultMotFreq 2 10
   t += 1
-
+  off: a15
 pulseon: tweezerIntensityTrig 0.1 % to loadingDepth
 pulseon: niawgTrig 0.1 % to loading bias
 t += 1
-off: tweezerRf
+%off: tweezerRf
 t += 0.2

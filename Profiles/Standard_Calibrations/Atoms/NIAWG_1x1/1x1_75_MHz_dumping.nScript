@@ -1,0 +1,37 @@
+% LOW FREQUENCY MEANS LOWER/LEFT ON SCREEN
+var hMainFreq 75 
+var vMainFreq 81 
+var vDumpFreq 117 
+var vStdBias 0.82
+var vLoadBias 0.91 % 0.833
+var vDumpBias 0.06 % 0.06 % 0.01
+var hStdBias 0.6
+
+var_v 2 zPhases [ 0 0 ]
+var_v 2 hLoadBi [ 1 0 ]
+var_v 2 linR [ lin lin ]
+var_v 2 hFreqs [ hMainFreq (hMainFreq+12) ] 
+var_v 2 hStdBi [ hStdBias (1-hStdBias) ]    
+var_v 2 vFreqs [ vMainFreq vDumpFreq ]
+var_v 2 vLoadBi [ (1-vLoadBias) vLoadBias ] 
+var_v 2 vStdBi [ (1-vStdBias) vStdBias ] 
+var_v 2 vFinBi [ vDumpBias (1-vDumpBias) ]
+
+%%% hold at loading
+repeatTilTrig 
+gen2const_v Horizontal hFreqs hLoadBi zPhases #  
+gen2const_v Vertical vFreqs vLoadBi zPhases #
+0.01 0 endRepeat
+
+%%% ramp to imaging/cooling
+gen2ampRamp_v Horizontal hFreqs linR hLoadBi hStdBi zPhases # 
+gen2ampRamp_v Vertical vFreqs linr vLoadBi vStdBi zPhases #
+0.01 0 
+
+%%% hold at imaging/cooling
+repeatTilTrig 
+gen2const_v Horizontal hFreqs hStdBi zPhases #  
+gen2const_v Vertical vFreqs vStdBi zPhases #
+0.01 0 endRepeat
+
+

@@ -1,0 +1,13 @@
+var IF 1 % intensity calibration factor
+var loadingDepth 3
+var intrapcooldepth 2.4
+var imagingDepth 2.5
+
+
+hold loadingDepth*IF 1 onceWaitTrig #   
+ramp lin loadingDepth*IF imagingDepth*IF 1 onceWaitTrig # 
+ramp lin imagingDepth*IF intrapcooldepth*IF 1 onceWaitTrig #
+ramp lin intrapcooldepth*IF imagingDepth*IF 1 onceWaitTrig #
+ramp lin imagingDepth*IF loadingDepth*IF 1 once # 
+  
+  

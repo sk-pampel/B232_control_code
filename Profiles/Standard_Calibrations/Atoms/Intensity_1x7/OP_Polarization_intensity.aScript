@@ -1,0 +1,13 @@
+var loadingdepth 14
+var imagingDepth 10
+var intrapPGCdepth 16
+var pumpDepth 19
+var dropDepth 2
+
+hold loadingDepth 1 onceWaitTrig #   
+ramp lin loadingDepth imagingDepth 1 onceWaitTrig # 
+ramp lin imagingDepth intrapPGCdepth 1 onceWaitTrig #
+ramp lin intrapPGCdepth pumpDepth 1 onceWaitTrig #
+ramp lin pumpDepth dropDepth 1 onceWaitTrig #
+ramp lin dropDepth imagingDepth 1 onceWaitTrig #
+ramp lin imagingDepth loadingDepth 1 once #   

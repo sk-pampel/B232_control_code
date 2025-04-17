@@ -1,0 +1,70 @@
+% LOW FREQUENCY MEANS LOWER/LEFT ON SCREEN
+
+var vStdBias 0.91 %0.82
+var vMainFreq 81 
+var hMainFreq 75
+var vDumpFreq 117 
+var hLoadBias 0.15
+var hStdBias 0.15
+var hTofBias 0.15
+var vLoadBias 0.87 %0.91 % 0.833
+var vDumpBias 0.28 % 0.06 % 0.01
+var_v 2 linRtwo [ lin lin ]
+var_v 1 linRone [ lin ] 
+
+var_v 2 tanhRtwo [ tanh tanh ] 
+var_v 1 tanhRone [ tanh ]  
+
+var_v 1 hPhases [ 0 ] 
+var_v 1 hFreqs [ hMainFreq ]
+var_v 1 hLoadBi [ hLoadBias ]
+var_v 1 hStdBi [ hStdBias ] 
+var_v 1 hTofBi [ hTofBias ]
+
+var_v 2 vPhases [ 0 0 ]   
+var_v 2 vFreqs [ vMainFreq vDumpFreq ]
+var_v 2 vLoadBi [ (1-vLoadBias) vLoadBias ] 
+var_v 2 vStdBi [ (1-vStdBias) vStdBias ] 
+var_v 2 vTofBi [ vDumpBias (1-vDumpBias) ]
+
+
+repeatTilTrig 
+gen1const_v Horizontal hFreqs hLoadBi hPhases #  
+gen2const_v Vertical vFreqs vLoadBi vPhases #
+0.01 0 endRepeat
+
+gen1ampRamp_v Horizontal hFreqs linRone hLoadBi hStdBi hPhases #  
+gen2ampRamp_v Vertical vFreqs linRtwo vLoadBi vStdBi vPhases #
+0.01 0 
+
+repeatTilTrig 
+gen1const_v Horizontal hFreqs hStdBi hPhases #  
+gen2const_v Vertical vFreqs vStdBi vPhases #
+0.01 0 endRepeat
+
+gen1ampramp_v Horizontal
+hFreqs tanhRone hStdBi hTofBi hPhases # 
+gen2ampramp_v Vertical
+vFreqs tanhRtwo vStdBi vTofBi vPhases #
+1 0
+
+repeatTilTrig
+gen1const_v Horizontal
+hFreqs hTofBi hphases # 
+gen2const_v Vertical
+vFreqs vTofBi vPhases #
+0.01 0
+endRepeat
+
+gen1ampramp_v Horizontal
+hFreqs tanhRone hTofBi hStdBi hphases #
+gen2ampramp_v Vertical
+vFreqs	tanhRtwo vTofBi vStdBi vPhases #
+1 0 
+
+repeatTilTrig 
+gen1const_v Horizontal hFreqs hStdBi hPhases #  
+gen2const_v Vertical vFreqs vStdBi vPhases #
+0.01 0 endRepeat
+
+% New dumping freq: 111 Mhz

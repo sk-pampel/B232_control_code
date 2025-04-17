@@ -273,6 +273,60 @@ namespace commonFunctions
 				}
 				break;
 			}
+
+			//case ID_ACCELERATOR_F11: {
+			//	if (mainWin->experimentIsRunning) {
+			//		return;
+			//	}
+			//	if (mainWin->getMainOptions().delayAutoCal) {
+			//		mainWin->handleNotification("Delaying Auto-Calibration!\n");
+			//		return;
+			//	}
+			//	if (QDateTime::currentDateTime().time().hour() < 4) {
+			//		return;
+			//	};
+			//	// F11 is the set of calibrations.
+			//	AllExperimentInput input;
+			//	input.masterInput = new ExperimentThreadInput(win);
+			//	input.masterInput->quiet = true;
+			//	try {
+			//		auxWin->fillMasterThreadInput(input.masterInput);
+			//		andorWin->fillMasterThreadInput(input.masterInput);
+			//		auto calNum = andorWin->getDataCalNum();
+			//		if (calNum == -1) {
+			//			return;
+			//		}
+			//		input.masterInput->calibrations = mainWin->getCalInfo();
+			//		mainWin->handleNotification("Auto-Calibration is starting");
+			//		commonFunctions::handleCommonMessage(ID_FILE_SAVEALL, win);
+			//		auto& calInfo = AUTO_CAL_LIST[calNum];
+			//		mainWin->reportStatus(qstr(calInfo.infoStr));
+			//		mainWin->reportStatus("Running calManager.runAllThreaded()");
+					//mainWin->calManager.runAllThreaded();
+			//		mainWin->reportStatus("Finished calManager.runAllThreaded() - Check for updated laser power settings");
+
+			//		// delay for calibrate all
+			//		mainWin->reportStatus("Delaying experiment start to allow calibration to finish...");
+			//		QTimer::singleShot(1000, win, [mainWin, input, calNum]() mutable {
+			//			mainWin->reportStatus("Delay complete, proceeding with experiment");
+
+			//			auto& calInfoRef = AUTO_CAL_LIST[calNum];
+			//			mainWin->reportStatus(QString::fromStdString(calInfoRef.infoStr));
+			//			input.masterInput->profile = calInfoRef.prof;
+			//			input.masterInput->expType = ExperimentType::AutoCal;
+			//			//logStandard(input, mainWin->andorWin->getLogger(), mainWin->andorWin->getAlignmentVals(), calInfoRef.fileName, false);
+			//			logStandard(input, andorWin->getLogger(), andorWin->getAlignmentVals(), calInfo.fileName, false);
+			//			startExperimentThread(mainWin, input);
+			//			});
+			//	}
+			//	catch (ChimeraError & err) {
+			//		mainWin->reportErr("Failed to start auto calibration experiment: " + err.qtrace());
+			//		mainWin->reportStatus("Caught ChimeraError in main thread: " + err.qtrace());
+			//	}
+			//	mainWin->reportStatus("Exiting ID_ACCELERATOR_F11 case");
+			//	break;
+			//}
+
 			case ID_ACCELERATOR_F11: {
 				if (mainWin->experimentIsRunning) {
 					return;
@@ -281,7 +335,7 @@ namespace commonFunctions
 					mainWin->handleNotification ("Delaying Auto-Calibration!\n");
 					return;
 				}
-				if (QDateTime::currentDateTime ().time ().hour () < 4) {
+				if (QDateTime::currentDateTime ().time ().hour () < 3) {
 					// This should set up the calibration to run at 4AM. 
 					return;
 				};
@@ -298,6 +352,8 @@ namespace commonFunctions
 					}
 					input.masterInput->calibrations = mainWin->getCalInfo ();
 					// automatically save; this is important to handle changes like the auto servo and auto carrier
+					mainWin->handleNotification("Auto-Calibration is starting");
+					//mainWin->calManager.runAllThreaded();
 					commonFunctions::handleCommonMessage (ID_FILE_SAVEALL, win);
 					auto& calInfo = AUTO_CAL_LIST[calNum];
 					mainWin->reportStatus (qstr (calInfo.infoStr));
@@ -311,7 +367,7 @@ namespace commonFunctions
 				}
 				break;
 			}
-								   // the rest of these are all one-liners. 			
+								    //the rest of these are all one-liners. 			
 			case ID_PROFILE_SAVE_PROFILE: { mainWin->profile.saveConfiguration (win); break; }
 			case ID_PLOTTING_STOPPLOTTER: { andorWin->stopPlotter (); break; }
 			case ID_FILE_MY_INTENSITY_NEW: { scriptWin->newIntensityScript (); break; }

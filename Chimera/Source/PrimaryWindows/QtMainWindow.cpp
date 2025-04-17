@@ -63,7 +63,7 @@ QtMainWindow::QtMainWindow () :
 	auto numMonitors = qApp->screens ().size ();
 	auto screens = qApp->screens ();
 	unsigned winCount = 0;
-	std::vector<unsigned> monitorNum = { 5,1,3,2,0,4 }; //{  3,1,4,2,0,5}; //
+	std::vector<unsigned> monitorNum = { 0,4,2,1,1,3 }; //{  3,1,4,2,0,5}; //
 	/*	scriptWin, andorWin, auxWin, basWin, dmWin, mainWin; */
 	for (auto* window : winList ()) { 
 		auto screen = qApp->screens ()[monitorNum[winCount++] % numMonitors];
@@ -103,8 +103,11 @@ QtMainWindow::QtMainWindow () :
 		// should auto quit in the handling here if calibration has already been completed for the day. 
 		commonFunctions::handleCommonMessage (ID_ACCELERATOR_F11, this);
 		});
-	// 6 minutes
+	// 6 minutes 360000
 	timer->start (360000);
+//	QTimer::singleShot(30000, this, [this]() {
+//		commonFunctions::handleCommonMessage(ID_ACCELERATOR_F11, this);
+//		});
 }
 
 bool QtMainWindow::expIsRunning () {

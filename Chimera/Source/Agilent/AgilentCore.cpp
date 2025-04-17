@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "stdafx.h"
 #include "AgilentCore.h"
 #include "DigitalOutput/DoCore.h"
 #include "Scripts/ScriptStream.h"
@@ -215,7 +216,6 @@ void AgilentCore::outputOff (int channel){
 	if (channel != 1 && channel != 2){
 		thrower ("bad value for channel inside outputOff! Channel shoulde be 1 or 2.");
 	}
-	channel++;
 	visaFlume.write ("OUTPUT" + str (channel) + " OFF");
 }
 
@@ -303,10 +303,13 @@ void AgilentCore::setSine(int channel, sineInfo info, unsigned var) {
 		visaFlume.write("SOURCE" + str(channel) + ":APPLY:SINUSOID " + str(info.frequency.getValue(var)) + " KHZ, "
 			+ str(convertPowerToSetPoint(info.amplitude.getValue(var), info.useCal, calibrations[channel - 1])) + " VPP");
 		if (info.burstMode) {
-			visaFlume.write("BURST:MODE GATED");
-			visaFlume.write("BURST:GATE:POLARITY NORMAL");
-			visaFlume.write("BURST:PHASE 0");
-			visaFlume.write("BURST:STATE ON");
+			visaFlume.write("SOURCE" + str(channel) + ":BURST:MODE GATED");
+			visaFlume.write("SOURCE" + str(channel) + ":BURST:GATE:POLARITY NORMAL");
+			visaFlume.write("SOURCE" + str(channel) + ":BURST:PHASE 0");
+			visaFlume.write("SOURCE" + str(channel) + ":BURST:STATE ON");
+		}
+		else {
+			visaFlume.write("SOURCE" + str(channel) + ":BURST:STATE OFF");
 		}
 
 	}

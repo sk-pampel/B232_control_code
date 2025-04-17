@@ -11,7 +11,7 @@ struct autoCalConfigInfo {
 
 const std::vector<autoCalConfigInfo> AUTO_CAL_LIST {
 	{
-		/*prof*/ {"Atom_Loading_And_Imaging", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms"},
+		/*prof*/ {"loading_survival", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms"},
 		/*filename*/ "BASIC_SINGLE_ATOMS",
 		/*infostr*/ "Running Basic Single Atom Loading and Imaging Test...\r\n"
 	},
@@ -26,45 +26,51 @@ const std::vector<autoCalConfigInfo> AUTO_CAL_LIST {
 		/*infostr*/ "Running Pushout...\r\n"
 	},
 	{
-		/*prof*/ {"LR_Quant_Axis_Calibration", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms"},
-		/*filename*/ "LR_FIELD_TEST",
-		/*infostr*/ "Running LR field calibration...\r\n"
-	},
-	{
-		/*prof*/ {"thermal_top_sideband_Raman_spectroscopy", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms"},
+		/*prof*/ {"thermal_radial_spectroscopy", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms"},
 		/*filename*/ "THERMAL_TOP_SIDEBAND_RAMAN_SPECTROSCOPY",
 		/*infostr*/ "Running Thermal Top Raman Sideband Spectroscopy...\r\n"
 	},
 	{
-		/*prof*/ { "3DGSBC_Carrier_Calibration", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms" },
+		/*prof*/ { "raman_carrier", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms" },
 		/*filename*/ "3DSBC_TOP_CARRIER_RAMAN_SPECTROSCOPY",
 		/*infostr*/ "Running 3DSBC Top Carrier Raman Spectroscopy...\r\n"
 	},
 	{
-		/*prof*/ { "3DGSBC_Top_Sideband_Spectroscopy", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms" },
+		/*prof*/ { "raman_radial_spectroscopy", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms" },
 		/*filename*/ "3DSBC_TOP_SIDEBAND_RAMAN_SPECTROSCOPY",
 		/*infostr*/ "Running 3DSBC Top Raman Sideband Spectroscopy...\r\n"
 	},
 	{
-		/*prof*/ { "3DGSBC_Top_BSB_PiTime", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms" },
-		/*filename*/ "3DSBC_TOP_BSB_RABI",
-		/*infostr*/ "Running 3DSBC Top BSB Pi Time...\r\n"
-	},
-	{
-		/*prof*/ { "3DGSBC_Axial_Sideband_Spectroscopy", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms" },
+		/*prof*/ { "raman_axial_spectroscopy", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms" },
 		/*filename*/ "3DSBC_AXIAL_RAMAN_SPECTROSCOPY",
 		/*infostr*/ "Running 3DSBC Axial Raman Spectroscopy...\r\n"
 	},
 	{
-		/*prof*/ { "thermal_Axial_Sideband_Spectroscopy", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms" },
+		/*prof*/ { "thermal_axial_spectroscopy", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms" },
 		/*filename*/ "THERMAL_AXIAL_RAMAN_SPECTROSCOPY",
 		/*infostr*/ "Running Thermal Axial Raman Spectroscopy...\r\n"
-	}
-//	{
-//		/*prof*/ { "3DGSBC_Axial_BSB_PiTime", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms" },
-//		/*filename*/ "3DSBC_AXIAL_BSB_RABI",
-//		/*infostr*/ "Running 3DSBC Axial BSB Pi Time...\r\n"
-//	},
+	},
+	{
+		/*prof*/ { "raman_axial_bsb_pi_pulse", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms" },
+		/*filename*/ "3DSBC_AXIAL_BSB_RABI",
+		/*infostr*/ "Running 3DSBC Axial BSB Pi Power...\r\n"
+	},
+	{
+		/*prof*/ { "raman_radial_bsb_pi_pulse", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms" },
+		/*filename*/ "3DSBC_TOP_BSB_RABI",
+		/*infostr*/ "Running 3DSBC Top BSB Pi Power...\r\n"
+	},
+	{
+		/*prof*/ { "shallow_trap_test", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms" },
+		/*filename*/ "ERASURE_SURVIVAL",
+		/*infostr*/ "Running earsure survival...\r\n"
+	},
+	{
+		/*prof*/ { "raman_radial_spectroscopy_spillout", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms" },
+		/*filename*/ "ERASURE_COOLING",
+		/*infostr*/ "Running erasure cooling...\r\n"
+	},
+
 //	{
 //		/*prof*/ {"Automated-MOT-Temperature-Measurement", "MOT", MOT_ROUTINES_ADDRESS},
 //		/*filename*/ "MOT_TEMPERATURE",

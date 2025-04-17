@@ -1,0 +1,28 @@
+%var loadingDepth 14 % 13.4 10
+%var imagingDepth 10 % 12.7 9
+%var intrapcooldepth 19
+%var ramanDepth 16 
+%var pushoutDepth 21
+
+var loadingDepth 2
+var intrapcooldepth 2.6 
+var imagingDepth 1.3
+var ramandepth 2.3
+var pushoutDepth 3
+var dropDepth 1
+
+
+hold loadingDepth 1 onceWaitTrig #   
+ramp lin loadingDepth imagingDepth 1 onceWaitTrig # 
+ramp lin imagingDepth intrapcooldepth 1 onceWaitTrig #
+ramp lin intrapcooldepth ramanDepth 1 onceWaitTrig #
+ramp lin ramanDepth pushoutDepth 1 onceWaitTrig #
+ramp lin pushoutDepth dropDepth 1 onceWaitTrig #
+ramp lin dropDepth imagingDepth 1 onceWaitTrig #
+ramp lin imagingDepth loadingDepth 1 once #   
+ 
+  
+  
+ 
+ 
+	

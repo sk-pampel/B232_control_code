@@ -1,0 +1,37 @@
+% LOW FREQUENCY MEANS LOWER/LEFT ON SCREEN
+
+var vStdBias 1
+var hStdBias 1 
+var vMainFreq 85 
+var hMainFreq 75
+var vDumpFreq 117 % 117 
+var offset 0.1
+
+var_v 1 hPhase [ 0 ] 
+var_v 1 hFreq [ hMainFreq ] 
+var_v 1 hOffset [ (hMainFreq+offset) ] 
+var_v 1 hStdBi [ hStdBias ] 
+%var_v 1 tanhRone [ tanh ] 
+var_v 1 linRone [ lin ] 
+var_v 2 vPhases [ 0 0 ]   
+var_v 2 vFreqs [ vMainFreq vDumpFreq ]
+var_v 2 vStdBi [ (vStdBias) (1-vStdBias) ] 
+
+repeatTilTrig
+gen1const_v Horizontal hFreq hStdBi hPhase #  
+gen2const_v Vertical vFreqs vStdBi vPhases #
+0.01 0 endRepeat
+
+%% ramp to offset 
+gen1freqramp_v Horizontal
+linRone hFreq hOffset hStdBi hPhase #
+gen2const_v Vertical vFreqs vStdBi vPhases #
+100 0 
+
+%% hold at offset
+repeatTilTrig
+gen1const_v Horizontal hOffset hStdBi hPhase #  
+gen2const_v Vertical vFreqs vStdBi vPhases #
+0.01 0 endRepeat
+
+

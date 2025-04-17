@@ -44,6 +44,8 @@ class CalibrationManager : public IChimeraSystem {
 		void refreshListview ();
 		static std::vector<double> calPtTextToVals (QString qtxt);
 		static double calibrationFunction (double val, calResult calibration, IChimeraSystem* parent = nullptr);
+	public slots:
+		void onExpAutoCalToggled(bool checked); // Declare the slot here	
 	private:
 		const std::string systemDelim = "CALIBRATION_MANAGER";
 		QLabel* calsHeader;

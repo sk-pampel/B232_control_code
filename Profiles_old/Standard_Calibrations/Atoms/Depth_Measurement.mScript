@@ -1,0 +1,36 @@
+% Master-Script See the "?" for info on commands.
+t = 0.1
+on: tweezerrf 
+off: axialRamanShutter  
+off: probeShutter 
+pulseon: dds_reset 1.1
+t += 1
+call turnonmot() 
+t += loadmottime
+pulseon: scoutTrig 0.1
+on: tweezerrf
+t += 2
+call pgcloading() 
+t += 2
+pulseon: tweezerIntensityTrig 0.1 
+call stdPgcImage()
+t += 5
+pulseon: tweezerIntensityTrig 0.1
+t += 1
+call intrappgc()
+pulseon: tweezerIntensityTrig 0.1 %to pump depth
+t += 1
+call pump2Stretch()
+t += 1
+pulseon: tweezerIntensityTrig 0.1 %pushoutDepth
+call pushout()
+%call pushout_all()
+t += 1.1
+
+pulseon: tweezerIntensityTrig 0.1 %imagingdepth
+t += 1.1
+call stdPgcImage()
+t += 1
+pulseon: tweezerIntensityTrig 0.1 %loadingdepth 
+
+t += 5

@@ -1,0 +1,38 @@
+% Master-Script See the "?" for info on commands.
+% Time starts at 1 ms.
+
+t = 0.1
+
+on: tweezerRf 
+pulseon: dds_reset 0.1 % MOT freq
+call turnonmot()
+t += loadmottime
+
+call pgcloading()
+t += 2
+pulseon: niawgTrig 0.1 % to imaging and cooling
+Pulseon: tweezerIntensityTrig 0.1 % to img depth
+%on: a15
+call stdPgcImage()
+t += 5
+%off: a15
+Pulseon: tweezerIntensityTrig 0.1 % to cooling depth
+t += 5
+
+call intrappgc()
+
+on: a15
+pulseon: niawgTrig 0.1 % to freq modulation
+t += freq_mod_time
+% pulseon: niawgTrig 0.1 % to imaging and cooling
+
+t += 1
+off: a15
+Pulseon: tweezerIntensityTrig 0.1 % to img depth
+t += 1
+call stdPgcImage()
+t += 1
+pulseon: niawgTrig 0.1 % back to loading
+pulseon: tweezerIntensityTrig 0.1 % to loading depth
+t += 1
+

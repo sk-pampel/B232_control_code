@@ -1,11 +1,12 @@
 % Master-Script See the "?" for info on commands.
 t = 0.1
+
 on: tweezerrf
 pulseon: dds_reset 0.1
 call turnonmot()
 t += loadMotTime
 call pgcloading()
-t += 2
+t += 1
 pulseon: tweezerIntensityTrig 0.1 % to imagingDepth 
 call stdPgcImage()
 t += 5
@@ -13,6 +14,7 @@ pulseon: tweezerIntensityTrig 0.1 % to intraplgmDepth
 t += 5
 call intrappgc()
 t += 1
+
 pulseon: tweezerIntensityTrig 0.1 % to RamanDepth
 call pump2stretch()
 t += 1
@@ -22,30 +24,33 @@ dac: probePower 0
 off: probeRf
 off: repumpRf
 var opFreq 1.5 %1.98
-var opPulseLength2 0.1 %0.2 % .015 %0.15
-var sigmaoppowscan .1 %2.8 % 2 %1
-call setQuantAxis() 
-%call setangledquantaxis()
-%call setTiltedQuantAxis()
+var opPulseLength2 0.15 %0.2 % .015 %0.15
+var sigmaoppowscan .01 %2.8 % 2 %1
+%call setQuantAxis2() 
+call setangledquantaxis()
+
 
 daclinspace: motFreq defaultMotFreq opFreq 1 10  
 dac: sigmaoppower { sigmaoppowscan sigma_op }
-on: sigmaOpRf
+%on: sigmaOpRf
 t += opPulseLength2
 off: sigmaOpRf 
 t += .01
 dac: sigmaoppower 0
-var finPumpFreq -0.5
-daclinspace: motFreq opFreq finPumpFreq 0.2 10 
-call pushout()
+daclinspace: motFreq opFreq defaultMotFreq 0.2 10 
+on: a15
 pulseon: tweezerIntensityTrig 0.1 %to pushout depth
-t += 7
-
+call pushout()
+t += 1
+%pulseon: tweezerIntensityTrig 0.1 %to cooling depth
+%call intrappgc()
+off: a15
 pulseon: tweezerIntensityTrig 0.1 %to image depth
 call stdPgcImage()
 t += 1
 pulseon: tweezerIntensityTrig 0.1 %to loading depth 
 t += 1
+
 
 
  

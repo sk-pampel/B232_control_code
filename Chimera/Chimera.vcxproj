@@ -257,7 +257,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(NIIVIPATH)\Lib_x64\msc;$(PXIPNPPATH)\winnt\Lib_x64\msc;C:\Program Files (x86)\IVI Foundation\VISA\WinNT\Lib_x64\msc;C:\Program Files (x86)\IVI Foundation\VISA\WinNT\agvisa\Lib_x64\msc;D:\Program Files\boost_1_60_0\lib64-msvc-14.0;C:\Program Files\boost_1_60_0\lib64-msvc-14.0</AdditionalLibraryDirectories>
@@ -697,6 +697,7 @@
     <ClCompile Include="Source\GeneralObjects\IChimeraSystem.cpp" />
     <ClCompile Include="Source\GeneralObjects\IDeviceCore.cpp" />
     <ClCompile Include="Source\GeneralUtilityFunctions\my_str.cpp" />
+    <ClCompile Include="Source\NIAWG\NiawgCore.cpp" />
     <ClCompile Include="Source\NIAWG\NiawgSystem.cpp" />
     <ClCompile Include="Source\GeneralObjects\CodeTimer.cpp" />
     <ClCompile Include="Source\Andor\AndorRunMode.cpp" />
@@ -773,7 +774,6 @@
     <ClCompile Include="Source\Tektronix\TekCore.cpp" />
     <ClCompile Include="Source\Tektronix\TektronixAfgControl.cpp" />
     <ClCompile Include="Source\GeneralUtilityFunctions\commonFunctions.cpp" />
-    <ClCompile Include="Source\NIAWG\NiawgCore.cpp" />
     <ClCompile Include="Source\ExcessDialogs\saveWithExplorer.cpp" />
     <ClCompile Include="Source\GeneralUtilityFunctions\miscCommonFunctions.cpp" />
     <ClCompile Include="Source\DigitalOutput\DoSystem.cpp" />

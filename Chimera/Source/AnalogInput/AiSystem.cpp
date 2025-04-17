@@ -2,6 +2,9 @@
 #include "stdafx.h"
 #include "AiSystem.h"
 #include <qtimer.h>
+#include <iostream>
+#include <thread>
+#include <chrono>
 
 AiSystem::AiSystem( ) : daqmx( ANALOG_IN_SAFEMODE ) {
 }
@@ -158,9 +161,35 @@ bool AiSystem::wantsContinuousQuery( ){
 }
 
 
-void AiSystem::refreshCurrentValues( ){
-	currentValues = getSingleSnapArray( getAiSettings().numberMeasurementsToAverage );
+//void AiSystem::refreshCurrentValues( ){
+//	currentValues = getSingleSnapArray( getAiSettings().numberMeasurementsToAverage );
+//}
+
+void AiSystem::refreshCurrentValues() {
+	try {
+		std::vector<float64> snap = getSingleSnap(100); // Example n_to_avg, adjust as needed
+		if (snap.size() == NUMBER_AI_CHANNELS) {
+			std::lock_guard<std::mutex> lock(aiMutex); // Protect vector modifications
+			resVals.insert(resVals.end(), snap.begin(), snap.end()); // Add all elements of snap
+			ctrlVals.insert(ctrlVals.end(), snap.begin(), snap.end()); // Use snap for now, adjust if needed
+			std::cout << "Added snap to resVals and ctrlVals, sizes: " << resVals.size() << ", " << ctrlVals.size() << std::endl;
+		}
+		else {
+			std::cout << "Warning: Incomplete snap data, size = " << snap.size() << ", skipped." << std::endl;
+		}
+	}
+	catch (ChimeraError & err) {
+		std::cout << "Error in refreshCurrentValues: " << err.trace() << ", skipping update." << std::endl;
+	}
 }
+
+//void AiSystem::refreshCurrentValues() {
+//	std::cout << "Before adding data: currentValues size = " << currentValues.size() << std::endl;
+//
+//	currentValues = getSingleSnapArray(getAiSettings().numberMeasurementsToAverage);
+//
+//	std::cout << "After adding data: currentValues size = " << currentValues.size() << std::endl;
+//}
 
 
 void AiSystem::armAquisition( unsigned numSnapshots ){
@@ -183,31 +212,80 @@ bool AiSystem::wantsQueryBetweenVariations( ){
 	return queryBetweenVariations->isChecked( );
 }
 
-std::vector<float64> AiSystem::getSingleSnap( unsigned n_to_avg ){
-	try{
-		daqmx.configSampleClkTiming( analogInTask0, "", 10000.0, DAQmx_Val_Rising, DAQmx_Val_FiniteSamps, n_to_avg );
-		daqmx.startTask( analogInTask0 );
-		// don't understand why but need 2 samples min???
-		std::vector<float64> tmpdata( NUMBER_AI_CHANNELS*n_to_avg );
+//std::vector<float64> AiSystem::getSingleSnap( unsigned n_to_avg ){
+//	try{
+//		daqmx.configSampleClkTiming( analogInTask0, "", 10000.0, DAQmx_Val_Rising, DAQmx_Val_FiniteSamps, n_to_avg );
+//		daqmx.startTask( analogInTask0 );
+//		// don't understand why but need 2 samples min???
+//		std::vector<float64> tmpdata( NUMBER_AI_CHANNELS*n_to_avg );
+//		int32 sampsRead;
+//		daqmx.readAnalogF64( analogInTask0, tmpdata, sampsRead );
+//		//int32 sampsRead = 0;
+//		//daqmx.readAnalogF64(analogInTask0, tmpdata, &sampsRead);
+//
+//		daqmx.stopTask( analogInTask0 );
+//		std::vector<float64> data( NUMBER_AI_CHANNELS );
+//		unsigned count = 0;
+//		for ( auto& d : data ){
+//			d = 0;
+//			for ( auto i : range( n_to_avg ) ){
+//				d += tmpdata[count++];
+//			}
+//			d /= n_to_avg;
+//		}
+//		return data;
+//	}
+//	catch (ChimeraError &){
+//		throwNested ("Error exception thrown while getting Ai system single snap!");
+//	}
+//}
+
+std::vector<float64> AiSystem::getSingleSnap(unsigned n_to_avg) {
+	std::lock_guard<std::mutex> lock(aiMutex); // Lock mutex
+	std::cout << "Entering getSingleSnap with n_to_avg = " << n_to_avg << std::endl;
+	try {
+		std::cout << "Checking and stopping task if running..." << std::endl;
+		daqmx.ensureTaskStopped(analogInTask0);
+
+		std::cout << "Configuring sample clock timing..." << std::endl;
+		daqmx.configSampleClkTiming(analogInTask0, "", 10000.0, DAQmx_Val_Rising, DAQmx_Val_FiniteSamps, n_to_avg);
+
+		std::cout << "Starting task..." << std::endl;
+		daqmx.startTask(analogInTask0);
+
+		std::cout << "Allocating tmpdata vector (size = " << NUMBER_AI_CHANNELS * n_to_avg << ")..." << std::endl;
+		std::vector<float64> tmpdata(NUMBER_AI_CHANNELS * n_to_avg);
 		int32 sampsRead;
-		daqmx.readAnalogF64( analogInTask0, tmpdata, sampsRead );
-		daqmx.stopTask( analogInTask0 );
-		std::vector<float64> data( NUMBER_AI_CHANNELS );
+		std::cout << "Reading analog data..." << std::endl;
+		daqmx.readAnalogF64(analogInTask0, tmpdata, sampsRead);
+
+		std::cout << "Read " << sampsRead << " samples. Stopping task..." << std::endl;
+		daqmx.stopTask(analogInTask0);
+		std::cout << "Adding 20ms delay after stop..." << std::endl;
+		std::this_thread::sleep_for(std::chrono::milliseconds(20));
+
+		std::cout << "Processing averaged data..." << std::endl;
+		std::vector<float64> data(NUMBER_AI_CHANNELS);
 		unsigned count = 0;
-		for ( auto& d : data ){
+		for (auto& d : data) {
 			d = 0;
-			for ( auto i : range( n_to_avg ) ){
+			for (auto i : range(n_to_avg)) {
 				d += tmpdata[count++];
 			}
 			d /= n_to_avg;
 		}
+		std::cout << "Returning averaged data (size = " << data.size() << ")..." << std::endl;
 		return data;
 	}
-	catch (ChimeraError &){
-		throwNested ("Error exception thrown while getting Ai system single snap!");
+	catch (ChimeraError & err) {
+		std::cout << "ChimeraError caught: " << err.trace() << std::endl;
+		throwNested("Error exception thrown while getting Ai system single snap!");
+	}
+	catch (...) {
+		std::cout << "Unknown exception caught in getSingleSnap!" << std::endl;
+		throwNested("Unknown error in getSingleSnap!");
 	}
 }
-
 
 double AiSystem::getSingleChannelValue( unsigned chan, unsigned n_to_avg ){
 	auto all = getSingleSnap( n_to_avg );
@@ -223,6 +301,27 @@ std::array<float64, AiSystem::NUMBER_AI_CHANNELS> AiSystem::getSingleSnapArray( 
 	}
 	return retData;
 }
+
+//#include <iostream> // Include for debugging output
+//
+//std::array<float64, AiSystem::NUMBER_AI_CHANNELS> AiSystem::getSingleSnapArray(unsigned n_to_avg) {
+//	std::vector<float64> data = getSingleSnap(n_to_avg);
+//
+//	// Print the contents of data
+//	std::cout << "getSingleSnap(" << n_to_avg << ") returned: ";
+//	for (const auto& val : data) {
+//		std::cout << val << " ";
+//	}
+//	std::cout << std::endl;
+//
+//	std::array<float64, NUMBER_AI_CHANNELS> retData;
+//	for (size_t dataInc = 0; dataInc < NUMBER_AI_CHANNELS; ++dataInc) {
+//		retData[dataInc] = data[dataInc];
+//	}
+//
+//	return retData;
+//}
+
 
 void AiSystem::logSettings (DataLogger& log, ExpThreadWorker* threadworker){
 }

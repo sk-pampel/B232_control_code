@@ -1,4 +1,5 @@
 // created by Mark O. Brown
+// created by Mark O. Brown
 #include "stdafx.h"
 #include "Agilent/Agilent.h"
 #include "scriptedAgilentWaveform.h"
@@ -68,6 +69,7 @@ bool ScriptedAgilentWaveform::analyzeAgilentScriptCommand( int segNum, ScriptStr
 			script >> workingInput.pulse.tOffset;
 			workingInput.pulse.tOffset.assertValid ( params, scope );
 		}
+
 		else if ( word == "modpulse" ){
 			workingInput.ramp.isRamp = false;
 			workingInput.pulse.isPulse = true;

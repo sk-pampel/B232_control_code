@@ -1,0 +1,4 @@
+var freq 1 
+
+hold 0 0.01 onceWaitTrig # 
+modPulse gaussian .2 1 tbspecpulselen .1 freq 0 2*tbspecpulselen once #

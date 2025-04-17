@@ -1,0 +1,16 @@
+t = 0.1
+pulseon: tweezerIntensityTrig 0.1 %
+call turnOnMot()
+t += 300
+call openAndorShutter()
+on: tweezerRF
+on: andorTrig
+t += andorImageTime
+off: andorTrig
+
+t += 10
+pulseon: tweezerIntensityTrig 0.1 % 
+t += 10
+pulseon: tweezerIntensityTrig 0.1 % 
+t += 10
+off: tweezerRF

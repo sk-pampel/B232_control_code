@@ -110,7 +110,20 @@ void Script::initialize (int width, int height, QPoint& loc, IChimeraQtWindow* p
 							"(g)Amplitude and Frequency Ramps\n"
 							"\"gen2freq&ampramp <freq1 ramp type> <init freq1> <fin freq1> <amp ramp1 type> <init ramp1> <fin ramp1> <phase1 (rad)>;...\n"
 							"...<similar for 2nd>; <time> <t manage>\"\n"
-							"(j)Create marker event after last waveform\n"
+							"(h) Sinusoidal Frequency Modulation\n"
+							"\"gen1sinmod <base freq> <mod amplitude (MHz)> <base amplitude> <mod freq (MHz)> <phase (rad)> #\"\n"
+							"\"genXsinmod_v <base freq vec> <mod amp vec> <base amp vec> <mod freq vec> <phase vec> #\"\n"
+							"- Note: <mod amplitude> is the frequency excursion (±MHz), <mod freq> is the modulation rate.\n"
+							"\"genXrar <freq> <init amp> <fin amp> <release time (ms)> <phase (rad)> #\"\n"
+							"\"genXrar_v <freq vec> <init amp vec> <fin amp vec> <release time vec> <phase vec> #\"\n"
+							"\"gen2rar <freq1> <init amp1> <fin amp1> <release time1 (ms)> <phase1 (rad)>; "
+							"<freq2> <init amp2> <fin amp2> <release time2 (ms)> <phase2 (rad)>; <time> <t manage> #\"\n"
+							"- Note: <release time> is in ms; amplitude jumps to <fin amp> until <release time>, then returns to <init amp>.\n"
+							"(i)Tanh - Ramped Sinusoidal Frequency Modulation\n"
+							"\"gen1tosinmod <base freq> <mod amplitude (MHz)> <base amplitude> <mod freq (MHz)> <phase (rad)> #\"\n"
+							"\"genXtosinmod_v <base freq vec> <mod amp vec> <base amp vec> <mod freq vec> <phase vec> #\"\n"
+							"- Note: <mod amplitude> is the final frequency excursion (±MHz) that ramps from 0 using a tanh function over waveTime, "
+							"<mod freq> is the modulation rate. The ramp follows a tanh(-4 + 8*t/waveTime) profile for smooth transition.\n""(j)Create marker event after last waveform\n"
 							"\"markerEvent <samples after previous waveform to wait>\"\n");
 	}
 	else if (deviceType == "Agilent"){

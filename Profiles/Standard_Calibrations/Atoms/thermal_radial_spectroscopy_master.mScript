@@ -1,0 +1,44 @@
+% Master-Script See the "?" for info on commands.
+
+t = 0.1
+on: tweezerrf
+pulseon: dds_reset 0.1
+call turnonmot()
+t += loadMotTime
+call pgcloading()
+t += 2
+pulseon: tweezerIntensityTrig 0.1 % to imagingDepth 
+call stdPgcImage()
+t += 5
+%on: a15
+pulseon: tweezerIntensityTrig 0.1 % to intraplgmDepth
+t += 1
+call intrappgc()
+t += 1
+call send_uw_to_raman_eom() 
+call triggerwindfreak() % to spectroscopy freq
+pulseon: tweezerIntensityTrig 0.1 % to RamanDepth
+call pump2stretch()
+on: totalRamanRf
+t += 1
+dac: eopulselev { 0.255 eo_raman } 
+on: a15 
+pulseon: topPulseTrig 0.01
+call TopRamanPulse(tbspecpulselen)
+
+off: totalRamanRf
+off: axialRamanShutter 
+dac: topPulseLev 0
+dac: eoPulseLev 0
+t += 1
+pulseon: tweezerIntensityTrig 0.1 % to pushout depth
+t += 1
+call pushout()
+t += 1
+pulseon: tweezerIntensityTrig 0.1 %to imaging depth
+t += 1
+call stdPgcImage()
+pulseon: tweezerIntensityTrig 0.1 %to loading depth
+off: a15
+t += 0.2
+

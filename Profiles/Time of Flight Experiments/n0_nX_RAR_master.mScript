@@ -1,0 +1,54 @@
+% Master-Script See the "?" for info on commands.
+% Time starts at 1 ms.
+
+t = 0.1
+on: tweezerRf 
+
+t += 10 
+call turnonmot()
+t += loadmottime
+pulseon: scoutTrig 0.1 
+t += 2
+call pgcloading()
+t += 2
+
+Pulseon: tweezerIntensityTrig 0.1 % to img depth
+t += 1
+call stdPgcImage()
+t += 5
+Pulseon: tweezerIntensityTrig 0.1 % to cooling depth
+t += 5
+call intrappgc()
+t += 2
+Pulseon: niawgTrig 0.1 % ramp and hold at TOF bias
+Pulseon: tweezerIntensityTrig 0.1 % to modulation
+t += 1
+
+Pulseon: niawgTrig 0.1 %start modulate position
+
+
+t += modTime
+
+Pulseon: niawgTrig 0.1 % end modulate
+t += qperiod + hperiod % finish ramp
+
+%% release and recapture
+on: osc_marker
+off: tweezerRf
+t += releasetime
+on: tweezerRf
+t += 1
+
+
+pulseon: niawgTrig 0.1 % to standard bias
+Pulseon: tweezerIntensityTrig 0.1 % to cooling depth
+call intrappgc()
+t += 0.1
+pulseon: tweezerIntensityTrig 0.1 % to imagingDepth 
+call stdPgcImage()
+
+pulseon: tweezerIntensityTrig 0.1 % to loadingDepth
+pulseon: niawgTrig 0.1 % to loading bias
+t += 1
+
+  

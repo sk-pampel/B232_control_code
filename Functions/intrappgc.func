@@ -9,8 +9,8 @@ def intrappgc():
 	t += 10
 	dac: diagMotPower 0
 	var pgc_intrap_freq 1.3 %-4 %-3
-    var pgc_intrap_sidemot_power 1.4
-	var repump_pow 0.25 %0.175 %0.25
+    var pgc_intrap_sidemot_power 2.3
+	var repump_pow 0.2 %0.25 %0.175 %0.25
     var diagmot_power 0.0 %1
 
     dac: SideMotPower { pgc_intrap_sidemot_power sidemot }
