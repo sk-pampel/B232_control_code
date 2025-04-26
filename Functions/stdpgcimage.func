@@ -2,15 +2,12 @@
 
 def stdPgcImage():
   % give the shutter some time to open.
+  call zeroFieldsPGC()
   call openAndorShutter()
   off: diagMotRf
   on: repumpShutter
   on: sidemotShutter
   off: diagmotShutter
-  t += 10
-  call zeroFieldsPGC()
-
-  %call zeroFieldsImage()
   dac: diagMotPower 0
   var image_detuning 1.58 % peak around 250
   var image_power 2.1
@@ -19,13 +16,8 @@ def stdPgcImage():
   dac: DiagMotPower { 0 diagmot } 
   dacLinSpace: MotFreq defaultMotFreq image_detuning 5 10
 
-  t += 5
   on: RepumpRf
   t += 0.2
-  %on: tweezerServoSamp
-  t += 0.1
-  %on: tweezerflashrf
-  %on: sidemotflash
   on: SideMotRf
   off: diagMotRf
   on: andorTrig
@@ -33,8 +25,6 @@ def stdPgcImage():
   off: SideMotRf
   off: diagMotRf
   off: repumpRf
-  %off: tweezerflashrf
-  %off: sidemotflash
   off: repumpShutter
   off: sidemotShutter
   dac: DiagMotPower 0

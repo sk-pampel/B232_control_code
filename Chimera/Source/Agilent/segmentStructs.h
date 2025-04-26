@@ -10,6 +10,7 @@ struct rampInfo{
 	Expression start;
 	Expression end;
 	Expression releaseTime = Expression("0");  // Release time in ms for rar
+	Expression modFreq = Expression("0");  // modulation frequency for ampsinmod
 
 	std::string rampFileName="";
 	std::vector<double> rampFileVals = std::vector<double> ();

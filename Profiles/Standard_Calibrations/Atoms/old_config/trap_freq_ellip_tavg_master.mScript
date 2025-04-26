@@ -20,26 +20,32 @@ Pulseon: tweezerIntensityTrig 0.1 % to cooling depth
 t += 5
 call intrappgc()
 t += 2
-Pulseon: niawgTrig 0.1 % modulate
-Pulseon: tweezerIntensityTrig 0.1 % to mod depth
+Pulseon: niawgTrig 0.1 % ramp and hold at TOF bias
+Pulseon: tweezerIntensityTrig 0.1 % to modulation
 t += 1
 
+Pulseon: niawgTrig 0.1 %start modulate position
+
+
 on: a15
-%on: axialmicropulsetrig 
+on: axialmicropulsetrig 
 t += 50
 off: axialmicropulsetrig
 off: a15
-
 t += 1
 Pulseon: niawgTrig 0.1 % end modulate
+
+t += 1
 Pulseon: tweezerIntensityTrig 0.1 % to drop depth
+Pulseon: niawgTrig 0.1 % ramp to std bias
 t += 10
 Pulseon: tweezerIntensityTrig 0.1 % to img depth
 t += 1
 call stdPgcImage()
 t += 1
-Pulseon: niawgTrig 0.1 % restart script
+
 pulseon: tweezerIntensityTrig 0.1 % to loading depth
+Pulseon: niawgTrig 0.1 % restart script
 t += 10
 
   

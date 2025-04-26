@@ -25,12 +25,6 @@ call intrappgc()
 
 t += 1
 
-%on: a15
-%on: sidemotflash
-%t += 1
-%off: sidemotflash
-%off: a15
-
 Pulseon: tweezerIntensityTrig 0.1 % to img depth
 t += 1
 call stdPgcImage()

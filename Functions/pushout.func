@@ -6,11 +6,8 @@ def pushout():
   var probepowsetting 0.02 %0.02 % 0.15 deep   
   var pushoutfreq 1.49 %1.5 for shallow-trap  1.61 for deep
   var pushouttime .006 % .005 shallow  0.1 for deep trap 
-  %call setQuantAxis()
-  %call zeroFieldsinTrapPgc()
   off: repumpRf
   off: repumpshutter
-  % not pushing out 'F=1
   off: sideMotRf
 
   dac: probePower { probepowsetting probe } % 

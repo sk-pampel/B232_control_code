@@ -16,31 +16,18 @@ var_v 2 noRamp [ nr nr ]
 var releasetime 0.01
 var_v 2 rt [ releasetime releasetime ]
 
-
+%% Standard Bias
 repeatTilTrig
 gen1const_v Horizontal hFreqs hStdBi hPhases #  
 gen2const_v Vertical vFreqs vStdBi vPhases #
 0.01 0 endRepeat
 
-% release and recapture
+%% release and recapture
 gen1const_v Horizontal hFreqs hStdBi hPhases # 
 gen2rar_v Vertical vFreqs vStdBi vRARBi rt vPhases #
 1 0
 
-
-%gen1const_v Horizontal hFreqs hStdBi hPhases # 
-%gen2ampramp_v Vertical vFreqs noRamp vStdBi vRARBi vPhases #
-%0.02 0 
-
-%gen1const_v Horizontal hFreqs hStdBi hPhases #  
-%gen2const_v Vertical vFreqs vRARBi vPhases #
-%.001 0
-
-%gen1const_v Horizontal hFreqs hStdBi hPhases # 
-%gen2ampramp_v Vertical vFreqs noRamp vRARBi vStdBi vPhases #
-%0.02 0 
-
-%% recapture
+%% standard bias
 repeatTilTrig
 gen1const_v Horizontal hFreqs hStdBi hPhases # 
 gen2const_v Vertical vFreqs vStdBi vPhases #

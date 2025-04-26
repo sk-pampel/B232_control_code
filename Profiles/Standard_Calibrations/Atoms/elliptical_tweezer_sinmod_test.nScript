@@ -3,7 +3,6 @@ var hStdBias 1
 var vMainFreq 85 
 var hMainFreq 75
 var vDumpFreq 117 
-var vTOFBias 1
 
 var_v 1 hPhase [ 0 ] 
 var_v 1 hFreq [ hMainFreq ] 
@@ -14,15 +13,10 @@ var_v 1 hDFreq [ hMainFreq ]
 var_v 2 vPhases [ 0 0 ]   
 var_v 2 vFreqs [ vMainFreq vDumpFreq ]
 var_v 2 vStdBi [ (vStdBias) (1-vStdBias) ] 
-var_v 2 vTofBi [ vTOFBias (1-vTOFBias) ]
 var_v 2 tanhRtwo [ tanh tanh ]
 
-var_v 1 sineq [ sinequarter ]
-var_v 1 sineh [ sinehalf ]
-var_v 1 cosq [ cosinequarter ]
-
-var modamp 1.5
-var modfreq 2.5
+var modamp .5
+var modfreq 1
 var_v 1 am [ modamp ]
 var_v 1 fm [ modfreq ] 
 
@@ -31,7 +25,7 @@ gen1const_v Horizontal hFreq hStdBi hPhase #
 gen2const_v Vertical vFreqs vStdBi vPhases #
 1 0 endRepeat
 
-
+%ramp to modulation
 gen1tosinmod_v Horizontal hFreq am hStdBi fm hPhase #
 gen2const_v Vertical vFreqs vStdBi vPhases #
 1 0 
@@ -45,7 +39,7 @@ gen2const_v Vertical vFreqs vStdBi vPhases #
 %ramp from modulation
 gen1fromsinmod_v Horizontal hFreq am hStdBi fm hPhase #
 gen2const_v Vertical vFreqs vStdBi vPhases #
-1000 0 
+1 0 
 
 % symmetric trap
 repeatTilTrig

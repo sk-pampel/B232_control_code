@@ -32,7 +32,7 @@ call setangledquantaxis()
 
 daclinspace: motFreq defaultMotFreq opFreq 1 10  
 dac: sigmaoppower { sigmaoppowscan sigma_op }
-%on: sigmaOpRf
+on: sigmaOpRf
 t += opPulseLength2
 off: sigmaOpRf 
 t += .01

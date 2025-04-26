@@ -29,7 +29,7 @@ gen2const_v Vertical vFreqs vStdBi vPhases #
 %% ramp to TOF bias
 gen1const_v Horizontal hFreq hStdBi hPhase # 
 gen2ampramp_v Vertical vFreqs tanhR vStdBi vTofBi vPhases #
-rampTime 0
+1 0
 
 %% hold at TOF bias
 repeatTilTrig
@@ -40,7 +40,7 @@ gen2const_v Vertical vFreqs vTofBi vPhases #
 %% ramp to standard bias
 gen1const_v Horizontal hFreq hStdBi hPhase # 
 gen2ampramp_v Vertical vFreqs tanhR vTofBi vStdBi vPhases #
-rampTime 0
+1 0
 
 %% hold at standard bias
 repeatTilTrig

@@ -23,27 +23,21 @@ call pump2stretch()
 call send_uw_to_raman_eom()
 on: totalRamanRf
 t += 1
-%on: a15
 call gsbc()
-%off: a15
-t += 0.1
-call triggerwindfreak() % to spectroscopy freq
-t += 1
-dac: eopulselev { 0.255 eo_raman } 
-%%on: a15
-pulseon: topPulseTrig 0.01
-call TopRamanPulse(tbspecpulselen)
-t += 0.1 
 off: totalRamanRf
 off: axialRamanShutter 
-dac: topPulseLev 0
 dac: eoPulseLev 0
-pulseon: tweezerIntensityTrig 0.1 % to pushout depth
+pulseon: niawgTrig 0.1 % TOF bias 
+pulseon: tweezerIntensityTrig 0.1 % to TOF depth
 t += 1
-call pushout() % 15 ms before pushout light
+%pulseon: niawgTrig 0.1 % time avg 
+t += 500
+pulseon: niawgTrig 0.1 % end time avg -> rar then std
+t += 2
 pulseon: tweezerIntensityTrig 0.1 % to imaging depth
 call stdPgcImage() % 15 ms before image
 pulseon: tweezerIntensityTrig 0.1 %to loading depth
+pulseon: niawgTrig 0.1 % repeat
 
 off: a15
 t += 0.2

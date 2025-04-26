@@ -1,7 +1,7 @@
 var IF 1
 var loadingDepth 3
-var intrapcooldepth 2.4 
-var imagingDepth 1.2 %1.8
+var intrapcooldepth 3.25 
+var imagingDepth 1.8 %1.8
 var ramandepth 2.8 %2.7 %2.5
 var pushoutDepth .3 %.3
 

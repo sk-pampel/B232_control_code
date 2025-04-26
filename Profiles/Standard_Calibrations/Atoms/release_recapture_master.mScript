@@ -18,7 +18,7 @@ t += 5
 Pulseon: tweezerIntensityTrig 0.1 % to cooling depth
 t += 5
 
-%call intrappgc()
+call intrappgc()
 
 
 t += .1
@@ -28,9 +28,6 @@ t += 2
 
 on: osc_marker
 pulseon: niawgTrig 0.1 % release & recapture
-% t += releasetime
-% pulseon: niawgTrig 0.01 % recapture
-
 
 %on: osc_marker
 %off: tweezerRf

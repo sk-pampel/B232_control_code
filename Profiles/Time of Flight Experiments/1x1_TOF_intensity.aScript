@@ -3,7 +3,7 @@ var loadingDepth 2
 var intrapcooldepth 2.25
 var imagingDepth 1.2
 var ramandepth 2.7
-var TOFDepth .1
+var TOFDepth 1
 
 hold loadingDepth*IF 1 onceWaitTrig #   
 ramp lin loadingDepth*IF imagingDepth*IF 1 onceWaitTrig # 

@@ -415,7 +415,8 @@ void NiawgCore::simpleFormVaries(simpleWaveForm& wave) {
 		for (auto& signal : chan.waveSigs) {
 			if (signal.freqInit.varies() || signal.freqFin.varies() || signal.powerRamp.start.varies()
 				|| signal.powerRamp.end.varies() || signal.initPhase.varies() || signal.initPhase.expressionStr == "-1"
-				|| signal.modFreq.varies() || signal.powerRamp.releaseTime.varies() ) {
+				|| signal.modFreq.varies() || signal.powerRamp.releaseTime.varies() || signal.powerRamp.modFreq.varies() 
+				|| signal.modAmpTwo.varies() || signal.modFreqTwo.varies() ) {
 				wave.varies = true;
 				return;
 			}
@@ -438,7 +439,10 @@ void NiawgCore::simpleFormToOutput(simpleWaveForm& formWave, std::vector<paramet
 				signalForm.powerRamp.start.internalEvaluate(varibles, totalVariationNum);
 				signalForm.powerRamp.end.internalEvaluate(varibles, totalVariationNum);
 				signalForm.modFreq.internalEvaluate(varibles, totalVariationNum);
+				signalForm.modAmpTwo.internalEvaluate(varibles, totalVariationNum);
+				signalForm.modFreqTwo.internalEvaluate(varibles, totalVariationNum);
 				signalForm.powerRamp.releaseTime.internalEvaluate(varibles, totalVariationNum);
+				signalForm.powerRamp.modFreq.internalEvaluate(varibles, totalVariationNum);
 			}
 		}
 	}
@@ -649,6 +653,12 @@ void NiawgCore::loadStandardInputFormType(std::string inputType, channelWaveForm
 		else if (inputType == "gen" + num_s + "fromampsinmod" || inputType == "gen" + num_s + "fromampsinmod_v") {
 			wvInfo.initType = number + 10 * NiawgConstants::MAX_NIAWG_SIGNALS;
 		}
+		else if (inputType == "gen" + num_s + "freq&ampsinmod" || inputType == "gen" + num_s + "freq&ampsinmod_v") {
+			wvInfo.initType = number + 11 * NiawgConstants::MAX_NIAWG_SIGNALS;
+		}
+		else if (inputType == "gen" + num_s + "doublesinmod" || inputType == "gen" + num_s + "doublesinmod_v") {
+			wvInfo.initType = number + 12 * NiawgConstants::MAX_NIAWG_SIGNALS;
+		}
 	}
 	if (wvInfo.initType == -1) {
 		thrower("waveform input type not found while loading standard input type?!?!? "
@@ -744,10 +754,13 @@ void NiawgCore::generateWaveform(channelWaveForm& chanWave, long int sampleNum, 
 			waveformFileSpecs += (str(chanWave.waveSigs[signal].freqInit.getValue(varnum)) + " "
 				+ str(chanWave.waveSigs[signal].freqFin.getValue(varnum)) + " "
 				+ str(chanWave.waveSigs[signal].modFreq.getValue(varnum)) + " "
+				+ str(chanWave.waveSigs[signal].modAmpTwo.getValue(varnum)) + " "
+				+ str(chanWave.waveSigs[signal].modFreqTwo.getValue(varnum)) + " "
 				+ chanWave.waveSigs[signal].freqRampType + " "
 				+ str(chanWave.waveSigs[signal].powerRamp.start.getValue(varnum)) + " "
 				+ str(chanWave.waveSigs[signal].powerRamp.end.getValue(varnum)) + " "
 				+ str(chanWave.waveSigs[signal].powerRamp.releaseTime.getValue(varnum)) + " "
+				+ str(chanWave.waveSigs[signal].powerRamp.modFreq.getValue(varnum)) + " "
 				+ chanWave.waveSigs[signal].powerRamp.type + " "
 				+ str(chanWave.waveSigs[signal].initPhase.getValue(varnum)) + ", ");
 		}
@@ -974,12 +987,9 @@ void NiawgCore::calcWaveData(channelWaveForm& inputData, std::vector<ViReal64>& 
 			&& inputData.waveSigs[signal].powerRamp.type != "sinequarter"
 			&& inputData.waveSigs[signal].powerRamp.type != "cosinequarter"
 			&& inputData.waveSigs[signal].powerRamp.type != "rar"
-			&& inputData.waveSigs[signal].powerRamp.type != "ampsinmod"
-			&& inputData.waveSigs[signal].powerRamp.type != "toampsinmod"
-			&& inputData.waveSigs[signal].powerRamp.type != "fromampsinmod"
-			&& inputData.waveSigs[signal].freqRampType != "sinmod"
-			&& inputData.waveSigs[signal].freqRampType != "tosinmod"
-			&& inputData.waveSigs[signal].freqRampType != "fromsinmod" ) {
+			&& inputData.waveSigs[signal].powerRamp.type != "sinmod"
+			&& inputData.waveSigs[signal].powerRamp.type != "tosinmod"
+			&& inputData.waveSigs[signal].powerRamp.type != "fromsinmod" ) {
 			Segment::analyzeRampFile(inputData.waveSigs[signal].powerRamp, sampleNum);
 		}
 		// If the ramp type isn't a standard command...
@@ -990,7 +1000,8 @@ void NiawgCore::calcWaveData(channelWaveForm& inputData, std::vector<ViReal64>& 
 			&& inputData.waveSigs[signal].freqRampType != "cosinequarter"
 			&& inputData.waveSigs[signal].freqRampType != "sinmod"
 			&& inputData.waveSigs[signal].freqRampType != "tosinmod"
-			&& inputData.waveSigs[signal].freqRampType != "fromsinmod") {
+			&& inputData.waveSigs[signal].freqRampType != "fromsinmod"
+			&& inputData.waveSigs[signal].freqRampType != "doublesinmod" ) {
 			// try to open it
 			freqRampFileData.push_back(new double[sampleNum]);
 			freqRampFile.open(inputData.waveSigs[signal].freqRampType, std::ios::in);
@@ -1022,12 +1033,26 @@ void NiawgCore::calcWaveData(channelWaveForm& inputData, std::vector<ViReal64>& 
 	double deltaTanh = std::tanh(4) - std::tanh(-4); // For "tanh" ramp normalization
 	std::vector<double> deltaOmega, phi_0_vals, f_0_vals, deltaNu, accel_w0, accel_w1, jerk, freq_1, phi_halfway;
 	std::vector<double> modFreq, modAmp; // Added for "sinmod"
+	std::vector<double> modFreqTwo, modAmpTwo; // Added for "doublesinmod"
 	for (unsigned signal = 0; signal < inputData.waveSigs.size(); signal++) {
 		auto f_0 = inputData.waveSigs[signal].freqInit.getValue(varNum) * 1e6; // MHz -> Hz
 		phi_0_vals.push_back(inputData.waveSigs[signal].initPhase.getValue(varNum));
 		f_0_vals.push_back(f_0);
 
-		if (inputData.waveSigs[signal].freqRampType == "sinmod" 
+		if (inputData.waveSigs[signal].freqRampType == "doublesinmod") {
+			modFreq.push_back(inputData.waveSigs[signal].modFreq.getValue(varNum) * 1e6); // MHz -> Hz
+			modAmp.push_back(inputData.waveSigs[signal].freqFin.getValue(varNum) * 1e6);  // MHz -> Hz
+			modFreqTwo.push_back(inputData.waveSigs[signal].modFreqTwo.getValue(varNum) * 1e6); // MHz -> Hz
+			modAmpTwo.push_back(inputData.waveSigs[signal].modAmpTwo.getValue(varNum) * 1e6);  // MHz -> Hz
+			deltaNu.push_back(0);
+			deltaOmega.push_back(0);
+			accel_w0.push_back(0);
+			accel_w1.push_back(0);
+			jerk.push_back(0);
+			freq_1.push_back(0);
+			phi_halfway.push_back(0);
+		}
+		else if (inputData.waveSigs[signal].freqRampType == "sinmod" 
 			|| inputData.waveSigs[signal].freqRampType == "tosinmod"
 			|| inputData.waveSigs[signal].freqRampType == "fromsinmod") {
 			modFreq.push_back(inputData.waveSigs[signal].modFreq.getValue(varNum) * 1e6); // MHz -> Hz
@@ -1039,20 +1064,8 @@ void NiawgCore::calcWaveData(channelWaveForm& inputData, std::vector<ViReal64>& 
 			jerk.push_back(0);
 			freq_1.push_back(0);
 			phi_halfway.push_back(0);
-		}
-		if (inputData.waveSigs[signal].powerRamp.type == "rar") {
-			double releaseTime = inputData.waveSigs[signal].powerRamp.releaseTime.getValue(varNum) / 1000.0;
-			if (releaseTime >= waveTime) {
-				thrower("releaseTime (" + str(releaseTime * 1000) + " ms) must be less than waveTime (" +
-					str(waveTime * 1000) + " ms) for signal " + str(signal));
-			}
-			deltaNu.push_back(0);
-			deltaOmega.push_back(0);
-			accel_w0.push_back(0);
-			accel_w1.push_back(0);
-			jerk.push_back(0);
-			freq_1.push_back(0);
-			phi_halfway.push_back(0);
+			modFreqTwo.push_back(0);
+			modAmpTwo.push_back(0);
 		}
 		else {
 			auto dNu = (inputData.waveSigs[signal].freqFin.getValue(varNum) * 1e6 - f_0);
@@ -1066,6 +1079,15 @@ void NiawgCore::calcWaveData(channelWaveForm& inputData, std::vector<ViReal64>& 
 				+ 2 * PI * f_0 * t_r2 + phi_0_vals.back());
 			modFreq.push_back(0);
 			modAmp.push_back(0);
+			modFreqTwo.push_back(0);
+			modAmpTwo.push_back(0);
+		}
+		if (inputData.waveSigs[signal].powerRamp.type == "rar") {
+			double releaseTime = inputData.waveSigs[signal].powerRamp.releaseTime.getValue(varNum) / 1000.0;
+			if (releaseTime >= waveTime) {
+				thrower("releaseTime (" + str(releaseTime * 1000) + " ms) must be less than waveTime (" +
+					str(waveTime * 1000) + " ms) for signal " + str(signal));
+			}
 		}
 	}
 	
@@ -1212,6 +1234,16 @@ void NiawgCore::calcWaveData(channelWaveForm& inputData, std::vector<ViReal64>& 
 				double t_normalized = t / waveTime;
 				double A_mod = A_mod_final * (1 - (tanh(-4 + 8 * t_normalized) + 1) / 2);
 				phasePos[signal] = 2 * PI * f_0 * t - (A_mod / f_mod) * cos(2 * PI * f_mod * t) + (A_mod / f_mod) + phi_0;
+			}
+			else if (inputData.waveSigs[signal].freqRampType == "doublesinmod") {
+				double f_mod1 = modFreq[signal];
+				double A_mod1 = modAmp[signal];
+				double f_mod2 = modFreqTwo[signal];
+				double A_mod2 = modAmpTwo[signal];
+				phasePos[signal] = 2 * PI * f_0 * t
+					- (A_mod1 / f_mod1) * cos(2 * PI * f_mod1 * t)
+					- (A_mod2 / f_mod2) * cos(2 * PI * f_mod2 * t)
+					+ (A_mod1 / f_mod1) + (A_mod2 / f_mod2) + phi_0;
 			}
 			else {
 				// special ramp case. I'm not sure if this is actually useful. 
@@ -1371,6 +1403,16 @@ void NiawgCore::calcWaveData(channelWaveForm& inputData, std::vector<ViReal64>& 
 			phasePos[signal] = 2 * PI * inputData.waveSigs[signal].freqInit.getValue(varNum) * 1e6 * curTime
 				- (A_mod / f_mod) * cos(2 * PI * f_mod * curTime) + (A_mod / f_mod)
 				+ inputData.waveSigs[signal].initPhase.getValue(varNum);
+		}
+		else if (inputData.waveSigs[signal].freqRampType == "doublesinmod") {
+			double f_mod1 = modFreq[signal];
+			double A_mod1 = modAmp[signal];
+			double f_mod2 = modFreqTwo[signal];
+			double A_mod2 = modAmpTwo[signal];
+			phasePos[signal] = 2 * PI * f_0 * curTime
+				- (A_mod1 / f_mod1) * cos(2 * PI * f_mod1 * curTime)
+				- (A_mod2 / f_mod2) * cos(2 * PI * f_mod2 * curTime)
+				+ (A_mod1 / f_mod1) + (A_mod2 / f_mod2) + phi_0;
 		}
 		else {
 			freqRampPos[signal] = freqRampFileData[signal][sample] * (inputData.waveSigs[signal].freqFin.getValue(varNum) * 1e6
@@ -1536,10 +1578,44 @@ void NiawgCore::readTraditionalSimpleWaveParams(ScriptStream& script, std::vecto
 			break;
 		}
 		case 8: { // genXampsinmod
-			script >> sig.freqInit >> sig.powerRamp.type >> sig.powerRamp.start >> sig.powerRamp.end >> sig.initPhase;
+			script >> sig.freqInit >> sig.powerRamp.start >> sig.powerRamp.end >> sig.powerRamp.modFreq >> sig.initPhase;
 			sig.powerRamp.isRamp = true;
+			sig.powerRamp.type = "sinmod";
 			sig.freqFin = sig.freqInit;
 			sig.freqRampType = "nr";
+			assertAllValid(sig, parameters);
+			break;
+		}
+		case 9: { // genXtoampsinmod
+			script >> sig.freqInit >> sig.powerRamp.start >> sig.powerRamp.end >> sig.powerRamp.modFreq >> sig.initPhase;
+			sig.powerRamp.isRamp = true;
+			sig.powerRamp.type = "tosinmod";
+			sig.freqFin = sig.freqInit;
+			sig.freqRampType = "nr";
+			assertAllValid(sig, parameters);
+			break;
+		}
+		case 10: { // genXfromampsinmod
+			script >> sig.freqInit >> sig.powerRamp.start >> sig.powerRamp.end >> sig.powerRamp.modFreq >> sig.initPhase;
+			sig.powerRamp.isRamp = true;
+			sig.powerRamp.type = "fromsinmod";
+			sig.freqFin = sig.freqInit;
+			sig.freqRampType = "nr";
+			assertAllValid(sig, parameters);
+			break;
+		}
+		case 11: { // genXfreq&ampsinmod
+			script >> sig.freqRampType >> sig.freqInit >> sig.freqFin >> sig.modFreq >> sig.modAmpTwo >> sig.modFreqTwo
+				>> sig.powerRamp.type >> sig.powerRamp.start >> sig.powerRamp.end >> sig.powerRamp.modFreq >> sig.initPhase;
+			sig.powerRamp.isRamp = true;
+			assertAllValid(sig, parameters);
+			break;
+		}
+		case 12: { // genXdoublesinmod
+			script >> sig.freqInit >> sig.freqFin >> sig.modFreq >> sig.modAmpTwo >> sig.modFreqTwo >> sig.powerRamp.start >> sig.initPhase;
+			sig.freqRampType = "doublesinmod";
+			sig.powerRamp.end = sig.powerRamp.start;
+			sig.powerRamp.type = "nr";
 			assertAllValid(sig, parameters);
 			break;
 		}
@@ -1844,6 +1920,198 @@ void NiawgCore::readVectorizedSimpleWaveParams(ScriptStream& script, std::vector
 		}
 		break;
 	}
+	case 8: { // genXampsinmod_v
+		vectorizedNiawgVals freqs, initPowers, finPowers, modFreqs, phases;
+		script >> freqs.name >> initPowers.name >> finPowers.name >> modFreqs.name >> phases.name;
+		for (auto& cv : constVecs) {
+			if (cv.name == freqs.name) { freqs = cv; }
+			if (cv.name == initPowers.name) { initPowers = cv; }
+			if (cv.name == finPowers.name) { finPowers = cv; }
+			if (cv.name == modFreqs.name) { modFreqs = cv; }
+			if (cv.name == phases.name) { phases = cv; }
+		}
+		if (freqs.vals.size() == 0) { thrower("Failed to find constant vector named " + freqs.name); }
+		if (initPowers.vals.size() == 0) { thrower("Failed to find constant vector named " + initPowers.name); }
+		if (finPowers.vals.size() == 0) { thrower("Failed to find constant vector named " + finPowers.name); }
+		if (modFreqs.vals.size() == 0) { thrower("Failed to find constant vector named " + modFreqs.name); }
+		if (phases.vals.size() == 0) { thrower("Failed to find constant vector named " + phases.name); }
+		for (auto signal : range(wave.chan[axis].waveSigs.size())) {
+			auto& sig = wave.chan[axis].waveSigs[signal];
+			sig.freqInit = sig.freqFin = freqs.vals[signal];
+			sig.powerRamp.start = initPowers.vals[signal];
+			sig.powerRamp.end = finPowers.vals[signal];
+			sig.powerRamp.modFreq = modFreqs.vals[signal];
+			sig.initPhase = phases.vals[signal];
+			sig.powerRamp.isRamp = true;
+			sig.powerRamp.type = "sinmod";
+			sig.freqRampType = "nr";
+			assertAllValid(sig, parameters);
+		}
+		break;
+	}
+	case 9: { // genXtoampsinmod_v
+		vectorizedNiawgVals freqs, initPowers, finPowers, modFreqs, phases;
+		script >> freqs.name >> initPowers.name >> finPowers.name >> modFreqs.name >> phases.name;
+		for (auto& cv : constVecs) {
+			if (cv.name == freqs.name) { freqs = cv; }
+			if (cv.name == initPowers.name) { initPowers = cv; }
+			if (cv.name == finPowers.name) { finPowers = cv; }
+			if (cv.name == modFreqs.name) { modFreqs = cv; }
+			if (cv.name == phases.name) { phases = cv; }
+		}
+		if (freqs.vals.size() == 0) { thrower("Failed to find constant vector named " + freqs.name); }
+		if (initPowers.vals.size() == 0) { thrower("Failed to find constant vector named " + initPowers.name); }
+		if (finPowers.vals.size() == 0) { thrower("Failed to find constant vector named " + finPowers.name); }
+		if (modFreqs.vals.size() == 0) { thrower("Failed to find constant vector named " + modFreqs.name); }
+		if (phases.vals.size() == 0) { thrower("Failed to find constant vector named " + phases.name); }
+		for (auto signal : range(wave.chan[axis].waveSigs.size())) {
+			auto& sig = wave.chan[axis].waveSigs[signal];
+			sig.freqInit = sig.freqFin = freqs.vals[signal];
+			sig.powerRamp.start = initPowers.vals[signal];
+			sig.powerRamp.end = finPowers.vals[signal];
+			sig.powerRamp.modFreq = modFreqs.vals[signal];
+			sig.initPhase = phases.vals[signal];
+			sig.powerRamp.isRamp = true;
+			sig.powerRamp.type = "tosinmod";
+			sig.freqRampType = "nr";
+			assertAllValid(sig, parameters);
+		}
+		break;
+	}
+	case 10: { // genXfromampsinmod_v
+		vectorizedNiawgVals freqs, initPowers, finPowers, modFreqs, phases;
+		script >> freqs.name >> initPowers.name >> finPowers.name >> modFreqs.name >> phases.name;
+		for (auto& cv : constVecs) {
+			if (cv.name == freqs.name) { freqs = cv; }
+			if (cv.name == initPowers.name) { initPowers = cv; }
+			if (cv.name == finPowers.name) { finPowers = cv; }
+			if (cv.name == modFreqs.name) { modFreqs = cv; }
+			if (cv.name == phases.name) { phases = cv; }
+		}
+		if (freqs.vals.size() == 0) { thrower("Failed to find constant vector named " + freqs.name); }
+		if (initPowers.vals.size() == 0) { thrower("Failed to find constant vector named " + initPowers.name); }
+		if (finPowers.vals.size() == 0) { thrower("Failed to find constant vector named " + finPowers.name); }
+		if (modFreqs.vals.size() == 0) { thrower("Failed to find constant vector named " + modFreqs.name); }
+		if (phases.vals.size() == 0) { thrower("Failed to find constant vector named " + phases.name); }
+		for (auto signal : range(wave.chan[axis].waveSigs.size())) {
+			auto& sig = wave.chan[axis].waveSigs[signal];
+			sig.freqInit = sig.freqFin = freqs.vals[signal];
+			sig.powerRamp.start = initPowers.vals[signal];
+			sig.powerRamp.end = finPowers.vals[signal];
+			sig.powerRamp.modFreq = modFreqs.vals[signal];
+			sig.initPhase = phases.vals[signal];
+			sig.powerRamp.isRamp = true;
+			sig.powerRamp.type = "fromsinmod";
+			sig.freqRampType = "nr";
+			assertAllValid(sig, parameters);
+		}
+		break;
+	}
+	case 11: { // genXfreq&ampsinmod_v
+		vectorizedNiawgVals freqRampTypes, initFreqs, finFreqs, modFreqs, modAmpTwos, modFreqTwos, 
+			powerRampTypes, initPowers, finPowers, powerModFreqs, phases;
+		script >> freqRampTypes.name >> initFreqs.name >> finFreqs.name >> modFreqs.name 
+			>> modAmpTwos.name >> modFreqTwos.name >> powerRampTypes.name >> initPowers.name
+			>> finPowers.name >> powerModFreqs.name >> phases.name;
+		for (auto& cv : constVecs) {
+			if (cv.name == freqRampTypes.name) { freqRampTypes = cv; }
+			if (cv.name == initFreqs.name) { initFreqs = cv; }
+			if (cv.name == finFreqs.name) { finFreqs = cv; }
+			if (cv.name == modFreqs.name) { modFreqs = cv; }
+			if (cv.name == modAmpTwos.name) { modAmpTwos = cv; }
+			if (cv.name == modFreqTwos.name) { modFreqTwos = cv; }
+			if (cv.name == powerRampTypes.name) { powerRampTypes = cv; }
+			if (cv.name == initPowers.name) { initPowers = cv; }
+			if (cv.name == finPowers.name) { finPowers = cv; }
+			if (cv.name == powerModFreqs.name) { powerModFreqs = cv; }
+			if (cv.name == phases.name) { phases = cv; }
+		}
+		auto numSigs = wave.chan[axis].waveSigs.size();
+		if (freqRampTypes.vals.size() == 0) { thrower("Failed to find constant vector named " + freqRampTypes.name); }
+		if (initFreqs.vals.size() == 0) { thrower("Failed to find constant vector named " + initFreqs.name); }
+		if (finFreqs.vals.size() == 0) { thrower("Failed to find constant vector named " + finFreqs.name); }
+		if (modFreqs.vals.size() == 0) { thrower("Failed to find constant vector named " + modFreqs.name); }
+		if (modAmpTwos.vals.size() == 0) thrower("Failed to find constant vector named " + modAmpTwos.name);
+		if (modFreqTwos.vals.size() == 0) thrower("Failed to find constant vector named " + modFreqTwos.name);
+		if (powerRampTypes.vals.size() == 0) { thrower("Failed to find constant vector named " + powerRampTypes.name); }
+		if (initPowers.vals.size() == 0) { thrower("Failed to find constant vector named " + initPowers.name); }
+		if (finPowers.vals.size() == 0) { thrower("Failed to find constant vector named " + finPowers.name); }
+		if (powerModFreqs.vals.size() == 0) { thrower("Failed to find constant vector named " + powerModFreqs.name); }
+		if (phases.vals.size() == 0) { thrower("Failed to find constant vector named " + phases.name); }
+		if (initFreqs.vals.size() != numSigs) thrower("Vector " + initFreqs.name + " size mismatch!");
+		if (finFreqs.vals.size() != numSigs) thrower("Vector " + finFreqs.name + " size mismatch!");
+		if (modFreqs.vals.size() != numSigs) thrower("Vector " + modFreqs.name + " size mismatch!");
+		if (modAmpTwos.vals.size() != numSigs) thrower("Vector " + modAmpTwos.name + " size mismatch!");
+		if (modFreqTwos.vals.size() != numSigs) thrower("Vector " + modFreqTwos.name + " size mismatch!");
+		if (initPowers.vals.size() != numSigs) thrower("Vector " + initPowers.name + " size mismatch!");
+		if (finPowers.vals.size() != numSigs) thrower("Vector " + finPowers.name + " size mismatch!");
+		if (phases.vals.size() != numSigs) thrower("Vector " + phases.name + " size mismatch!");
+		for (auto signal : range(wave.chan[axis].waveSigs.size())) {
+			auto& sig = wave.chan[axis].waveSigs[signal];
+			sig.powerRamp.type = powerRampTypes.vals[signal];
+			sig.freqInit = initFreqs.vals[signal];
+			sig.freqFin = finFreqs.vals[signal];
+			sig.modFreq = modFreqs.vals[signal];
+			sig.freqRampType = freqRampTypes.vals[signal];
+			sig.powerRamp.start = initPowers.vals[signal];
+			sig.powerRamp.end = finPowers.vals[signal];
+			sig.powerRamp.modFreq = powerModFreqs.vals[signal];
+			sig.initPhase = phases.vals[signal];
+			sig.powerRamp.isRamp = true;
+			assertAllValid(sig, parameters);
+		}
+		break;
+	}
+	case 12: { // genXdoublesinmod_v
+		vectorizedNiawgVals initFreqs, modAmps, modFreqs, modAmpTwos, modFreqTwos, powers, phases;
+		script >> initFreqs.name >> modAmps.name >> modFreqs.name >> modAmpTwos.name >> modFreqTwos.name >> powers.name >> phases.name;
+		for (auto& cv : constVecs) {
+			if (cv.name == initFreqs.name) initFreqs = cv;
+			if (cv.name == modAmps.name) modAmps = cv;
+			if (cv.name == modFreqs.name) modFreqs = cv;
+			if (cv.name == modAmpTwos.name) modAmpTwos = cv;
+			if (cv.name == modFreqTwos.name) modFreqTwos = cv;
+			if (cv.name == powers.name) powers = cv;
+			if (cv.name == phases.name) phases = cv;
+		}
+		auto numSigs = wave.chan[axis].waveSigs.size();
+		if (initFreqs.vals.size() == 0) thrower("Failed to find constant vector named " + initFreqs.name);
+		if (modAmps.vals.size() == 0) thrower("Failed to find constant vector named " + modAmps.name);
+		if (modFreqs.vals.size() == 0) thrower("Failed to find constant vector named " + modFreqs.name);
+		if (modAmpTwos.vals.size() == 0) thrower("Failed to find constant vector named " + modAmpTwos.name);
+		if (modFreqTwos.vals.size() == 0) thrower("Failed to find constant vector named " + modFreqTwos.name);
+		if (powers.vals.size() == 0) thrower("Failed to find constant vector named " + powers.name);
+		if (phases.vals.size() == 0) thrower("Failed to find constant vector named " + phases.name);
+		if (initFreqs.vals.size() != numSigs) thrower("Vector " + initFreqs.name + " size mismatch!");
+		if (modAmps.vals.size() != numSigs) thrower("Vector " + modAmps.name + " size mismatch!");
+		if (modFreqs.vals.size() != numSigs) thrower("Vector " + modFreqs.name + " size mismatch!");
+		if (modAmpTwos.vals.size() != numSigs) thrower("Vector " + modAmpTwos.name + " size mismatch!");
+		if (modFreqTwos.vals.size() != numSigs) thrower("Vector " + modFreqTwos.name + " size mismatch!");
+		if (powers.vals.size() != numSigs) thrower("Vector " + powers.name + " size mismatch!");
+		if (phases.vals.size() != numSigs) thrower("Vector " + phases.name + " size mismatch!");
+		for (auto signal : range(numSigs)) {
+			auto& sig = wave.chan[axis].waveSigs[signal];
+			sig.freqInit = initFreqs.vals[signal];
+			sig.freqFin = modAmps.vals[signal];
+			sig.powerRamp.start = sig.powerRamp.end = powers.vals[signal];
+			sig.modFreq = modFreqs.vals[signal];
+			sig.modAmpTwo = modAmpTwos.vals[signal];
+			sig.modFreqTwo = modFreqTwos.vals[signal];
+			sig.initPhase = phases.vals[signal];
+			sig.freqRampType = "doublesinmod";
+			sig.powerRamp.type = "nr";
+			assertAllValid(sig, parameters);
+			// Force evaluation for 1 variation
+			sig.freqInit.internalEvaluate(parameters, 1);
+			sig.freqFin.internalEvaluate(parameters, 1);
+			sig.powerRamp.start.internalEvaluate(parameters, 1);
+			sig.modFreq.internalEvaluate(parameters, 1);
+			sig.modAmpTwo.internalEvaluate(parameters, 1);
+			sig.modFreqTwo.internalEvaluate(parameters, 1);
+			sig.initPhase.internalEvaluate(parameters, 1);
+		}
+		break;
+	}
 	}
 } 
 
@@ -1851,12 +2119,13 @@ void NiawgCore::assertAllValid(waveSignalForm& signal, std::vector<parameterType
 	signal.initPhase.assertValid(parameters, "niawg");
 	signal.powerRamp.start.assertValid(parameters, "niawg");
 	signal.powerRamp.end.assertValid(parameters, "niawg");
-	if (signal.powerRamp.type == "rar") {
-		signal.powerRamp.releaseTime.assertValid(parameters, "niawg");  // Only for rar
-	}
+	signal.powerRamp.releaseTime.assertValid(parameters, "niawg");
 	signal.freqInit.assertValid(parameters, "niawg");
 	signal.freqFin.assertValid(parameters, "niawg"); 
 	signal.modFreq.assertValid(parameters, "niawg");
+	signal.modFreqTwo.assertValid(parameters, "niawg");
+	signal.modAmpTwo.assertValid(parameters, "niawg");
+	signal.powerRamp.modFreq.assertValid(parameters, "niawg");
 }
 
 bool NiawgCore::isVectorizedCmd(std::string cmd) {
@@ -2212,7 +2481,8 @@ bool NiawgCore::isStandardWaveform(std::string inputType) {
 			|| inputType == "gen" + str(number + 1) + "sinmod" || inputType == "gen" + str(number + 1) + "rar"
 			|| inputType == "gen" + str(number + 1) + "tosinmod" || inputType == "gen" + str(number + 1) + "fromsinmod"
 			|| inputType == "gen" + str(number + 1) + "ampsinmod" || inputType == "gen" + str(number + 1) + "toampsinmod" 
-			|| inputType == "gen" + str(number + 1) + "fromampsinmod" ) {
+			|| inputType == "gen" + str(number + 1) + "fromampsinmod" || inputType == "gen" + str(number + 1) + "freq&ampsinmod"
+			|| inputType == "gen" + str(number + 1) + "doublesinmod" ) {
 			return true;
 		}
 		// vectorized versions
@@ -2221,7 +2491,8 @@ bool NiawgCore::isStandardWaveform(std::string inputType) {
 			|| inputType == "gen" + str(number + 1) + "sinmod_v" || inputType == "gen" + str(number + 1) + "rar_v"
 			|| inputType == "gen" + str(number + 1) + "tosinmod_v" || inputType == "gen" + str(number + 1) + "fromsinmod_v"
 			|| inputType == "gen" + str(number + 1) + "ampsinmod_v" || inputType == "gen" + str(number + 1) + "toampsinmod_v"
-			|| inputType == "gen" + str(number + 1) + "fromampsinmod_v" ) {
+			|| inputType == "gen" + str(number + 1) + "fromampsinmod_v" || inputType == "gen" + str(number + 1) + "freq&ampsinmod_v"
+			|| inputType == "gen" + str(number + 1) + "doublesinmod_v" ) {
 			return true;
 		}
 	}
@@ -2518,6 +2789,26 @@ double NiawgCore::rampCalc(int totalSamples, int iteration, const rampInfo& ramp
 			return rampRange;
 		}
 		return 0;
+	}
+	else if (ramp.type == "sinmod") {
+		double modAmp = ramp.end.getValue(varNum);
+		double modFreq = ramp.modFreq.getValue(varNum);
+		double time = (double)iteration / NiawgConstants::NIAWG_SAMPLE_RATE * 1e6;  // Time in microseconds
+		return modAmp * sin(2 * PI * modFreq * time);
+	}
+	else if (ramp.type == "tosinmod") {
+		double modAmp_final = ramp.end.getValue(varNum);
+		double modAmp = modAmp_final * (double)iteration / totalSamples;
+		double modFreq = ramp.modFreq.getValue(varNum);
+		double time = (double)iteration / NiawgConstants::NIAWG_SAMPLE_RATE * 1e6;  // Time in microseconds
+		return modAmp * sin(2 * PI * modFreq * time);
+	}
+	else if (ramp.type == "fromsinmod") {
+		double modAmp_final = ramp.end.getValue(varNum);
+		double modAmp = modAmp_final * (1 - (double)iteration / totalSamples);
+		double modFreq = ramp.modFreq.getValue(varNum);
+		double time = (double)iteration / NiawgConstants::NIAWG_SAMPLE_RATE * 1e6;  // Time in microseconds
+		return modAmp * sin(2 * PI * modFreq * time);
 	}
 	// error message. I've already checked (outside this function) whether the ramp-type is a filename.
 	else if (ramp.isFileRamp) {
@@ -3591,13 +3882,17 @@ std::string NiawgCore::getOutputSummary(const NiawgOutput& output) {
 		msg += "\nWave " + str(count) + " Horizontal:";
 		for (const auto& hsig : wave.core.chan[Axes::Horizontal].waveSigs) {
 			msg += "\nfrt: " + hsig.freqRampType + ", fi:" + str(hsig.freqInit, 3) + ", ff:" + str(hsig.freqFin, 3) + ", fm:" + str(hsig.modFreq, 3)
-				+ ", prt:" + hsig.powerRamp.type + ", pi:" + str(hsig.powerRamp.start, 3) + ", pf:" + str(hsig.powerRamp.end, 3) + ", rt:" + str(hsig.powerRamp.releaseTime, 3)
+				+ ", fmt:" + str(hsig.modFreqTwo, 3) + ", amt:" + str(hsig.modAmpTwo, 3)
+				+ ", prt:" + hsig.powerRamp.type + ", pi:" + str(hsig.powerRamp.start, 3) + ", pf:" + str(hsig.powerRamp.end, 3)
+				+ ", rt:" + str(hsig.powerRamp.releaseTime, 3) + ", afm:" + str(hsig.powerRamp.modFreq, 3)
 				+ ", fp:" + str(hsig.finPhase, 3);
 		}
 		msg += "\nWave " + str(count) + " Vertical:";
 		for (const auto& hsig : wave.core.chan[Axes::Vertical].waveSigs) {
 			msg += "\nfrt: " + hsig.freqRampType + ", fi:" + str(hsig.freqInit, 3) + ", ff:" + str(hsig.freqFin, 3) + ", fm:" + str(hsig.modFreq, 3)
-				+ ", prt:" + hsig.powerRamp.type + ", pi:" + str(hsig.powerRamp.start, 3) + ", pf:" + str(hsig.powerRamp.end, 3) + ", rt:" + str(hsig.powerRamp.releaseTime, 3)
+				+ ", fmt:" + str(hsig.modFreqTwo, 3) + ", amt:" + str(hsig.modAmpTwo, 3)
+				+ ", prt:" + hsig.powerRamp.type + ", pi:" + str(hsig.powerRamp.start, 3) + ", pf:" + str(hsig.powerRamp.end, 3)
+				+ ", rt:" + str(hsig.powerRamp.releaseTime, 3) + ", afm:" + str(hsig.powerRamp.modFreq, 3)
 				+ ", fp:" + str(hsig.finPhase, 3);
 		}
 		count++;
@@ -3605,45 +3900,47 @@ std::string NiawgCore::getOutputSummary(const NiawgOutput& output) {
 	return msg;
 }
 
-void NiawgCore::generateModulatedWaveform(
-	std::string channel, double centerFreq, double modFreq,
-	double amplitude, double bias, double phase)
-{
-	// Validate parameters
-	if (centerFreq <= 0 || modFreq <= 0 || amplitude <= 0) {
-		throw std::runtime_error("Invalid modulation parameters");
-	}
-
-	// Generate time array based on NIAWG sampling rate
-	int numSamples = static_cast<int>(NiawgConstants::NIAWG_SAMPLE_RATE / modFreq);
-	std::vector<double> timeArray(numSamples);
-	for (int i = 0; i < numSamples; i++) {
-		timeArray[i] = i / NiawgConstants::NIAWG_SAMPLE_RATE;
-	}
-
-	// Generate frequency modulated waveform
-	std::vector<double> freqArray(numSamples);
-	for (int i = 0; i < numSamples; i++) {
-		freqArray[i] = centerFreq + amplitude * sin(2 * PI * modFreq * timeArray[i]);
-	}
-
-	// Convert waveform to NIAWG script format
-	std::ostringstream script;
-	script << "script myModulatedWaveform\n";
-	script << "  waveform myWave = create " << numSamples << " real64\n";
-
-	for (double freq : freqArray) {
-		script << "  myWave[] = " << freq << "\n";
-	}
-
-	script << "  repeat forever\n";
-	script << "    generate " << channel << " myWave marker0\n";
-	script << "  end repeat\n";
-	script << "end script\n";
-
-	std::string scriptString = script.str();
-	std::vector<ViChar> scriptVector(scriptString.begin(), scriptString.end());
-	fgenFlume.writeScript(scriptVector);
-
-
-}
+// I think this function below is not in use - using the various "sinmod" ramps instead (Gur - 21 Apr 2025)
+//
+//void NiawgCore::generateModulatedWaveform(
+//	std::string channel, double centerFreq, double modFreq,
+//	double amplitude, double bias, double phase)
+//{
+//	// Validate parameters
+//	if (centerFreq <= 0 || modFreq <= 0 || amplitude <= 0) {
+//		throw std::runtime_error("Invalid modulation parameters");
+//	}
+//
+//	// Generate time array based on NIAWG sampling rate
+//	int numSamples = static_cast<int>(NiawgConstants::NIAWG_SAMPLE_RATE / modFreq);
+//	std::vector<double> timeArray(numSamples);
+//	for (int i = 0; i < numSamples; i++) {
+//		timeArray[i] = i / NiawgConstants::NIAWG_SAMPLE_RATE;
+//	}
+//
+//	// Generate frequency modulated waveform
+//	std::vector<double> freqArray(numSamples);
+//	for (int i = 0; i < numSamples; i++) {
+//		freqArray[i] = centerFreq + amplitude * sin(2 * PI * modFreq * timeArray[i]);
+//	}
+//
+//	// Convert waveform to NIAWG script format
+//	std::ostringstream script;
+//	script << "script myModulatedWaveform\n";
+//	script << "  waveform myWave = create " << numSamples << " real64\n";
+//
+//	for (double freq : freqArray) {
+//		script << "  myWave[] = " << freq << "\n";
+//	}
+//
+//	script << "  repeat forever\n";
+//	script << "    generate " << channel << " myWave marker0\n";
+//	script << "  end repeat\n";
+//	script << "end script\n";
+//
+//	std::string scriptString = script.str();
+//	std::vector<ViChar> scriptVector(scriptString.begin(), scriptString.end());
+//	fgenFlume.writeScript(scriptVector);
+//
+//
+//}

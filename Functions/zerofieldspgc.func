@@ -2,7 +2,7 @@ def zeroFieldsPgc():
   dac: motGradientCurrent 0
   % total time = 0. This function is for doing pgc.
   var LR_field 0.42 %0.455  %0.43 %0.387 %0.486 %0.43 
-  var TB_Field 2.09 %2.02  %1.94 %1.7 %1.986 %2.1 %1.81 %2 
+  var TB_Field 2.07 %2.02  %1.94 %1.7 %1.986 %2.1 %1.81 %2 
   var FB_Field 0.52 %0.566 %  %0.557 %0.75 %0.57 %0.5754 %0.517
   dac: leftCoilCurrent (-1*LR_field) 
   dac: rightCoilCurrent LR_field 

@@ -19,18 +19,20 @@ Pulseon: tweezerIntensityTrig 0.1 % to cooling depth
 t += 5
 call intrappgc()
 t += 2
-
 Pulseon: tweezerIntensityTrig 0.1 % to modulation
 
-t += 10
+%Pulseon: niawgTrig 0.1
+t += 1 
 
-on: a15
+
+%on: a15
 %t += 1
-on: axialmicropulsetrig 
-t += 50
+%on: axialmicropulsetrig 
+t += heat_time
 off: axialmicropulsetrig
-off: a15
+%off: a15
 t += .1
+%Pulseon: niawgTrig 0.1 
 Pulseon: tweezerIntensityTrig 0.1 % to drop depth
 
 t += 10
@@ -39,7 +41,7 @@ Pulseon: tweezerIntensityTrig 0.1 % to img depth
 
 call stdPgcImage()
 t += 1
-
+%Pulseon: niawgTrig 0.1
 pulseon: tweezerIntensityTrig 0.1 % to loading depth
 t += 10
 

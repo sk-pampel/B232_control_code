@@ -10,7 +10,7 @@ t += loadmottime
 
 call pgcloading()
 t += 2
-pulseon: niawgTrig 0.1 % to imaging and cooling
+
 Pulseon: tweezerIntensityTrig 0.1 % to img depth
 %on: a15
 call stdPgcImage()
@@ -22,7 +22,8 @@ t += 5
 call intrappgc()
 
 on: a15
-pulseon: niawgTrig 0.1 % to freq modulation
+pulseon: niawgTrig 0.1 % to low
+%pulseon: niawgTrig 0.1 % to freq modulation
 t += freq_mod_time
 % pulseon: niawgTrig 0.1 % to imaging and cooling
 

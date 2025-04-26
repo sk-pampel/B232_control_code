@@ -1,0 +1,118 @@
+% LOW FREQUENCY MEANS LOWER/LEFT ON SCREEN
+
+var vStdBias 1 % 0.82
+var vModBias .6
+var vMainFreq 85 
+var vDumpFreq 117 
+
+var hMainFreq 75
+var hStdBias 1 %0.6
+var freqMod .195 % Hz
+var biasMod .02
+var freqModf 2.5 % Hz
+var ampModf .6
+var freqDiff 0
+
+
+var_v 1 hPhases [ 0 ] 
+var_v 1 hFreq [ hMainFreq ] 
+var_v 1 hStdBi [ hStdBias ] 
+
+
+var_v 2 linR [ lin lin ]
+var_v 2 vPhases [ 0 0 ]   
+var_v 2 vFreqs [ vMainFreq vDumpFreq ]
+var_v 2 vFreqsTwo [ (vMainFreq+10) (vDumpFreq+10) ]
+var_v 2 vStdBi [ vStdBias (1-vStdBias) ] 
+var_v 2 vModBi [ vModBias (1-vModBias) ] 
+
+
+var_v 2 fm [ freqMod -freqMod ]
+var_v 2 am [ biasMod biasMod ]
+var_v 2 fmf [ freqModf freqModf ]
+var_v 2 amf [ ampModf ampModf ]
+
+
+var_v 2 fmfA [ freqModf freqModf ]
+var_v 2 amfA [ ampModf -ampModf ]
+var_v 2 fmfB [ (freqModf+freqDiff) (freqModf+freqDiff) ]
+var_v 2 amfB [ ampModf -ampModf ]
+
+var_v 2 ampR [ sinmod sinmod ]
+var_v 2 freqR [ sinmod sinmod ]
+
+%% hold at standard bias
+%repeatTilTrig 
+%gen1const_v Horizontal hFreq hStdBi hPhases #  
+%gen2const_v Vertical vFreqs vStdBi vPhases #
+%0.01 0 endRepeat
+
+%% ramp to mod bias
+%gen1const_v Horizontal hFreq hStdBi hPhases #  
+%gen2ampRamp_v Vertical vFreqs linR vStdBi vModBi vPhases #
+%1 0 
+
+
+%% ramp to amp mod
+%gen1const_v Horizontal hFreq hStdBi hPhases #  
+%gen2tosinmod_v Vertical vFreqs amf vModBi fmf vPhases #
+%1 0 
+
+%% 
+%repeatTilTrig 
+%gen1const_v Horizontal hFreq hStdBi hPhases #  
+%gen2const_v Vertical vFreqs vModBi vPhases #
+%0.01 0 endRepeat
+
+%
+%% amplitude mod
+%repeatTilTrig
+%gen1const_v Horizontal hFreq hStdBi hPhases #  
+%gen2ampsinmod_v Vertical vFreqs vModBi am fm vPhases #
+%1 0 endRepeat
+
+
+%% amplitude mod
+%repeatTilTrig
+%gen1const_v Horizontal hFreq hStdBi hPhases #  
+%gen2freq&ampsinmod_v Vertical freqR vFreqs amf fmf ampR vModBi am fm vPhases #
+%1 0 endRepeat
+
+%repeatTilTrig
+%gen1const_v Horizontal hFreq hStdBi hPhases #  
+%gen2freq&ampramp_v Vertical linR vFreqs vFreqsTwo linR vStdBi vModBi vPhases #
+%1000 0 endRepeat
+
+%% double sinmod
+repeatForever
+gen2freq&ampsinmod_v Horizontal freqR vFreqs amfA fmfA amfB fmfB ampR vModBi am fm vPhases #  
+gen2const_v Vertical vFreqs vStdBi vPhases #
+1000 0 endRepeat
+
+%% single sinmod
+%repeatForever
+%gen1sinmod_v Horizontal hFreq amfA hStdBi fmfA hPhases #
+%gen2const_v Vertical vFreqs vModBi vPhases #
+%1 0 endRepeat
+
+%% ramp from amp mod
+%gen1const_v Horizontal hFreq hStdBi hPhasesvvvvvvvvv #  
+%gen2fromampsinmod_v Vertical vFreqs vModBi am fm vPhases #
+%1 0
+
+%gen1const_v Horizontal hFreq hStdBi hPhases #  
+%gen2fromsinmod_v Vertical vFreqs amf vModBi fmf vPhases #
+%1 0
+
+%% ramp to std bias
+%gen1const_v Horizontal hFreq hStdBi hPhases #  
+%gen2ampRamp_v Vertical vFreqs linR vModBi vStdBi vPhases #
+%1 0 
+
+%% stop amp mod
+%repeatTilTrig 
+%gen1const_v Horizontal hFreq hStdBi hPhases #  
+%gen2const_v Vertical vFreqs vStdBi vPhases #
+%0.01 0 endRepeat
+
+
