@@ -4,9 +4,9 @@ var vMainFreq 85
 var hMainFreq 75
 var vDumpFreq 117 
 % var hTofBias .15 %0.6
-var vTOFBias .01 %.02
+var vTOFBias .02 %.02
 var vOffset 0.5
-var hOffset 0.5
+var hOffset 2
 
 var_v 1 hPhase [ 0 ] 
 var_v 1 hFreq [ hMainFreq ] 
@@ -37,40 +37,40 @@ gen1const_v Horizontal hFreq hStdBi hPhase #
 gen2ampramp_v Vertical vFreqs tanhR vStdBi vTOFBi vPhases #
 1 0
 
+%repeatTilTrig
+%gen1const_v Horizontal hFreq hStdBi hPhase # 
+%gen2const_v Vertical vFreqs vTofBi vPhases #
+%.01 0 endRepeat
+
+%% ramp to horizontal modulation
+gen1tosinmod_v Horizontal hFreq am hStdBi fm hPhase #
+gen2const_v Vertical vFreqs vTofBi vPhases #
+0.001 0
+
+%% hold at TOF bias and modulation
 repeatTilTrig
-gen1const_v Horizontal hFreq hStdBi hPhase # 
+gen1sinmod_v Horizontal hFreq am hStdBi fm hPhase # 
 gen2const_v Vertical vFreqs vTofBi vPhases #
 .01 0 endRepeat
 
-%% ramp to horizontal modulation
-%gen1tosinmod_v Horizontal hFreq am hStdBi fm hPhase #
-%gen2const_v Vertical vFreqs vTofBi vPhases #
-%.001 0
-
-%% hold at TOF bias and modulation
-%repeatTilTrig
-%gen1sinmod_v Horizontal hFreq am hStdBi fm hPhase # 
-%gen2const_v Vertical vFreqs vTofBi vPhases #
-%.01 0 endRepeat
-
 %% displace vertically
 %% & hold at displaced, modulated, TOF depth
-%repeatTilTrig
-%gen1sinmod_v Horizontal hFreq am hStdBi fm hPhase #
-%gen2const_v Vertical vDFreqs vTofBi vPhases #
-%.01 0 endRepeat
+repeatTilTrig
+gen1sinmod_v Horizontal hFreq am hStdBi fm hPhase #
+gen2const_v Vertical vDFreqs vTofBi vPhases #
+.01 0 endRepeat
 
 %% displace horizontaly 
 %% & hold at displaced, modulated, TOF depth
 %repeatTilTrig
 %gen1sinmod_v Horizontal hDFreq am hStdBi fm hPhase #
 %gen2const_v Vertical vFreqs vTofBi vPhases #
-%.001 0 endRepeat
+%.01 0 endRepeat
 
-repeatTilTrig
-gen1const_v Horizontal hDFreq hStdBi hPhase #
-gen2const_v Vertical vFreqs vTofBi vPhases #
-.001 0 endRepeat
+%repeatTilTrig
+%gen1const_v Horizontal hDFreq hStdBi hPhase #
+%gen2const_v Vertical vFreqs vTofBi vPhases #
+%.01 0 endRepeat
 
 
 %% to loading bias

@@ -24,6 +24,9 @@ call gsbc()
 t += 0.1
 off: totalRamanRf
 off: axialRamanShutter 
+call openAndorShutter()
+call zeroFieldsPGC()
+
 dac: topPulseLev 0
 dac: eoPulseLev 0
 pulseon: dds_step 2 
@@ -38,7 +41,7 @@ pulseon: niawgTrig 0.1 % to TOF bias
   var diagmotscan 0.0
   var toftimescan .0001 %0.1
   var image_detuning 1.71
-  var shutterOffset 20
+  var shutterOffset 2
   var repumpscan 0.2
   off: diagMotRf
   off: sigmaOpRf 
@@ -48,17 +51,14 @@ pulseon: niawgTrig 0.1 % to TOF bias
   %t += -shutterOffset
   on: repumpShutter
   on: sidemotShutter
-  call openAndorShutter()
   off: diagmotShutter
-  t += shutterOffset
   dac: diagMotPower 0
   dacLinSpace: MotFreq defaultMotFreq image_detuning 1 10
   %call zeroFieldsFSI()
-  call zeroFieldsPGC()
   dac: SideMotPower { sideMotScan sidemot } %sideMotScan 9
   dac: RepumpPower { repumpscan repump } %repumpscan 0.2
   dac: DiagMotPower { diagmotscan diagmot } %diagmotscan 0.86
-  t += 0.2
+  t += shutterOffset
   on: a15
   pulseon: niawgTrig 0.1 % displace
   t += evolvetime

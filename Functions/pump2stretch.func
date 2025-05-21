@@ -4,14 +4,13 @@ def pump2stretch():
   dac: probePower 0
   off: probeRf
   off: repumpRf
-  var opFreq 1.94 %1.857 %1.98
-  var opPulseLength .1 %0.2 % .015 %0.15
+  var opFreq 1.8 %2.1 %2.23 %1.94 %1.98
+  var opPulseLength 0.1 %.25 %0.2 % .015 %0.15
   var sigmaoppowscan 0.0 %2.8 % 2 %1
   var sigmarepumpfreqscan 0 %0.15 % -0.1 %-.25 
   var sigmarepumppowscan 0.15 %0.108 %0.15 %0.35
   % set to 3G field
   call setQuantAxis() 
-  t += 20
   dac: sigmarepumpfreq sigmarepumpfreqscan 
   daclinspace: motFreq defaultMotFreq opFreq 1 10 
   dac: sigmaopfreq 0 

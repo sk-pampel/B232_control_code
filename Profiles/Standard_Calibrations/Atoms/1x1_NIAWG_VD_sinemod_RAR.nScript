@@ -5,7 +5,7 @@ var hStdBias 1
 var vMainFreq 85 
 var hMainFreq 75
 var vDumpFreq 117 % 117 
-var vTOFBias 0.01
+var vTOFBias .02
 
 var_v 1 hPhases [ 0 ] 
 var_v 1 hFreqs [ hMainFreq ] 
@@ -48,41 +48,46 @@ gen1const_v Horizontal hFreqs hStdBi hPhases #
 gen2const_v Vertical vFreqs vTofBi vPhases #
 0.01 0 endRepeat
 
+
+
 %% ramp to sinemod 
 %gen1const_v Horizontal hFreqs hStdBi hPhases #  
-%gen1tosinmod_v Horizontal hFreqs amfx hStdBi fmfx hPhases #
-%%gen2tosinmod_v Vertical vFreqs amfy vStdBi fmfy vPhases #
-%gen2const_v Vertical vFreqs vStdBi vPhases #
-%.0001 0
+gen1tosinmod_v Horizontal hFreqs amfx hStdBi fmfx hPhases #
+%gen2tosinmod_v Vertical vFreqs amfy vStdBi fmfy vPhases #
+gen2const_v Vertical vFreqs vTofBi vPhases #
+5 0
 
 %% modulate
-%repeatTilTrig
+repeatTilTrig
 %gen1const_v Horizontal hFreqs hStdBi hPhases #  
-%gen1sinmod_v Horizontal hFreqs amfx hStdBi fmfx hPhases #
+gen1sinmod_v Horizontal hFreqs amfx hStdBi fmfx hPhases #
 %gen2sinmod_v Vertical vFreqs amfy vStdBi fmfy vPhases #
-%gen2const_v Vertical vFreqs vStdBi vPhases #
-%1 0 endRepeat
+gen2const_v Vertical vFreqs vTofBi vPhases #
+1 0 endRepeat
 
 %% ramp from sinemod 
 %gen1const_v Horizontal hFreqs hStdBi hPhases #  
-%gen1fromsinmod_v Horizontal hFreqs amfx hStdBi fmfx hPhases #
+gen1fromsinmod_v Horizontal hFreqs amfx hStdBi fmfx hPhases #
 %gen2fromsinmod_v Vertical vFreqs amfy vStdBi fmfy vPhases #
-%gen2const_v Vertical vFreqs vStdBi vPhases #
-%.0001 0
+gen2const_v Vertical vFreqs vTofBi vPhases #
+5 0
 
-
-
-
-
-%% release and recapture
-gen1const_v Horizontal hFreqs hStdBi hPhases # 
-gen2rar_v Vertical vFreqs vTofBi vRARBi rt vPhases #
-1 0
-
-%% ramp to TOF bias
+%% ramp from TOF bias
 gen1const_v Horizontal hFreqs hStdBi hPhases #  
 gen2ampRamp_v Vertical vFreqs tanhRtwo vTofBi vStdBi vPhases #
 1 0 
+
+%% Standard Bias
+repeatTilTrig
+gen1const_v Horizontal hFreqs hStdBi hPhases #  
+gen2const_v Vertical vFreqs vStdBi vPhases #
+.01 0 endRepeat
+
+%% release and recapture
+gen1const_v Horizontal hFreqs hStdBi hPhases # 
+gen2rar_v Vertical vFreqs vStdBi vRARBi rt vPhases #
+1 0
+
 
 %% standard bias
 repeatTilTrig

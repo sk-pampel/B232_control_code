@@ -34,7 +34,7 @@ on: a15
 pulseon: niawgTrig 0.1 % to TOF bias and start modulating
 %t += 1 % 1
 %%% frespace image
-  var FSImageTime .015 %0.02 %0.02 %0.01
+  var FSImageTime .02 %0.02 %0.02 %0.01
   var offsetTime 0
   var sideMotScan 5.4 %8.0 % 6 %9.1
   var diagmotscan 0.0

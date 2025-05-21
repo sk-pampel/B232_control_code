@@ -1,0 +1,104 @@
+% LOW FREQUENCY MEANS LOWER/LEFT ON SCREEN
+
+var vStdBias 1
+var hStdBias 1 
+var vMainFreq 85 
+var hMainFreq 75
+var vDumpFreq 117 
+var vTOFBias .02
+
+var_v 1 hPhases [ 0 ] 
+var_v 1 hFreqs [ hMainFreq ] 
+var_v 1 hStdBi [ hStdBias ] 
+var_v 2 vPhases [ 0 0 ]   
+var_v 2 vFreqs [ vMainFreq vDumpFreq ] 
+var_v 2 vStdBi [ (vStdBias) (1-vStdBias) ] 
+var_v 2 vTofBi [ vTOFBias (1-vTOFBias) ]
+var_v 2 tanhRtwo [ tanh tanh ]
+
+%%%%%%% release and recapture variables
+var releasetime 0.01
+var_v 2 rt [ releasetime releasetime ]
+var_v 2 vRARBi [ (1-vStdBias) (vStdBias) ] 
+
+%%%%%%% x axis modulation variables
+var freqTavgx 3 % time average freq x (MHz)
+var ampTavgx 2.5 % time average amp x (MHz)
+var_v 1 fTavgx [ freqTavgx ]
+var_v 1 aTavgx [ ampTavgx ]
+
+var freqN1x 0.01 % transition freq x (MHz)
+var ampN1x 0.025 % transition amp x (MHz)
+var_v 1 fN1x [ freqN1x ]
+var_v 1 aN1x [ ampN1x ]
+
+%%%%%%% y axis modulation variables
+var freqTavgy 3 %  time average freq y (MHz)
+var ampTavgy 3 % time average freq y (MHz)
+var_v 2 fTavgy [ freqTavgy freqTavgy ]
+var_v 2 aTavgy [ ampTavgy ampTavgy ]
+
+var freqN1y 0.01 % transition freq y (MHz)
+var ampN1y 0.025 % transition amp y (MHz)
+var_v 2 fN1y [ freqN1y freqN1y ]
+var_v 2 aN1y [ ampN1y ampN1y ]
+
+%% Standard Bias
+repeatTilTrig
+gen1const_v Horizontal hFreqs hStdBi hPhases #  
+gen2const_v Vertical vFreqs vStdBi vPhases #
+0.01 0 endRepeat
+
+%%%%%%%%%%%%%%%% begin sequence with single trigger
+%% ramp to TOF bias
+gen1const_v Horizontal hFreqs hStdBi hPhases #  
+gen2ampRamp_v Vertical vFreqs tanhRtwo vStdBi vTofBi vPhases #
+1 0 
+
+%% ramp to sinemod time average in x 
+gen1tosinmod_v Horizontal hFreqs aTavgx hStdBi fTavgx hPhases #
+gen2const_v Vertical vFreqs vTofBi vPhases #
+1 0
+
+
+%% time average and shake in x
+gen1doublesinmod_v Horizontal hFreqs aTavgx fTavgx aN1x fN1x hStdBi hPhases #
+gen2const_v Vertical vFreqs vTofBi vPhases #
+10 0 
+
+%% ramp from sinemod time average  
+gen1fromsinmod_v Horizontal hFreqs aTavgx hStdBi fTavgx hPhases #
+gen2const_v Vertical vFreqs vTofBi vPhases #
+.001 0
+
+%% ramp from TOF to std bias
+gen1const_v Horizontal hFreqs hStdBi hPhases #  
+gen2ampRamp_v Vertical vFreqs tanhRtwo vTofBi vStdBi vPhases #
+1 0 
+
+%%%%%%%%%%%%%%%% end sequence 
+
+
+%% hold standard bias
+repeatTilTrig
+gen1const_v Horizontal hFreqs hStdBi hPhases # 
+gen2const_v Vertical vFreqs vStdBi vPhases #
+0.01 0 endRepeat
+
+%% release and recapture
+gen1const_v Horizontal hFreqs hStdBi hPhases # 
+gen2rar_v Vertical vFreqs vStdBi vRARBi rt vPhases #
+1 0
+
+
+
+%% standard bias
+repeatTilTrig
+gen1const_v Horizontal hFreqs hStdBi hPhases # 
+gen2const_v Vertical vFreqs vStdBi vPhases #
+0.01 0 endRepeat
+
+
+
+
+

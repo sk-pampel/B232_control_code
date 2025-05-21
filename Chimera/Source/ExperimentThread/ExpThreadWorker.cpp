@@ -61,6 +61,7 @@ void ExpThreadWorker::experimentThreadProcedure () {
 				}
 			}
 		}
+		/// Call calibration manager
 		/// Begin experiment 
 		for (const auto& variationInc : range (determineVariationNumber (expRuntime.expParams))) {
 			initVariation (variationInc, expRuntime.expParams);

@@ -29,7 +29,7 @@ def intrappgc():
     off: sidemotShutter 
     %t += pumptime
     %off: a15
-    %off: repumpShutter
+    off: repumpShutter
 	off: RepumpRf
 	daclinspace: MotFreq pgc_intrap_freq defaultmotfreq 2 10
 	t += 1.5

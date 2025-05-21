@@ -1,54 +1,97 @@
-% Master-Script See the "?" for info on commands.
-% Time starts at 1 ms.
-
 t = 0.1
-on: tweezerRf 
-
-t += 10 
+on: tweezerrf
+pulseon: dds_reset 0.1
 call turnonmot()
-t += loadmottime
-pulseon: scoutTrig 0.1 
-t += 2
+t += loadMotTime
 call pgcloading()
 t += 2
-
-Pulseon: tweezerIntensityTrig 0.1 % to img depth
-t += 1
-call stdPgcImage()
-t += 5
-Pulseon: tweezerIntensityTrig 0.1 % to cooling depth
-t += 5
-call intrappgc()
-t += 2
-Pulseon: niawgTrig 0.1 % ramp and hold at TOF bias
-Pulseon: tweezerIntensityTrig 0.1 % to modulation
-t += 1
-
-Pulseon: niawgTrig 0.1 %start modulate position
-
-
-t += modTime
-
-Pulseon: niawgTrig 0.1 % end modulate
-t += qperiod + hperiod % finish ramp
-
-%% release and recapture
-on: osc_marker
-off: tweezerRf
-t += releasetime
-on: tweezerRf
-t += 1
-
-
-pulseon: niawgTrig 0.1 % to standard bias
-Pulseon: tweezerIntensityTrig 0.1 % to cooling depth
-call intrappgc()
-t += 0.1
 pulseon: tweezerIntensityTrig 0.1 % to imagingDepth 
 call stdPgcImage()
+t += 5
+on: axialRamanShutter
+pulseon: tweezerIntensityTrig 0.1 % to intrapCoolDepth
+t += 5
+call intrappgc()
+t += 1
+call triggerwindfreak() % to Raman freq
+pulseon: tweezerIntensityTrig 0.1 % to RamanDepth
+t += 1
 
+call pump2stretch()
+call send_uw_to_raman_eom()
+on: totalRamanRf
+t += 1
+call gsbc()
+off: totalRamanRf
+off: axialRamanShutter 
+dac: eopulselev 0 
+pulseon: dds_step 2 
+call openAndorShutter()
+call zeroFieldsPGC()
+on: repumpShutter
+on: sidemotShutter
+on: a15
+pulseon: tweezerIntensityTrig 0.1 % to nx depth
+t += 1
+pulseon: niawgTrig 0.1 % initiate sequence
+t += 1 % ramp time to tof bias
+t += 1 % ramp time to avg x modulation
+t += 1 % ramp time to n0->n1 y shaking
+t += shaketime % n1 shaking time
+t += 1 % ramp time from n0->n1 y shaking
+off: a15
+
+%t += 1 % 1
+%%% frespace image
+  var FSImageTime .015 %0.02 %0.02 %0.01
+  var offsetTime 0
+  var sideMotScan 5.4 %8.0 % 6 %9.1
+  var diagmotscan 0.0
+  var toftimescan .0001 %0.1
+  var image_detuning 1.71
+  var shutterOffset 5
+  var repumpscan 0.2
+  off: diagMotRf
+  off: sigmaOpRf 
+  off: sigmaRepumpRf
+  off: proberf
+  off: totalRamanRf
+  %on: repumpShutter
+  %on: sidemotShutter
+  off: diagmotShutter
+  dac: diagMotPower 0
+  dacLinSpace: MotFreq defaultMotFreq image_detuning 1 10
+  dac: SideMotPower { sideMotScan sidemot } %sideMotScan 9
+  dac: RepumpPower { repumpscan repump } %repumpscan 0.2
+  dac: DiagMotPower { diagmotscan diagmot } %diagmotscan 0.86
+  on: a15
+  %pulseon: niawgTrig 0.1 % displace
+  %t += evolvetime
+  off: rf795
+  off: tweezerrf
+  t += toftimescan
+  on: SideMotRf
+  on: repumpRf 
+
+  on: andorTrig
+  t += fSImageTime
+  off: andorTrig 
+  %off: a15
+  call closeAndorShutter()
+  off: SideMotRf
+  off: diagMotRf
+  off: repumpRf
+
+  dac: DiagMotPower 0
+  dac: SideMotPower 0
+  dac: RepumpPower 0
+  dacLinSpace: MotFreq image_detuning defaultMotFreq 2 10
+  t += 1
+  off: a15
 pulseon: tweezerIntensityTrig 0.1 % to loadingDepth
 pulseon: niawgTrig 0.1 % to loading bias
 t += 1
+%off: tweezerRf
+t += 0.2
 
   

@@ -1,0 +1,111 @@
+% LOW FREQUENCY MEANS LOWER/LEFT ON SCREEN
+
+var vStdBias 1
+var vTOFBias .02
+var hStdBias 1 
+var vMainFreq 85 
+var hMainFreq 75
+var vDumpFreq 117 
+var_v 1 hPhases [ 0 ] 
+var_v 1 hFreqs [ hMainFreq ] 
+var_v 1 hStdBi [ hStdBias ] 
+var_v 2 vPhases [ 0 0 ]   
+var_v 2 vFreqs [ vMainFreq vDumpFreq ] 
+var_v 2 vStdBi [ (vStdBias) (1-vStdBias) ]
+var_v 2 vTOFBi [ (vTOFBias) (1-vTOFBias) ]  
+var_v 2 vRARBi [ (1-vStdBias) (vStdBias) ] 
+var_v 2 noRamp [ nr nr ]
+var_v 2 tanhRtwo [ tanh tanh ]
+
+var shaketime 1
+var amptavgx 0
+var freqtavgx 0
+var ampn1y 0
+var freqn1y 0
+var_v 1 atavgx [ amptavgx ]
+var_v 1 ftavgx [ freqtavgx ]
+var_v 2 any [ ampn1y ampn1y ]
+var_v 2 fny [ freqn1y freqn1y ]
+
+
+var releasetime 0.01
+var_v 2 rt [ releasetime releasetime ]
+
+%% Standard Bias
+repeatTilTrig
+gen1const_v Horizontal hFreqs hStdBi hPhases #  
+gen2const_v Vertical vFreqs vStdBi vPhases #
+0.01 0 endRepeat
+
+%% Ramp to TOF Bias
+gen1const_v Horizontal hFreqs hStdBi hPhases #  
+gen2ampRamp_v Vertical vFreqs tanhRtwo vStdBi vTOFBi vPhases #
+1 0
+
+%% Ramp to x avg modulation
+gen1tosinmod_v Horizontal hFreqs atavgx hStdBi ftavgx hPhases #  
+gen2const_v Vertical vFreqs vTOFBi vPhases #
+1 0
+
+%% Ramp to y shaking modulation
+gen1sinmod_v Horizontal hFreqs atavgx hStdBi ftavgx hPhases #  
+gen2tosinmod_v Vertical vFreqs any vTOFBi fny vPhases #
+1 0
+
+%% Shake pi/2 :)
+gen1sinmod_v Horizontal hFreqs atavgx hStdBi ftavgx hPhases #  
+gen2sinmod_v Vertical vFreqs any vTOFBi fny vPhases #
+shaketime 0
+
+%% Ramp from y shaking modulation
+gen1sinmod_v Horizontal hFreqs atavgx hStdBi ftavgx hPhases #  
+gen2fromsinmod_v Vertical vFreqs any vTOFBi fny vPhases #
+1 0
+
+
+%% Hold at TOF Bias for evolve time
+repeatTilTrig
+gen1sinmod_v Horizontal hFreqs atavgx hStdBi ftavgx hPhases #  
+gen2const_v Vertical vFreqs vTOFBi vPhases #
+0.01 0 endRepeat
+
+%% Ramp to y shaking modulation
+gen1sinmod_v Horizontal hFreqs atavgx hStdBi ftavgx hPhases #  
+gen2tosinmod_v Vertical vFreqs any vTOFBi fny vPhases #
+1 0
+
+%% Shake 2nd pi/2 :)
+gen1sinmod_v Horizontal hFreqs atavgx hStdBi ftavgx hPhases #  
+gen2sinmod_v Vertical vFreqs any vTOFBi fny vPhases #
+shaketime 0
+
+%% Ramp from y shaking modulation
+gen1sinmod_v Horizontal hFreqs atavgx hStdBi ftavgx hPhases #  
+gen2fromsinmod_v Vertical vFreqs any vTOFBi fny vPhases #
+1 0
+
+
+%% Ramp from x avg modulation
+gen1fromsinmod_v Horizontal hFreqs atavgx hStdBi ftavgx hPhases #  
+gen2const_v Vertical vFreqs vTOFBi vPhases #
+1 0
+
+
+%% Ramp to std Bias
+gen1const_v Horizontal hFreqs hStdBi hPhases #  
+gen2ampRamp_v Vertical vFreqs tanhRtwo vTOFBi vStdBi vPhases #
+1 0
+
+%% Hold at Standard Bias
+repeatTilTrig
+gen1const_v Horizontal hFreqs hStdBi hPhases #  
+gen2const_v Vertical vFreqs vStdBi vPhases #
+0.01 0 endRepeat
+
+
+
+
+
+
+
+

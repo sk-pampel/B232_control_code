@@ -20,20 +20,9 @@ t += 5
 
 call intrappgc()
 
-
-t += .1
-
 pulseon: tweezerIntensityTrig 0.1 % to release depth
-t += 2
-
-on: osc_marker
+t += 2 
 pulseon: niawgTrig 0.1 % release & recapture
-
-%on: osc_marker
-%off: tweezerRf
-%t += releasetime
-%on: tweezerRf
-
 
 t += 1
 
@@ -44,7 +33,6 @@ t += 10
 Pulseon: tweezerIntensityTrig 0.1 % to img depth
 t += 1
 call stdPgcImage()
-off: osc_marker
 t += 1
 pulseon: niawgTrig 0.01 % back to standard
 pulseon: tweezerIntensityTrig 0.1 % to loading depth

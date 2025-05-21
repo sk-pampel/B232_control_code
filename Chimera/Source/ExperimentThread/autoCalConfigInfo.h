@@ -16,9 +16,34 @@ const std::vector<autoCalConfigInfo> AUTO_CAL_LIST {
 		/*infostr*/ "Running Basic Single Atom Loading and Imaging Test...\r\n"
 	},
 	{
-		/*prof*/ {"release_recapture", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms"},
-		/*filename*/ "SINGLE_ATOM_TEMP",
-		/*infostr*/ "Running Release and Recapture...\r\n"
+		/*prof*/ {"PGC_release_recapture", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms"},
+		/*filename*/ "PGC_SINGLE_ATOM_TEMP",
+		/*infostr*/ "Running PGC Release and Recapture...\r\n"
+	},
+	{
+		/*prof*/ {"raman_release_recapture", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms"},
+		/*filename*/ "RAMAN_SINGLE_ATOM_TEMP",
+		/*infostr*/ "Running Raman Release and Recapture...\r\n"
+	},
+	{
+		/*prof*/ {"raman_radial_bsb_pi_pulse_RAR", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms"},
+		/*filename*/ "RAMAN_BSB_PI_PULSE_RAR",
+		/*infostr*/ "Running BSB Pi Pulse RAR...\r\n"
+	},
+	{
+		/*prof*/ {"raman_sbc_cooling_freq", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms"},
+		/*filename*/ "RAMAN_SBC_FREQ_RAR",
+		/*infostr*/ "Running SBC Frequency RAR...\r\n"
+	},
+	{
+		/*prof*/ {"raman_top_piezo_x", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms"},
+		/*filename*/ "RAMAN_TOP_PIEZO_X",
+		/*infostr*/ "Running Top Raman Piezo x RAR...\r\n"
+	},
+	{
+		/*prof*/ {"raman_top_piezo_y", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms"},
+		/*filename*/ "RAMAN_TOP_PIEZO_Y",
+		/*infostr*/ "Running Top Raman Piezo y RAR...\r\n"
 	},
 	{
 		/*prof*/ {"pushout", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms"},
@@ -51,25 +76,25 @@ const std::vector<autoCalConfigInfo> AUTO_CAL_LIST {
 		/*infostr*/ "Running Thermal Axial Raman Spectroscopy...\r\n"
 	},
 	{
-		/*prof*/ { "raman_axial_bsb_pi_pulse", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms" },
-		/*filename*/ "3DSBC_AXIAL_BSB_RABI",
-		/*infostr*/ "Running 3DSBC Axial BSB Pi Power...\r\n"
-	},
-	{
 		/*prof*/ { "raman_radial_bsb_pi_pulse", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms" },
 		/*filename*/ "3DSBC_TOP_BSB_RABI",
 		/*infostr*/ "Running 3DSBC Top BSB Pi Power...\r\n"
 	},
-	{
-		/*prof*/ { "shallow_trap_test", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms" },
-		/*filename*/ "ERASURE_SURVIVAL",
-		/*infostr*/ "Running earsure survival...\r\n"
-	},
-	{
-		/*prof*/ { "raman_radial_spectroscopy_spillout", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms" },
-		/*filename*/ "ERASURE_COOLING",
-		/*infostr*/ "Running erasure cooling...\r\n"
-	},
+	//{
+	//	/*prof*/ { "raman_axial_bsb_pi_pulse", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms" },
+	//	/*filename*/ "3DSBC_AXIAL_BSB_RABI",
+	//	/*infostr*/ "Running 3DSBC Axial BSB Pi Power...\r\n"
+	//},
+	//{
+	//	/*prof*/ { "shallow_trap_test", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms" },
+	//	/*filename*/ "ERASURE_SURVIVAL",
+	//	/*infostr*/ "Running earsure survival...\r\n"
+	//},
+	//{
+	//	/*prof*/ { "raman_radial_spectroscopy_spillout", "Atoms", PROFILES_PATH + "Standard_Calibrations\\Atoms" },
+	//	/*filename*/ "ERASURE_COOLING",
+	//	/*infostr*/ "Running erasure cooling...\r\n"
+	//},
 
 //	{
 //		/*prof*/ {"Automated-MOT-Temperature-Measurement", "MOT", MOT_ROUTINES_ADDRESS},

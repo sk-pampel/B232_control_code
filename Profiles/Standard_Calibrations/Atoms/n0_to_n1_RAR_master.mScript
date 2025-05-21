@@ -2,7 +2,6 @@
 
 t = 0.1
 on: tweezerrf
-on: probeshutter
 pulseon: dds_reset 0.1
 call turnonmot()
 t += loadMotTime
@@ -19,6 +18,7 @@ t += 1
 call triggerwindfreak() % to Raman freq
 pulseon: tweezerIntensityTrig 0.1 % to RamanDepth
 t += 1
+
 call pump2stretch()
 call send_uw_to_raman_eom()
 on: totalRamanRf
@@ -27,13 +27,27 @@ call gsbc()
 off: totalRamanRf
 off: axialRamanShutter 
 dac: eoPulseLev 0
-t += 2
-pulseon: niawgTrig 0.1 %  rar 
-t += 2
+on: a15
+pulseon: tweezerIntensityTrig 0.1 % to n1 depth
+t += 1
+pulseon: niawgTrig 0.1 % initiate sequence
+t += 1 % ramp time to tof bias
+t += 1 % ramp time to avg x modulation
+%t += 1 % ramp time to n0->n1 y shaking
+t += shaketime % n1 shaking time
+%t += 1 % ramp time from n0->n1 y shaking
+t += 1 % ramp time from avg x modulation
+t += 1 % ramp time to std bias
+off: a15
+pulseon: tweezerIntensityTrig 0.1 % to raman depth
+t += 1 % 
+pulseon: niawgTrig 0.1 % RAR
+t += 2 % RAR time
 pulseon: tweezerIntensityTrig 0.1 % to imaging depth
-call stdPgcImage() 
+t += 1
+call stdPgcImage() % 15 ms before image
 pulseon: tweezerIntensityTrig 0.1 %to loading depth
 pulseon: niawgTrig 0.1 % repeat
 
-off: a15
+
 t += 0.2

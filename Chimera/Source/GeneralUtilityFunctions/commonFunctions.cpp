@@ -105,8 +105,11 @@ namespace commonFunctions
 						commonFunctions::getPermissionToStart (win, true, true, input);
 					}
 					mainWin->autoF5_AfterFinish = false;
-					logStandard (input, andorWin->getLogger (), andorWin->getAlignmentVals ());
-					startExperimentThread (mainWin, input);
+					mainWin->calManager.runAllThreaded();
+					QTimer::singleShot(20000, win, [andorWin,input,mainWin]() mutable {
+						logStandard(input, andorWin->getLogger(), andorWin->getAlignmentVals());
+						startExperimentThread(mainWin, input);
+						});
 				}
 				catch (ChimeraError & err) {
 					if (err.whatBare () == "CANCEL") {
@@ -359,8 +362,11 @@ namespace commonFunctions
 					mainWin->reportStatus (qstr (calInfo.infoStr));
 					input.masterInput->profile = calInfo.prof;
 					input.masterInput->expType = ExperimentType::AutoCal;
-					logStandard (input, andorWin->getLogger (), andorWin->getAlignmentVals (), calInfo.fileName, false);
-					startExperimentThread (mainWin, input);
+					mainWin->calManager.runAllThreaded();
+					QTimer::singleShot(20000, win, [andorWin, input, mainWin, calInfo]() mutable {
+						logStandard(input, andorWin->getLogger(), andorWin->getAlignmentVals(), calInfo.fileName, false);
+						startExperimentThread(mainWin, input);
+						});
 				}
 				catch (ChimeraError & err) {
 					mainWin->reportErr ("Failed to start auto calibration experiment: " + err.qtrace ());
@@ -476,9 +482,9 @@ namespace commonFunctions
 	}
 
 	void startExperimentThread(IChimeraQtWindow* win, AllExperimentInput& input){
-		win->mainWin->addTimebar( "main" );
-		win->mainWin->addTimebar( "error" );
-		win->mainWin->startExperimentThread( input.masterInput );
+		win->mainWin->addTimebar("main");
+		win->mainWin->addTimebar("error");
+		win->mainWin->startExperimentThread(input.masterInput);
 	}
 
 	void abortCamera(IChimeraQtWindow* win){

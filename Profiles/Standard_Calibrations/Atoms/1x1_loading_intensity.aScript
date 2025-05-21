@@ -1,6 +1,6 @@
 var IF 1 % intensity calibration factor
 var loadingDepth 3
-var intrapcooldepth 2.4
+var intrapcooldepth 3
 var imagingDepth 1.8
 
 

@@ -17,10 +17,10 @@ pulseon: tweezerIntensityTrig 0.1 % to Raman depth
 call pump2stretch()
 t += 2
 on: a15
+%t += t_hold 
 pulseon: tweezerIntensityTrig 0.1 % to pushout depth
 
 call pushout()
-
 off: a15
 t += 5
 pulseon: tweezerIntensityTrig 0.1 %to imaging depth
